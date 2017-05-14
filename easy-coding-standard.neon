@@ -5,3 +5,5 @@ checkers:
     - PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowSpaceIndentSniff
     # <?php opening tag
     - PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer
+    # not trailing spaces
+    - PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer
