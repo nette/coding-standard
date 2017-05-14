@@ -1,1 +1,2 @@
 checkers:
+    - PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
