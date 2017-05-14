@@ -3,3 +3,5 @@ checkers:
     - PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
     # use tabs over spaces
     - PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowSpaceIndentSniff
+    # <?php opening tag
+    - PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer
