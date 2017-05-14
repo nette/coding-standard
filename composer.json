@@ -2,5 +2,9 @@
 	"require": {
 		"php": "^7.1",
 		"symplify/easy-coding-standard": "@dev"
+	},
+	"scripts": {
+		"check-cs": "vendor/bin/easy-coding-standard check examples",
+		"fix-cs": "vendor/bin/easy-coding-standard check examples --fix"
 	}
 }
