@@ -1,6 +1,6 @@
 {
-    "require": {
-        "php": "^7.1",
-        "symplify/easy-coding-standard": "@dev"
-    }
+	"require": {
+		"php": "^7.1",
+		"symplify/easy-coding-standard": "@dev"
+	}
 }
