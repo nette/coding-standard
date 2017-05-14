@@ -1,3 +1,5 @@
 checkers:
     # declare(strict_types=1);
     - PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
+    # use tabs over spaces
+    - PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowSpaceIndentSniff

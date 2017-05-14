@@ -4,8 +4,7 @@ namespace Nette\CodingStandard\Examples;
 
 class ValidClass
 {
-    public function validMethod()
-    {
-
-    }
+	public function validMethod()
+	{
+	}
 }
