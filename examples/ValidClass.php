@@ -14,5 +14,6 @@ class ValidClass
 
 	public function validMethod()
 	{
+		return TRUE;
 	}
 }

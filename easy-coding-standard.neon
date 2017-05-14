@@ -24,3 +24,8 @@ checkers:
         syntax: short
     # use trailing command in last array element
     - PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer
+
+    # Keywords and True/False/Null
+
+    # TRUE, FALSE, and NULL must be upper case
+    - PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\UpperCaseConstantSniff
