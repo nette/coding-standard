@@ -4,6 +4,11 @@ namespace Nette\CodingStandard\Examples;
 
 class ValidClass
 {
+	private $listOfElements = [
+		'Nette',
+		'Latte',
+	];
+
 	public function validMethod()
 	{
 	}

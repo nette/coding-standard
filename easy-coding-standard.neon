@@ -1,6 +1,9 @@
 checkers:
     # declare(strict_types=1);
     - PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
+
+    # General rules
+
     # use tabs over spaces
     - PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowSpaceIndentSniff
     # <?php opening tag
@@ -9,3 +12,11 @@ checkers:
     - PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer
     # newline one file end
     - PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff
+
+    # Arrays
+
+    # use short array fixes
+    PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer:
+        syntax: short
+    # use trailing command in last array element
+    - PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer
