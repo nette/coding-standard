@@ -7,3 +7,5 @@ checkers:
     - PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer
     # not trailing spaces
     - PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer
+    # newline one file end
+    - PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff
