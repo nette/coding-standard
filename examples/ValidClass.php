@@ -2,6 +2,9 @@
 
 namespace Nette\CodingStandard\Examples;
 
+use stdClass, DateTimeInterface;
+
+
 class ValidClass
 {
 	private $listOfElements = [
