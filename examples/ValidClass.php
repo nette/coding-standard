@@ -2,7 +2,9 @@
 
 namespace Nette\CodingStandard\Examples;
 
-use stdClass, DateTimeInterface;
+use Alphabetcial;
+use DateTimeInterface;
+use stdClass;
 
 
 class ValidClass

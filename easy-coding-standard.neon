@@ -14,8 +14,15 @@ checkers:
     - PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff
 
     # File Header
+
     # empty line before namespace
     - PhpCsFixer\Fixer\NamespaceNotation\SingleBlankLineBeforeNamespaceFixer
+
+    # 1 Use statement per line
+    - PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer
+
+    # Use statements are alphabetically ordered
+    - PhpCsFixer\Fixer\Import\OrderedImportsFixer
 
     # Arrays
 
