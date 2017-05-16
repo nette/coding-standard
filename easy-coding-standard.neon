@@ -2,7 +2,8 @@ checkers:
     # declare(strict_types=1);
     - PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
 
-    # General rules
+
+    # General rules, aims on 1:1 copy of https://nette.org/en/coding-standard#toc-general-rules
 
     # use tabs over spaces
     - PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowSpaceIndentSniff
