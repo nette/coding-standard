@@ -37,3 +37,6 @@ checkers:
 
     # TRUE, FALSE, and NULL must be upper case
     - PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\UpperCaseConstantSniff
+
+    # Classes
+    - PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer
