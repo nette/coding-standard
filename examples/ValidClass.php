@@ -9,10 +9,9 @@ use stdClass;
 
 class ValidClass
 {
-	protected $listOfSkills = [
-		'empathy',
-		'respect',
-	];
+	public const JOY_COUNT = 5;
+
+	protected const CHILD_COUNT = 1;
 
 	private const DREAM_COUNT = 250;
 
@@ -21,34 +20,34 @@ class ValidClass
 		'happiness',
 	];
 
-	public const JOY_COUNT = 5;
+	protected $listOfSkills = [
+		'empathy',
+		'respect',
+	];
 
 	private $listOfElements = [
 		'Nette',
 		'Latte',
 	];
 
-	private function internalMethod()
+	public function __construct()
 	{
 	}
-
-	protected const CHILD_COUNT = 1;
 
 	public function __destruct()
 	{
 	}
-
-	protected function anotherMethod()
-	{
-	}
-
 
 	public function validMethod()
 	{
 		return TRUE;
 	}
 
-	public function __construct()
+	protected function anotherMethod()
+	{
+	}
+
+	private function internalMethod()
 	{
 	}
 }
