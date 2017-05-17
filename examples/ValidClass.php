@@ -15,7 +15,7 @@ class ValidClass
 
 	private const DREAM_COUNT = 250;
 
-	public $ListOfEmotions = [
+	public $listOfEmotions = [
 		'love',
 		'happiness',
 	];
