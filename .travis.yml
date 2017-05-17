@@ -1,0 +1,10 @@
+language: php
+
+php:
+    - 7.1
+
+install:
+    - composer install
+
+script:
+    - vendor/bin/easy-coding-standard check examples

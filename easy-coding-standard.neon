@@ -1,0 +1,49 @@
+checkers:
+    # declare(strict_types=1);
+    - PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
+
+
+    # General rules, aims on 1:1 copy of https://nette.org/en/coding-standard#toc-general-rules
+
+    # use tabs over spaces
+    - PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowSpaceIndentSniff
+    # <?php opening tag
+    - PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer
+    # no trailing spaces
+    - PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer
+    # newline one file end
+    - PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff
+
+    # File Header
+
+    # empty line before namespace
+    - PhpCsFixer\Fixer\NamespaceNotation\SingleBlankLineBeforeNamespaceFixer
+
+    # 1 Use statement per line
+    - PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer
+
+    # Use statements are alphabetically ordered
+    - PhpCsFixer\Fixer\Import\OrderedImportsFixer
+
+    # Arrays
+
+    # use short array fixes
+    PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer:
+        syntax: short
+    # use trailing command in last array element
+    - PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer
+
+    # Keywords and True/False/Null
+
+    # TRUE, FALSE, and NULL must be upper case
+    - PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\UpperCaseConstantSniff
+
+    # Classes
+
+    # class element order: constants, properties, methods (__construct, __destruct first), from public to private
+    - PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer
+
+    # Constants
+
+    # constant names are CAPITALIZED (manuall fixing only :()
+    - PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\UpperCaseConstantNameSniff
