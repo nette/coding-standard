@@ -6,7 +6,6 @@ use Alphabetcial;
 use DateTimeInterface;
 use stdClass;
 
-
 class ValidClass
 {
 	public const JOY_COUNT = 5;
@@ -15,7 +14,7 @@ class ValidClass
 
 	private const DREAM_COUNT = 250;
 
-	public $listOfEmotions = [
+	public $ListOfEmotions = [
 		'love',
 		'happiness',
 	];
@@ -45,6 +44,8 @@ class ValidClass
 
 	protected function anotherMethod(string $someArgument, int $anotherArgument)
 	{
+		$sum = $someArgument + $anotherArgument;
+		$sum += 5;
 	}
 
 	private function internalMethod()
