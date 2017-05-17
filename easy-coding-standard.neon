@@ -19,7 +19,7 @@ checkers:
     # The closing ?> tag must be omitted from files containing only PHP.
     - PhpCsFixer\Fixer\PhpTag\NoClosingTagFixer
     # Blank lines should be added to improve readability and to indicate related blocks of code.
-    - PhpCsFixer\Fixer\Whitespace\NoExtraConsecutiveBlankLinesFixer
+    # - PhpCsFixer\Fixer\Whitespace\NoExtraConsecutiveBlankLinesFixer # remove 2 lines before class :-(
     # There should not be more than one statement per line.
     - PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\DisallowMultipleStatementsSniff
     # There must not be trailing whitespace at the end of lines.
