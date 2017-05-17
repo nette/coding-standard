@@ -18,10 +18,8 @@ checkers:
 
     # empty line before namespace
     - PhpCsFixer\Fixer\NamespaceNotation\SingleBlankLineBeforeNamespaceFixer
-
     # 1 Use statement per line
     - PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer
-
     # Use statements are alphabetically ordered
     - PhpCsFixer\Fixer\Import\OrderedImportsFixer
 
@@ -35,8 +33,17 @@ checkers:
 
     # Keywords and True/False/Null
 
+    # PHP keywords must be in lower case
+    - PhpCsFixer\Fixer\Casing\LowercaseKeywordsFixer
     # TRUE, FALSE, and NULL must be upper case
     - PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\UpperCaseConstantSniff
+
+    # Method and Functions Calls
+
+    # No space after the opening parenthesis and before the closing parenthesis
+    - PhpCsFixer\Fixer\Whitespace\NoSpacesInsideParenthesisFixer
+    # In the argument list, there must be one space after each comma, and there must no be a space before each comma
+    - PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer
 
     # Classes
 
@@ -47,3 +54,7 @@ checkers:
 
     # constant names are CAPITALIZED (manuall fixing only :()
     - PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\UpperCaseConstantNameSniff
+
+    # Constans, Class Properties, Methods
+    PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer:
+        elements: [const, property, method]

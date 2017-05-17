@@ -43,7 +43,7 @@ class ValidClass
 		return TRUE;
 	}
 
-	protected function anotherMethod()
+	protected function anotherMethod(string $someArgument, int $anotherArgument)
 	{
 	}
 
