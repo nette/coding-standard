@@ -43,8 +43,10 @@ class ValidClass
 		return TRUE;
 	}
 
-	protected function anotherMethod()
+	protected function anotherMethod(string $someArgument, int $anotherArgument)
 	{
+		$sum = $someArgument + $anotherArgument;
+		$sum += 5;
 	}
 
 	private function internalMethod()

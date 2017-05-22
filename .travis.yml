@@ -8,3 +8,4 @@ install:
 
 script:
     - vendor/bin/easy-coding-standard check examples
+    - vendor/bin/easy-coding-standard check examples --fix
