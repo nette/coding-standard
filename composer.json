@@ -1,4 +1,6 @@
 {
+	"name": "nette/coding-standard",
+	"license": "MIT",
 	"require": {
 		"php": "^7.1",
 		"symplify/easy-coding-standard": "@dev"
