@@ -4,3 +4,5 @@ includes:
 checkers:
 	# declare(strict_types=1);
 	- PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
+	# Enforces consistent formatting of return typehints: function foo(): ?int
+	- SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff

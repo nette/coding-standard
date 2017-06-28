@@ -23,6 +23,8 @@ checkers:
 	- PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff
 	# File name should match class name if possible.
 	- PhpCsFixer\Fixer\Basic\Psr4Fixer
+	# Enforces using shorthand scalar typehint variants in phpDocs: `int` instead of `integer` and `bool` instead of `boolean`
+	- SlevomatCodingStandard\Sniffs\TypeHints\LongTypeHintsSniff
 
 	# File Header - https://nette.org/en/coding-standard#toc-file-header
 
@@ -32,6 +34,13 @@ checkers:
 	- PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer
 	# Use statements are alphabetically ordered
 	- PhpCsFixer\Fixer\Import\OrderedImportsFixer
+	# disallow group use declarations use FooLibrary\Bar\Baz\{ ClassA, ClassB, ClassC, ClassD as Fizbo }
+	- SlevomatCodingStandard\Sniffs\Namespaces\DisallowGroupUseSniff
+	# Disallows leading backslash in use statement: use \Foo\Bar;
+	- SlevomatCodingStandard\Sniffs\Namespaces\UseDoesNotStartWithBackslashSniff
+	# Looks for unused imports from other namespaces.
+	SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff:
+		searchAnnotations: yes
 
 	# Arrays - https://nette.org/en/coding-standard#toc-arrays
 
@@ -80,6 +89,8 @@ checkers:
 
 	# They must be declared in camelCase.
 	- PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods\CamelCapsMethodNameSniff
+	# Checks that there's a single space between a typehint and a parameter name and no whitespace between a nullability symbol and a typehint
+	- SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSpacingSniff
 
 	# Constans, Class Properties, Methods
 
@@ -93,3 +104,7 @@ checkers:
 	# The closing brace must be on the next line after the body.
 	# There should not be more than one statement per line.
 	- Nette\CodingStandard\Fixer\Basic\BracesFixer
+	# changes if (1 === $cond) to if ($cond === 1)
+	- SlevomatCodingStandard\Sniffs\ControlStructures\YodaComparisonSniff
+	# finds unreachable catch blocks:
+	- SlevomatCodingStandard\Sniffs\Exceptions\DeadCatchSniff
