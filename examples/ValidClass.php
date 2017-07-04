@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Nette\CodingStandard\Examples;
 
@@ -17,19 +15,16 @@ class ValidClass
 
 	private const DREAM_COUNT = 250;
 
-	/** @var string[] */
 	public $listOfEmotions = [
 		'love',
 		'happiness',
 	];
 
-	/** @var string[] */
 	protected $listOfSkills = [
 		'empathy',
 		'respect',
 	];
 
-	/** @var string[] */
 	private $listOfElements = [
 		'Nette',
 		'Latte',
@@ -43,18 +38,18 @@ class ValidClass
 	{
 	}
 
-	public function validMethod(): bool
+	public function validMethod()
 	{
 		return TRUE;
 	}
 
-	protected function anotherMethod(string $someArgument, int $anotherArgument): void
+	protected function anotherMethod(string $someArgument, int $anotherArgument)
 	{
 		$sum = $someArgument + $anotherArgument;
 		$sum += 5;
 	}
 
-	private function internalMethod(): void
+	private function internalMethod()
 	{
 	}
 }
