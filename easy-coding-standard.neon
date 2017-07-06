@@ -19,7 +19,7 @@ checkers:
     # The closing ?> tag must be omitted from files containing only PHP.
     - PhpCsFixer\Fixer\PhpTag\NoClosingTagFixer
     # Blank lines should be added to improve readability and to indicate related blocks of code.
-    # - PhpCsFixer\Fixer\Whitespace\NoExtraConsecutiveBlankLinesFixer # remove 2 lines before class :-(
+    - PhpCsFixer\Fixer\Whitespace\NoExtraConsecutiveBlankLinesFixer
     # There should not be more than one statement per line.
     - PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\DisallowMultipleStatementsSniff
     # There must not be trailing whitespace at the end of lines.
@@ -78,7 +78,9 @@ checkers:
     - PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods\CamelCapsMethodNameSniff
 
     # Constans, Class Properties, Methods
-    PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer:
+
+    # All Class and Trait elements should have visibility required
+    Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer:
         elements: [const, property, method]
 
     # Control Statements - https://nette.org/en/coding-standard#toc-control-statements

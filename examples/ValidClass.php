@@ -6,7 +6,6 @@ use Alphabetcial;
 use DateTimeInterface;
 use stdClass;
 
-
 class ValidClass
 {
 	public const JOY_COUNT = 5;
@@ -43,7 +42,7 @@ class ValidClass
 		return TRUE;
 	}
 
-	protected function anotherMethod(string $someArgument, int $anotherArgument)
+	protected function anotherMethod($someArgument, $anotherArgument)
 	{
 		$sum = $someArgument + $anotherArgument;
 		$sum += 5;
