@@ -3,7 +3,13 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.1",
-		"symplify/easy-coding-standard": "^2.1"
+		"symplify/easy-coding-standard": "^2.1",
+		"friendsofphp/php-cs-fixer": "^2.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"Nette\\CodingStandard\\": "src"
+		}
 	},
 	"scripts": {
 		"cs": "vendor/bin/easy-coding-standard check examples",
