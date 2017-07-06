@@ -37,8 +37,8 @@ To avoid long scripts and typos, you can add this to your `composer.json`:
 ```json
 {
     "scripts": {
-        "cs": "vendor/bin/ecs check src --config vendor/nette/coding-standard/easy-coding-standard.neon",
-        "fs": "vendor/bin/ecs check src --config vendor/nette/coding-standard/easy-coding-standard.neon --fix"
+        "cs": "vendor/bin/ecs check src tests --config vendor/nette/coding-standard/easy-coding-standard.neon",
+        "fs": "vendor/bin/ecs check src tests --config vendor/nette/coding-standard/easy-coding-standard.neon --fix"
     }
 }
 ```
