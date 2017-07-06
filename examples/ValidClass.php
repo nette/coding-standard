@@ -6,7 +6,6 @@ use Alphabetcial;
 use DateTimeInterface;
 use stdClass;
 
-
 class ValidClass
 {
 	public const JOY_COUNT = 5;
