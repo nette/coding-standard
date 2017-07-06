@@ -42,7 +42,7 @@ class ValidClass
 		return TRUE;
 	}
 
-	protected function anotherMethod(string $someArgument, int $anotherArgument)
+	protected function anotherMethod($someArgument, $anotherArgument)
 	{
 		$sum = $someArgument + $anotherArgument;
 		$sum += 5;
