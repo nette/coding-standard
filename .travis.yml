@@ -5,7 +5,11 @@ php:
 
 install:
     - composer install
+    # composer create-project approach
+    - composer create-project nette/coding-standard temp/nette-coding-standard
 
 script:
     - vendor/bin/easy-coding-standard check examples
     - vendor/bin/easy-coding-standard check examples --fix
+    # composer create-project approach
+    - temp/nette-coding-standard/vendor/symplify/easy-coding-standard/bin/ecs check examples --config temp/nette-coding-standard/easy-coding-standard.neon
