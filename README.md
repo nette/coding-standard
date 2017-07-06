@@ -12,7 +12,7 @@ This is set of [sniff](https://github.com/squizlabs/PHP_CodeSniffer) and [fixers
 
 ## A. Travis Setup
 
-```bash
+```yaml
 # .travis.yml
 install:
     - composer create-project nette/coding-standard temp/nette-coding-standard
@@ -34,7 +34,7 @@ vendor/bin/ecs check src tests --config vendor/bin/nette/coding-standard/easy-co
 
 To avoid long scripts and typos, you can add this to your `composer.json`:
 
-```bash
+```json
 {
     "scripts": {
         "cs": "vendor/bin/ecs check src --config nette/coding-standard/easy-coding-standard.neon",
