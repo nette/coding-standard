@@ -35,6 +35,7 @@ final class ClassAndTraitVisibilityRequiredFixer extends AbstractFixer implement
 
     public function configure(array $configuration = null): void
     {
+        $this->configuration = $configuration;
         $this->visibilityRequiredFixer->configure($configuration);
     }
 
