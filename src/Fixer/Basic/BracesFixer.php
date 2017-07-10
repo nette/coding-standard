@@ -332,7 +332,14 @@ class Foo
 			$indent = $this->detectIndent($tokens, $index);
 
 			// fix indent near closing brace
-			$tokens->ensureWhitespaceAtIndex($endBraceIndex - 1, 1, $this->whitespacesConfig->getLineEnding().$indent);
+			$endBraceNextNonWhitespaceIndex = $tokens->getNextNonWhitespace($endBraceIndex);
+			if ($endBraceNextNonWhitespaceIndex === NULL || !$tokens[$endBraceNextNonWhitespaceIndex]->isGivenKind([T_ELSE, T_ELSEIF, T_CATCH, T_FINALLY])) {
+				$lineEnding = $this->whitespacesConfig->getLineEnding();
+				if ($token->isGivenKind([T_CLASS, T_INTERFACE, T_TRAIT])) {
+					$lineEnding .= $lineEnding;
+				}
+				$tokens->ensureWhitespaceAtIndex($endBraceIndex - 1, 1, $lineEnding.$indent);
+			}
 
 			// fix indent between braces
 			$lastCommaIndex = $tokens->getPrevTokenOfKind($endBraceIndex - 1, [';', '}']);
