@@ -1,90 +1,90 @@
 checkers:
-    # declare(strict_types=1);
-    - PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
+	# declare(strict_types=1);
+	- PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
 
 
-    # Checkers bellow aim on 1:1 copy of https://nette.org/en/coding-standard
+	# Checkers bellow aim on 1:1 copy of https://nette.org/en/coding-standard
 
-    # General rules - https://nette.org/en/coding-standard#toc-general-rules
+	# General rules - https://nette.org/en/coding-standard#toc-general-rules
 
-    # max line length limit is 120 characters
-    PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff:
-        absoluteLineLimit: 120
-    # use tabs over spaces
-    - PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowSpaceIndentSniff
-    # PHP code must use only UTF-8 without BOM
-    - PhpCsFixer\Fixer\Basic\EncodingFixer
-    # <?php opening tag
-    - PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer
-    # The closing ?> tag must be omitted from files containing only PHP.
-    - PhpCsFixer\Fixer\PhpTag\NoClosingTagFixer
-    # Blank lines should be added to improve readability and to indicate related blocks of code.
-    - PhpCsFixer\Fixer\Whitespace\NoExtraConsecutiveBlankLinesFixer
-    # There should not be more than one statement per line.
-    - PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\DisallowMultipleStatementsSniff
-    # There must not be trailing whitespace at the end of lines.
-    - PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer
-    # All files must end with a single blank line.
-    - PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff
-    # File name should match class name if possible.
-    - PhpCsFixer\Fixer\Basic\Psr4Fixer
+	# max line length limit is 120 characters
+	PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff:
+		absoluteLineLimit: 120
+	# use tabs over spaces
+	- PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowSpaceIndentSniff
+	# PHP code must use only UTF-8 without BOM
+	- PhpCsFixer\Fixer\Basic\EncodingFixer
+	# <?php opening tag
+	- PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer
+	# The closing ?> tag must be omitted from files containing only PHP.
+	- PhpCsFixer\Fixer\PhpTag\NoClosingTagFixer
+	# Blank lines should be added to improve readability and to indicate related blocks of code.
+	- PhpCsFixer\Fixer\Whitespace\NoExtraConsecutiveBlankLinesFixer
+	# There should not be more than one statement per line.
+	- PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\DisallowMultipleStatementsSniff
+	# There must not be trailing whitespace at the end of lines.
+	- PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer
+	# All files must end with a single blank line.
+	- PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff
+	# File name should match class name if possible.
+	- PhpCsFixer\Fixer\Basic\Psr4Fixer
 
-    # File Header - https://nette.org/en/coding-standard#toc-file-header
+	# File Header - https://nette.org/en/coding-standard#toc-file-header
 
-    # empty line before namespace
-    - PhpCsFixer\Fixer\NamespaceNotation\SingleBlankLineBeforeNamespaceFixer
-    # 1 Use statement per line
-    - PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer
-    # Use statements are alphabetically ordered
-    - PhpCsFixer\Fixer\Import\OrderedImportsFixer
+	# empty line before namespace
+	- PhpCsFixer\Fixer\NamespaceNotation\SingleBlankLineBeforeNamespaceFixer
+	# 1 Use statement per line
+	- PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer
+	# Use statements are alphabetically ordered
+	- PhpCsFixer\Fixer\Import\OrderedImportsFixer
 
-    # Arrays - https://nette.org/en/coding-standard#toc-arrays
+	# Arrays - https://nette.org/en/coding-standard#toc-arrays
 
-    # use short array fixes
-    PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer:
-        syntax: short
-    # use trailing command in last array element
-    - PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer
+	# use short array fixes
+	PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer:
+		syntax: short
+	# use trailing command in last array element
+	- PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer
 
-    # Keywords and True/False/Null - https://nette.org/en/coding-standard#toc-keywords-and-true-false-null
+	# Keywords and True/False/Null - https://nette.org/en/coding-standard#toc-keywords-and-true-false-null
 
-    # PHP keywords must be in lower case
-    - PhpCsFixer\Fixer\Casing\LowercaseKeywordsFixer
-    # TRUE, FALSE, and NULL must be upper case
-    - PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\UpperCaseConstantSniff
+	# PHP keywords must be in lower case
+	- PhpCsFixer\Fixer\Casing\LowercaseKeywordsFixer
+	# TRUE, FALSE, and NULL must be upper case
+	- PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\UpperCaseConstantSniff
 
-    # Method and Functions Calls - https://nette.org/en/coding-standard#toc-method-and-function-calls
+	# Method and Functions Calls - https://nette.org/en/coding-standard#toc-method-and-function-calls
 
-    # No space after the opening parenthesis and before the closing parenthesis
-    - PhpCsFixer\Fixer\Whitespace\NoSpacesInsideParenthesisFixer
-    # In the argument list, there must be one space after each comma, and there must no be a space before each comma
-    - PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer
+	# No space after the opening parenthesis and before the closing parenthesis
+	- PhpCsFixer\Fixer\Whitespace\NoSpacesInsideParenthesisFixer
+	# In the argument list, there must be one space after each comma, and there must no be a space before each comma
+	- PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer
 
-    # Classes - https://nette.org/en/coding-standard#toc-classes
+	# Classes - https://nette.org/en/coding-standard#toc-classes
 
-    # class element order: constants, properties, methods (__construct, __destruct first), from public to private
-    - PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer
+	# class element order: constants, properties, methods (__construct, __destruct first), from public to private
+	- PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer
 
-    # Constants - https://nette.org/en/coding-standard#toc-constants
+	# Constants - https://nette.org/en/coding-standard#toc-constants
 
-    # constant names are CAPITALIZED (manuall fixing only :()
-    - PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\UpperCaseConstantNameSniff
+	# constant names are CAPITALIZED (manuall fixing only :()
+	- PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\UpperCaseConstantNameSniff
 
-    # Class Properties - https://nette.org/en/coding-standard#toc-class-properties
+	# Class Properties - https://nette.org/en/coding-standard#toc-class-properties
 
-    # Methods - https://nette.org/en/coding-standard#toc-methods
+	# Methods - https://nette.org/en/coding-standard#toc-methods
 
-    # They must be declared in camelCase.
-    - PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods\CamelCapsMethodNameSniff
+	# They must be declared in camelCase.
+	- PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods\CamelCapsMethodNameSniff
 
-    # Constans, Class Properties, Methods
+	# Constans, Class Properties, Methods
 
-    # All Class and Trait elements should have visibility required
-    Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer:
-        elements: [const, property, method]
+	# All Class and Trait elements should have visibility required
+	Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer:
+		elements: [const, property, method]
 
-    # Control Statements - https://nette.org/en/coding-standard#toc-control-statements
+	# Control Statements - https://nette.org/en/coding-standard#toc-control-statements
 
-    # The structure body must be indented once.
-    # The closing brace must be on the next line after the body.
-    # - PhpCsFixer\Fixer\Basic\BracesFixer # buggy, not sure why
+	# The structure body must be indented once.
+	# The closing brace must be on the next line after the body.
+	# - PhpCsFixer\Fixer\Basic\BracesFixer # buggy, not sure why

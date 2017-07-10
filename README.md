@@ -36,7 +36,7 @@ script:
 
 ```bash
 composer require --dev nette/coding-standard
-vendor/bin/ecs check src tests --config vendor/bin/nette/coding-standard/easy-coding-standard.neon 
+vendor/bin/ecs check src tests --config vendor/bin/nette/coding-standard/easy-coding-standard.neon
 ```
 
 
@@ -59,7 +59,7 @@ Check coding standard:
 composer cs
 ```
 
-And fix it: 
+And fix it:
 
 ```bash
 composer fs
