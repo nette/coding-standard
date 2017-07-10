@@ -21,8 +21,6 @@ checkers:
 	- PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer
 	# The closing ?> tag must be omitted from files containing only PHP.
 	- PhpCsFixer\Fixer\PhpTag\NoClosingTagFixer
-	# Blank lines should be added to improve readability and to indicate related blocks of code.
-	- PhpCsFixer\Fixer\Whitespace\NoExtraConsecutiveBlankLinesFixer
 	# There must not be trailing whitespace at the end of lines.
 	- PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer
 	# All files must end with a single blank line.
