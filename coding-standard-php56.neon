@@ -46,7 +46,7 @@ checkers:
 	SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff:
 		searchAnnotations: yes
 
-	# Language Construct (should be placed before UpperCaseConstantSniff and some other fixers)
+	# Language Construct (should be placed before some other fixers)
 
 	# Functions should be used with `$strict` param set to `true`
 	- PhpCsFixer\Fixer\Strict\StrictParamFixer
@@ -87,8 +87,8 @@ checkers:
 
 	# PHP keywords must be in lower case
 	- PhpCsFixer\Fixer\Casing\LowercaseKeywordsFixer
-	# TRUE, FALSE, and NULL must be upper case
-	- PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\UpperCaseConstantSniff
+	# The PHP constants `true`, `false`, and `null` MUST be in lower case
+	- PhpCsFixer\Fixer\Casing\LowercaseConstantsFixer
 
 	# Method and Functions Calls - https://nette.org/en/coding-standard#toc-method-and-function-calls
 
