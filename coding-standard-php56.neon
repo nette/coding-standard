@@ -103,7 +103,8 @@ checkers:
 	# The structure body must be indented once.
 	# The closing brace must be on the next line after the body.
 	# There should not be more than one statement per line.
-	- Nette\CodingStandard\Fixer\Basic\BracesFixer
+	Nette\CodingStandard\Fixer\Basic\BracesFixer:
+		allow_single_line_closure: yes
 	# changes if (1 === $cond) to if ($cond === 1)
 	- SlevomatCodingStandard\Sniffs\ControlStructures\YodaComparisonSniff
 	# finds unreachable catch blocks:
