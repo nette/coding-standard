@@ -99,4 +99,4 @@ checkers:
 
 	# The structure body must be indented once.
 	# The closing brace must be on the next line after the body.
-	# - PhpCsFixer\Fixer\Basic\BracesFixer # buggy, not sure why
+	- PhpCsFixer\Fixer\Basic\BracesFixer
