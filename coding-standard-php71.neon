@@ -4,3 +4,7 @@ includes:
 checkers:
 	Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer:
 		elements: [const, property, method]
+
+	# short list() syntax []
+	PhpCsFixer\Fixer\ListNotation\ListSyntaxFixer:
+		syntax: short
