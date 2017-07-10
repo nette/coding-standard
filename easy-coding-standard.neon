@@ -65,8 +65,17 @@ checkers:
 
 	# Classes - https://nette.org/en/coding-standard#toc-classes
 
-	# class element order: constants, properties, methods (__construct, __destruct first), from public to private
-	- PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer
+	# class element order: constants, properties, from public to private
+	PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer:
+		order:
+			- use_trait
+			- constant
+			- constant_public
+			- constant_protected
+			- constant_private
+			- property_public
+			- property_protected
+			- property_private
 
 	# Constants - https://nette.org/en/coding-standard#toc-constants
 
