@@ -334,11 +334,7 @@ class Foo
 			// fix indent near closing brace
 			$endBraceNextNonWhitespaceIndex = $tokens->getNextNonWhitespace($endBraceIndex);
 			if ($endBraceNextNonWhitespaceIndex === NULL || !$tokens[$endBraceNextNonWhitespaceIndex]->isGivenKind([T_ELSE, T_ELSEIF, T_CATCH, T_FINALLY])) {
-				$lineEnding = $this->whitespacesConfig->getLineEnding();
-				if ($token->isGivenKind([T_CLASS, T_INTERFACE, T_TRAIT])) {
-					$lineEnding .= $lineEnding;
-				}
-				$tokens->ensureWhitespaceAtIndex($endBraceIndex - 1, 1, $lineEnding.$indent);
+				$tokens->ensureWhitespaceAtIndex($endBraceIndex - 1, 1, $this->whitespacesConfig->getLineEnding().$indent);
 			}
 
 			// fix indent between braces
