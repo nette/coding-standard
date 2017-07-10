@@ -6,9 +6,6 @@ checkers:
 
 	# General rules - https://nette.org/en/coding-standard#toc-general-rules
 
-	# max line length limit is 120 characters
-	PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff:
-		absoluteLineLimit: 120
 	# use tabs over spaces
 	- PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowSpaceIndentSniff
 	# PHP code must use only UTF-8 without BOM
