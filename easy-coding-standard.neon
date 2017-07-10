@@ -23,8 +23,6 @@ checkers:
 	- PhpCsFixer\Fixer\PhpTag\NoClosingTagFixer
 	# Blank lines should be added to improve readability and to indicate related blocks of code.
 	- PhpCsFixer\Fixer\Whitespace\NoExtraConsecutiveBlankLinesFixer
-	# There should not be more than one statement per line.
-	- PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\DisallowMultipleStatementsSniff
 	# There must not be trailing whitespace at the end of lines.
 	- PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer
 	# All files must end with a single blank line.
@@ -99,4 +97,5 @@ checkers:
 
 	# The structure body must be indented once.
 	# The closing brace must be on the next line after the body.
+	# There should not be more than one statement per line.
 	- PhpCsFixer\Fixer\Basic\BracesFixer
