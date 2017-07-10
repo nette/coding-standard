@@ -1,3 +1,6 @@
+parameters:
+	indentation: tab
+
 checkers:
 	# declare(strict_types=1);
 	- PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
