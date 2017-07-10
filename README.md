@@ -15,7 +15,7 @@ This package covers **part of [official rules](https://nette.org/en/coding-stand
 
 When you open [`/examples`](/examples) directory, all files you'll see are checked by this coding standard. The code might look invalid compared to Nette code you know, but it's only because this tool doesn't check it (yet).
 
-All **general rules** you can find in [`easy-coding-standard.neon`](/easy-coding-standard.neon) file.
+All **general rules** you can find in [`coding-standard-php56.neon`](/coding-standard-php56.neon) file.
 
 
 ## Install and Use
@@ -28,7 +28,7 @@ install:
     - composer create-project nette/coding-standard temp/nette-coding-standard
 
 script:
-    - temp/nette-coding-standard/vendor/symplify/easy-coding-standard/bin/ecs check src tests --config temp/nette-coding-standard/easy-coding-standard.neon
+    - temp/nette-coding-standard/vendor/symplify/easy-coding-standard/bin/ecs check src tests --config temp/nette-coding-standard/coding-standard-php56.neon
 ```
 
 
@@ -36,7 +36,7 @@ script:
 
 ```bash
 composer require --dev nette/coding-standard
-vendor/bin/ecs check src tests --config vendor/bin/nette/coding-standard/easy-coding-standard.neon
+vendor/bin/ecs check src tests --config vendor/bin/nette/coding-standard/coding-standard-php56.neon
 ```
 
 
@@ -47,8 +47,8 @@ To avoid long scripts and typos, you can add this to your `composer.json`:
 ```json
 {
     "scripts": {
-        "cs": "vendor/bin/ecs check src tests --config vendor/nette/coding-standard/easy-coding-standard.neon",
-        "fs": "vendor/bin/ecs check src tests --config vendor/nette/coding-standard/easy-coding-standard.neon --fix"
+        "cs": "vendor/bin/ecs check src tests --config vendor/nette/coding-standard/coding-standard-php56.neon",
+        "fs": "vendor/bin/ecs check src tests --config vendor/nette/coding-standard/coding-standard-php56.neon --fix"
     }
 }
 ```

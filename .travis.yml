@@ -12,4 +12,4 @@ script:
     - vendor/bin/easy-coding-standard check examples
     - vendor/bin/easy-coding-standard check examples --fix
     # composer create-project approach
-    - temp/nette-coding-standard/vendor/symplify/easy-coding-standard/bin/ecs check examples --config temp/nette-coding-standard/easy-coding-standard.neon
+    - temp/nette-coding-standard/vendor/symplify/easy-coding-standard/bin/ecs check examples --config temp/nette-coding-standard/coding-standard-php71.neon

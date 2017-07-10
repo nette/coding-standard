@@ -2,10 +2,6 @@ parameters:
 	indentation: tab
 
 checkers:
-	# declare(strict_types=1);
-	- PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
-
-
 	# Checkers bellow aim on 1:1 copy of https://nette.org/en/coding-standard
 
 	# General rules - https://nette.org/en/coding-standard#toc-general-rules
@@ -89,7 +85,7 @@ checkers:
 
 	# All Class and Trait elements should have visibility required
 	Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer:
-		elements: [const, property, method]
+		elements: [property, method]
 
 	# Control Statements - https://nette.org/en/coding-standard#toc-control-statements
 

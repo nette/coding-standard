@@ -1,0 +1,6 @@
+includes:
+	- coding-standard-php70.neon
+
+checkers:
+	Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer:
+		elements: [const, property, method]

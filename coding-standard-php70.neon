@@ -1,0 +1,6 @@
+includes:
+	- coding-standard-php56.neon
+
+checkers:
+	# declare(strict_types=1);
+	- PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer
