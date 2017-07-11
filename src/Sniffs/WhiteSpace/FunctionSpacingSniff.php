@@ -47,7 +47,6 @@ class FunctionSpacingSniff implements Sniff
 	public function process(File $phpcsFile, $stackPtr)
 	{
 		$tokens        = $phpcsFile->getTokens();
-		$this->spacing = (int) $this->spacing;
 
 		/*
 			Check the number of blank lines
@@ -60,6 +59,8 @@ class FunctionSpacingSniff implements Sniff
 		} else {
 			$closer = $tokens[$stackPtr]['scope_closer'];
 		}
+
+		$this->spacing = end($tokens[$stackPtr]['conditions']) === T_INTERFACE ? 1 : 2;
 
 		// Allow for comments on the same line as the closer.
 		for ($nextLineToken = ($closer + 1); $nextLineToken < $phpcsFile->numTokens; $nextLineToken++) {
@@ -81,6 +82,11 @@ class FunctionSpacingSniff implements Sniff
 				// Don't check spacing after the function because this
 				// should be done by an EOF sniff.
 				$foundLines = $this->spacing;
+
+			} elseif ($tokens[$nextContent]['code'] === T_CLOSE_CURLY_BRACKET) {
+				// last function in class
+				$foundLines = $this->spacing;
+
 			} else {
 				$foundLines += ($tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line']);
 			}
@@ -151,6 +157,15 @@ class FunctionSpacingSniff implements Sniff
 				$prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($tokens[$prevContent]['comment_opener'] - 1), null, true);
 			}
 
+			if ($tokens[$prevContent]['code'] === T_OPEN_CURLY_BRACKET) {
+				// first function in class
+				return;
+			}
+
+			if ($tokens[$prevContent]['level'] && ($useToken = $phpcsFile->findPrevious(T_USE, $prevContent)) && $tokens[$useToken]['line'] === $tokens[$prevContent]['line'] ) {
+				$this->spacing = 1; // method after 'use'
+			}
+
 			// Before we throw an error, check that we are not throwing an error
 			// for another function. We don't want to error for no blank lines after
 			// the previous function and no blank lines before this one as well.
@@ -215,10 +230,12 @@ class FunctionSpacingSniff implements Sniff
 					$nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), null, true);
 					$phpcsFile->fixer->beginChangeset();
 					for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
-						$phpcsFile->fixer->replaceToken($i, '');
+						if (strpos($tokens[$i]['content'], "\n") !== FALSE) {
+							$phpcsFile->fixer->replaceToken($i, '');
+						}
 					}
 
-					$phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $this->spacing));
+					$phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $this->spacing + 1) . str_repeat("\t", $tokens[$i]['level']));
 					$phpcsFile->fixer->endChangeset();
 				}
 			}//end if
