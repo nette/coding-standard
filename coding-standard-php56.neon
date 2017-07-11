@@ -205,3 +205,13 @@ checkers:
 	- PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer
 	# Phpdocs should start and end with content, excluding the very first and last line of the docblocks.
 	- PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer
+	# Single-line comments comments with only one line of actual content should use the `//` syntax.
+	PhpCsFixer\Fixer\Comment\SingleLineCommentStyleFixer:
+		comment_types: [hash]
+
+
+	# Properties MUST not be explicitly initialized with `null`.
+	- PhpCsFixer\Fixer\ClassNotation\NoNullPropertyInitializationFixer
+
+	PhpCsFixer\Fixer\ControlStructure\NoBreakCommentFixer:
+		comment_text: 'break omitted'

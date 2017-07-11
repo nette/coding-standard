@@ -4,7 +4,7 @@
 	"require": {
 		"php": "^7.1",
 		"symplify/easy-coding-standard": "^2.1",
-		"friendsofphp/php-cs-fixer": "^2.3",
+		"friendsofphp/php-cs-fixer": "^2.4",
 		"slevomat/coding-standard": "^3.0"
 	},
 	"autoload": {
