@@ -1,10 +1,8 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace Nette\CodingStandard\Examples;
 
-use Alphabetcial;
-use DateTimeInterface;
-use stdClass;
 
 class ValidClass
 {
@@ -29,24 +27,29 @@ class ValidClass
 		'Latte',
 	];
 
+
 	public function __construct()
 	{
 	}
+
 
 	public function __destruct()
 	{
 	}
 
+
 	public function validMethod()
 	{
-		return TRUE;
+		return true;
 	}
+
 
 	protected function anotherMethod($someArgument, $anotherArgument)
 	{
 		$sum = $someArgument + $anotherArgument;
 		$sum += 5;
 	}
+
 
 	private function internalMethod()
 	{
