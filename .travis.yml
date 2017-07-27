@@ -15,3 +15,6 @@ script:
     - composer fs
     # composer create-project approach
     - temp/nette-coding-standard/vendor/symplify/easy-coding-standard/bin/ecs check examples --config temp/nette-coding-standard/coding-standard-php71.neon
+
+notifications:
+    email: false
