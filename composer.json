@@ -9,9 +9,5 @@
 		"psr-4": {
 			"Nette\\CodingStandard\\": "src"
 		}
-	},
-	"scripts": {
-		"cs": "vendor/bin/easy-coding-standard check src examples --config coding-standard-php71.neon",
-		"fs": "vendor/bin/easy-coding-standard check src examples --config coding-standard-php71.neon --fix"
 	}
 }
