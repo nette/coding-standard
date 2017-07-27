@@ -12,3 +12,9 @@ script:
 
 notifications:
     email: false
+
+sudo: false
+
+cache:
+    directories:
+        - $HOME/.composer/cache
