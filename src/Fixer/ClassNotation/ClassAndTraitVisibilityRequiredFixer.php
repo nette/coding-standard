@@ -57,5 +57,4 @@ final class ClassAndTraitVisibilityRequiredFixer extends AbstractFixer implement
 		$method->setAccessible(true);
 		$method->invoke($this->visibilityRequiredFixer, $file, $tokens);
 	}
-
 }

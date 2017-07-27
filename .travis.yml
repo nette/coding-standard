@@ -9,7 +9,9 @@ install:
     - composer create-project nette/coding-standard temp/nette-coding-standard
 
 script:
-    - vendor/bin/easy-coding-standard check examples
-    - vendor/bin/easy-coding-standard check examples --fix
+    # run coding standard check
+    - composer cs
+    # run coding standard fixing
+    - composer fs
     # composer create-project approach
     - temp/nette-coding-standard/vendor/symplify/easy-coding-standard/bin/ecs check examples --config temp/nette-coding-standard/coding-standard-php71.neon

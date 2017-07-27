@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Checks the separation between methods in a class or interface.
  *
@@ -9,8 +10,8 @@
 
 namespace Nette\CodingStandard\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 class FunctionSpacingSniff implements Sniff
 {
@@ -18,7 +19,7 @@ class FunctionSpacingSniff implements Sniff
 	/**
 	 * The number of blank lines between functions.
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	public $spacing = 2;
 
@@ -30,8 +31,7 @@ class FunctionSpacingSniff implements Sniff
 	 */
 	public function register()
 	{
-		return array(T_FUNCTION);
-
+		return [T_FUNCTION];
 	}//end register()
 
 
@@ -46,7 +46,7 @@ class FunctionSpacingSniff implements Sniff
 	 */
 	public function process(File $phpcsFile, $stackPtr)
 	{
-		$tokens        = $phpcsFile->getTokens();
+		$tokens = $phpcsFile->getTokens();
 
 		/*
 			Check the number of blank lines
@@ -99,10 +99,10 @@ class FunctionSpacingSniff implements Sniff
 			}
 
 			$error .= ' after function; %s found';
-			$data   = array(
+			$data = [
 					   $this->spacing,
 					   $foundLines,
-					  );
+					  ];
 
 			$fix = $phpcsFile->addFixableError($error, $closer, 'After', $data);
 			if ($fix === true) {
@@ -135,10 +135,10 @@ class FunctionSpacingSniff implements Sniff
 			}
 		}
 
-		if (is_null($prevLineToken) === true) {
+		if (($prevLineToken === null) === true) {
 			// Never found the previous line, which means
 			// there are 0 blank lines before the function.
-			$foundLines  = 0;
+			$foundLines = 0;
 			$prevContent = 0;
 		} else {
 			$currentLine = $tokens[$stackPtr]['line'];
@@ -162,15 +162,15 @@ class FunctionSpacingSniff implements Sniff
 				return;
 			}
 
-			if ($tokens[$prevContent]['level'] && ($useToken = $phpcsFile->findPrevious(T_USE, $prevContent)) && $tokens[$useToken]['line'] === $tokens[$prevContent]['line'] ) {
+			if ($tokens[$prevContent]['level'] && ($useToken = $phpcsFile->findPrevious(T_USE, $prevContent)) && $tokens[$useToken]['line'] === $tokens[$prevContent]['line']) {
 				$this->spacing = 1; // method after 'use'
 			}
 
 			// Before we throw an error, check that we are not throwing an error
 			// for another function. We don't want to error for no blank lines after
 			// the previous function and no blank lines before this one as well.
-			$prevLine   = ($tokens[$prevContent]['line'] - 1);
-			$i          = ($stackPtr - 1);
+			$prevLine = ($tokens[$prevContent]['line'] - 1);
+			$i = ($stackPtr - 1);
 			$foundLines = 0;
 			while ($currentLine !== $prevLine && $currentLine > 1 && $i > 0) {
 				if (isset($tokens[$i]['scope_condition']) === true) {
@@ -179,7 +179,7 @@ class FunctionSpacingSniff implements Sniff
 						// Found a previous function.
 						return;
 					}
-				} else if ($tokens[$i]['code'] === T_FUNCTION) {
+				} elseif ($tokens[$i]['code'] === T_FUNCTION) {
 					// Found another interface function.
 					return;
 				}
@@ -207,10 +207,10 @@ class FunctionSpacingSniff implements Sniff
 			}
 
 			$error .= ' before function; %s found';
-			$data   = array(
+			$data = [
 					   $this->spacing,
 					   $foundLines,
-					  );
+					  ];
 
 			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'Before', $data);
 			if ($fix === true) {
@@ -230,7 +230,7 @@ class FunctionSpacingSniff implements Sniff
 					$nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), null, true);
 					$phpcsFile->fixer->beginChangeset();
 					for ($i = $nextSpace; $i < ($nextContent - 1); $i++) {
-						if (strpos($tokens[$i]['content'], "\n") !== FALSE) {
+						if (strpos($tokens[$i]['content'], "\n") !== false) {
 							$phpcsFile->fixer->replaceToken($i, '');
 						}
 					}
@@ -240,8 +240,5 @@ class FunctionSpacingSniff implements Sniff
 				}
 			}//end if
 		}//end if
-
 	}//end process()
-
-
 }//end class
