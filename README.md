@@ -20,6 +20,27 @@ All **general rules** you can find in [`coding-standard-php56.neon`](/coding-sta
 
 ## Install and Use
 
+
+### Local Setup
+
+Installation into global folder named `nette-coding-standard`:
+
+```
+composer create-project nette/coding-standard nette-coding-standard
+```
+
+Check coding standard:
+
+```bash
+nette-coding-standard/ecs check src tests --config nette-coding-standard/coding-standard-php56.neon
+```
+
+And fix it:
+
+```bash
+nette-coding-standard/ecs check src tests --config nette-coding-standard/coding-standard-php56.neon --fix
+```
+
 ### Travis Setup
 
 ```yaml
@@ -28,39 +49,5 @@ install:
     - composer create-project nette/coding-standard temp/nette-coding-standard
 
 script:
-    - temp/nette-coding-standard/vendor/symplify/easy-coding-standard/bin/ecs check src tests --config temp/nette-coding-standard/coding-standard-php56.neon
-```
-
-
-### Local Setup
-
-```bash
-composer require --dev nette/coding-standard
-vendor/bin/ecs check src tests --config vendor/bin/nette/coding-standard/coding-standard-php56.neon
-```
-
-
-## Composer Script for Lazy Programmer
-
-To avoid long scripts and typos, you can add this to your `composer.json`:
-
-```json
-{
-    "scripts": {
-        "cs": "vendor/bin/ecs check src tests --config vendor/nette/coding-standard/coding-standard-php56.neon",
-        "fs": "vendor/bin/ecs check src tests --config vendor/nette/coding-standard/coding-standard-php56.neon --fix"
-    }
-}
-```
-
-Check coding standard:
-
-```bash
-composer cs
-```
-
-And fix it:
-
-```bash
-composer fs
+    - temp/nette-coding-standard/ecs check src tests --config temp/nette-coding-standard/coding-standard-php56.neon
 ```
