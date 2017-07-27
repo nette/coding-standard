@@ -100,9 +100,9 @@ class FunctionSpacingSniff implements Sniff
 
 			$error .= ' after function; %s found';
 			$data = [
-					   $this->spacing,
-					   $foundLines,
-					  ];
+				$this->spacing,
+				$foundLines,
+			];
 
 			$fix = $phpcsFile->addFixableError($error, $closer, 'After', $data);
 			if ($fix === true) {
@@ -208,9 +208,9 @@ class FunctionSpacingSniff implements Sniff
 
 			$error .= ' before function; %s found';
 			$data = [
-					   $this->spacing,
-					   $foundLines,
-					  ];
+				$this->spacing,
+				$foundLines,
+			];
 
 			$fix = $phpcsFile->addFixableError($error, $stackPtr, 'Before', $data);
 			if ($fix === true) {
