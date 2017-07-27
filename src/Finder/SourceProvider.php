@@ -26,6 +26,7 @@ final class SourceProvider implements CustomSourceProviderInterface
 			->exclude('fixtures*')
 			->exclude('output')
 			->exclude('vendor')
+			->exclude('temp')
 			->exclude('tmp');
 
 		return iterator_to_array($finder);
