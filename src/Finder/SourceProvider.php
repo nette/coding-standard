@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nette\CodingStandard\Finder;
 
+use IteratorAggregate;
 use Nette\Utils\Finder;
 use Symplify\EasyCodingStandard\Contract\Finder\CustomSourceProviderInterface;
 
@@ -12,11 +13,10 @@ final class SourceProvider implements CustomSourceProviderInterface
 {
 	/**
 	 * @param string[] $source
-	 * @return \SplFileInfo[]
 	 */
-	public function find(array $source): array
+	public function find(array $source): IteratorAggregate
 	{
-		$finder = Finder::findFiles([
+		return Finder::findFiles([
 				'*.php',
 				'*.phpt',
 			])
@@ -28,7 +28,5 @@ final class SourceProvider implements CustomSourceProviderInterface
 			->exclude('vendor')
 			->exclude('temp')
 			->exclude('tmp');
-
-		return iterator_to_array($finder);
 	}
 }
