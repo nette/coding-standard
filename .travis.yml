@@ -6,7 +6,7 @@ php:
 
 install:
     - composer install
-    - composer create-project nette/coding-standard temp/nette-coding-standard
+    - composer create-project nette/coding-standard:@dev temp/nette-coding-standard
 
 script:
     - temp/nette-coding-standard/ecs check src examples --config temp/nette-coding-standard/coding-standard-php71.neon
