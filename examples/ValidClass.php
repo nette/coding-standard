@@ -8,15 +8,9 @@ class ValidClass
 {
 	public const JOY_COUNT = 5;
 
-
-
 	protected const CHILD_COUNT = 1;
 
-
-
 	private const DREAM_COUNT = 250;
-
-
 
 	public $listOfEmotions = [
 		'love',
