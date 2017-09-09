@@ -39,12 +39,9 @@ class ValidClass
 	}
 
 
-
-
 	public function __destruct()
 	{
 	}
-
 
 
 	public function validMethod()
