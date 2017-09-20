@@ -3,11 +3,18 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.1",
-		"symplify/easy-coding-standard": "^2.2.3"
+		"symplify/easy-coding-standard": "^2.3"
 	},
 	"autoload": {
 		"psr-4": {
 			"Nette\\CodingStandard\\": "src"
 		}
+	},
+	"scripts": {
+		"test": [
+			"ecs check examples --config coding-standard-php56.neon",
+			"ecs check examples --config coding-standard-php70.neon",
+			"ecs check examples --config coding-standard-php71.neon"
+		]
 	}
 }
