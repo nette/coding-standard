@@ -15,6 +15,7 @@ install:
 
 script:
     - temp/nette-coding-standard/ecs check src examples --config temp/nette-coding-standard/coding-standard-php71.neon
+    - composer test
 
 notifications:
     email: false
