@@ -161,7 +161,7 @@ checkers:
 	Nette\CodingStandard\Fixer\Basic\BracesFixer:
 		allow_single_line_closure: yes
 	# changes if (1 === $cond) to if ($cond === 1)
-	- SlevomatCodingStandard\Sniffs\ControlStructures\YodaComparisonSniff
+	- SlevomatCodingStandard\Sniffs\ControlStructures\DisallowYodaComparisonSniff
 	# finds unreachable catch blocks:
 	- SlevomatCodingStandard\Sniffs\Exceptions\DeadCatchSniff
 
