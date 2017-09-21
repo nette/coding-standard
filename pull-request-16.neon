@@ -1,0 +1,16 @@
+parameters:
+	indentation: tab
+
+services:
+	Nette\CodingStandard\Finder\SourceProvider: ~
+
+checkers:
+	# Constants and Properties should be separated by 1 space
+	Symplify\CodingStandard\Fixer\ClassNotation\PropertyAndConstantSeparationFixer:
+		space_count: 1
+
+	# Last property and 1st method should be separated by 2 spaces
+	Symplify\CodingStandard\Fixer\ClassNotation\LastPropertyAndFirstMethodSeparationFixer:
+		space_count: 2
+
+	- Nette\CodingStandard\Sniffs\WhiteSpace\FunctionSpacingSniff
