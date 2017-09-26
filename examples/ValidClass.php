@@ -6,9 +6,8 @@ namespace Nette\CodingStandard\Examples;
 
 class ValidClass
 {
-	public const JOY_COUNT = 5;
-
-	protected const CHILD_COUNT = 1;
+	protected const CHILD_COUNT = 1,
+		HOUSE_COUNT = 10; // allow comment
 
 	private const DREAM_COUNT = 250;
 

@@ -3,7 +3,7 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.1",
-		"symplify/easy-coding-standard": "^2.3"
+		"symplify/easy-coding-standard": "^2.4"
 	},
 	"autoload": {
 		"psr-4": {
