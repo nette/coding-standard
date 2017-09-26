@@ -12,7 +12,6 @@
 	},
 	"scripts": {
 		"test": [
-			"ecs check examples --config pull-request-16.neon",
 			"ecs check examples --config coding-standard-php56.neon",
 			"ecs check examples --config coding-standard-php70.neon",
 			"ecs check examples --config coding-standard-php71.neon"
