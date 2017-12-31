@@ -1,8 +1,8 @@
 parameters:
 	indentation: tab
 
-#services:
-#	Nette\CodingStandard\Finder\SourceProvider: ~
+services:
+	Nette\CodingStandard\Finder\SourceProvider: ~
 
 checkers:
 	# Checkers bellow aim on 1:1 copy of https://nette.org/en/coding-standard
