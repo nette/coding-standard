@@ -6,10 +6,17 @@ namespace Nette\CodingStandard\Examples;
 
 class ValidPropertyAndMethodSpacing
 {
-	private $var;
+	private $someProperty;
+
+	private $anoterProperty;
 
 
 	public function __construct()
+	{
+	}
+
+
+	public function anotherMethod()
 	{
 	}
 }
