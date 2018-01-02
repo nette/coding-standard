@@ -15,7 +15,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 class FunctionSpacingSniff implements Sniff
 {
-
 	/**
 	 * The number of blank lines between functions.
 	 *
@@ -32,7 +31,7 @@ class FunctionSpacingSniff implements Sniff
 	public function register()
 	{
 		return [T_FUNCTION];
-	}//end register()
+	}
 
 
 	/**
@@ -117,8 +116,8 @@ class FunctionSpacingSniff implements Sniff
 				}
 
 				$phpcsFile->fixer->endChangeset();
-			}//end if
-		}//end if
+			}
+		}
 
 		/*
 			Check the number of blank lines
@@ -197,8 +196,8 @@ class FunctionSpacingSniff implements Sniff
 				}
 
 				$i--;
-			}//end while
-		}//end if
+			}
+		}
 
 		if ($foundLines !== $this->spacing) {
 			$error = 'Expected %s blank line';
@@ -238,7 +237,7 @@ class FunctionSpacingSniff implements Sniff
 					$phpcsFile->fixer->replaceToken($i, str_repeat($phpcsFile->eolChar, $this->spacing + 1) . str_repeat("\t", $tokens[$i]['level']));
 					$phpcsFile->fixer->endChangeset();
 				}
-			}//end if
-		}//end if
-	}//end process()
-}//end class
+			}
+		}
+	}
+}
