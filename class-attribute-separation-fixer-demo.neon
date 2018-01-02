@@ -1,0 +1,11 @@
+# only for PR demo purpose (remove afterwards)
+parameters:
+	indentation: tab
+
+services:
+	Nette\CodingStandard\Finder\SourceProvider: ~
+
+checkers:
+	# Constants, Properties and Methods should be separated by 1 blank line
+	PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer:
+		elements: [const, property, method]

@@ -8,6 +8,9 @@ matrix:
     include:
         - php: 7.1
           env: COMPOSER_PROJECT=true
+        # only for PR demo purpose (remove afterwards)
+        - php: 7.1
+          env: DEMO=true
 
 install:
     - composer install
@@ -16,6 +19,8 @@ install:
 script:
     - composer test
     - if [[ $COMPOSER_PROJECT != "" ]]; then temp/nette-coding-standard/ecs check src examples --config temp/nette-coding-standard/coding-standard-php71.neon; fi
+    # only for PR demo purpose (remove afterwards)
+    - if [[ $DEMO != "" ]]; then ecs check vendor/nette --config class-attribute-separation-fixer-demo.neon; fi
 
 notifications:
     email: false
