@@ -10,11 +10,9 @@ class ValidPropertyAndMethodSpacing
 
 	private $anoterProperty;
 
-
 	public function __construct()
 	{
 	}
-
 
 	public function anotherMethod()
 	{

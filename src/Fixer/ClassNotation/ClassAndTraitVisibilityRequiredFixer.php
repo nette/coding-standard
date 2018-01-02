@@ -19,32 +19,27 @@ final class ClassAndTraitVisibilityRequiredFixer extends AbstractFixer implement
 	 */
 	private $visibilityRequiredFixer;
 
-
 	public function __construct()
 	{
 		$this->visibilityRequiredFixer = new VisibilityRequiredFixer;
 		parent::__construct();
 	}
 
-
 	public function isCandidate(Tokens $tokens): bool
 	{
 		return $tokens->isAnyTokenKindsFound([T_CLASS, T_TRAIT]);
 	}
-
 
 	public function getDefinition(): FixerDefinitionInterface
 	{
 		return $this->visibilityRequiredFixer->getDefinition();
 	}
 
-
 	public function configure(array $configuration = null): void
 	{
 		$this->configuration = $configuration;
 		$this->visibilityRequiredFixer->configure($configuration);
 	}
-
 
 	protected function applyFix(SplFileInfo $file, Tokens $tokens): void
 	{

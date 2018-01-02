@@ -26,29 +26,24 @@ class ValidClass
 		'Latte',
 	];
 
-
 	public function __construct()
 	{
 	}
 
-
 	public function __destruct()
 	{
 	}
-
 
 	public function validMethod()
 	{
 		return true;
 	}
 
-
 	protected function anotherMethod($someArgument, $anotherArgument)
 	{
 		$sum = $someArgument + $anotherArgument;
 		$sum += 5;
 	}
-
 
 	private function internalMethod()
 	{

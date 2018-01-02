@@ -96,8 +96,6 @@ checkers:
 	- PhpCsFixer\Fixer\Casing\NativeFunctionCasingFixer
 	# In the argument list, there must be one space after each comma, and there must no be a space before each comma
 	- PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer
-	# This sniff checks that there are two blank lines between functions declarations and single between signatures.
-	- Nette\CodingStandard\Sniffs\WhiteSpace\FunctionSpacingSniff
 
 	# Classes - https://nette.org/en/coding-standard#toc-classes
 
@@ -143,13 +141,9 @@ checkers:
 	Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer:
 		elements: [property, method]
 
-	# Constants and Properties should be separated by 1 blank line
+	# Constants, Properties and Methods should be separated by 1 blank line
 	PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer:
-		elements: [const, property]
-
-	# Last property and 1st method should be separated by 2 spaces
-	Symplify\CodingStandard\Fixer\ClassNotation\LastPropertyAndFirstMethodSeparationFixer:
-		space_count: 2
+		elements: [const, property, method]
 
 	# Control Statements - https://nette.org/en/coding-standard#toc-control-statements
 
