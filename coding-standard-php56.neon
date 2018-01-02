@@ -143,9 +143,9 @@ checkers:
 	Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer:
 		elements: [property, method]
 
-	# Constants and Properties should be separated by 1 space
-	Symplify\CodingStandard\Fixer\ClassNotation\PropertyAndConstantSeparationFixer:
-		space_count: 1
+	# Constants and Properties should be separated by 1 blank line
+	PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer:
+		elements: [const, property]
 
 	# Last property and 1st method should be separated by 2 spaces
 	Symplify\CodingStandard\Fixer\ClassNotation\LastPropertyAndFirstMethodSeparationFixer:
