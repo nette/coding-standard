@@ -43,7 +43,6 @@ final class BracesFixer extends AbstractFixer implements ConfigurationDefinition
 	 */
 	private const LINE_SAME = 'same';
 
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -123,7 +122,6 @@ class Foo
 		);
 	}
 
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -133,7 +131,6 @@ class Foo
 		return -25;
 	}
 
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -141,7 +138,6 @@ class Foo
 	{
 		return true;
 	}
-
 
 	/**
 	 * {@inheritdoc}
@@ -155,7 +151,6 @@ class Foo
 		$this->fixSpaceAroundToken($tokens);
 		$this->fixDoWhile($tokens);
 	}
-
 
 	/**
 	 * {@inheritdoc}
@@ -173,7 +168,6 @@ class Foo
 				->getOption(),
 		]);
 	}
-
 
 	private function fixCommentBeforeBrace(Tokens $tokens)
 	{
@@ -230,7 +224,6 @@ class Foo
 		}
 	}
 
-
 	private function fixControlContinuationBraces(Tokens $tokens)
 	{
 		$controlContinuationTokens = $this->getControlContinuationTokens();
@@ -252,7 +245,6 @@ class Foo
 			$tokens->ensureWhitespaceAtIndex($index - 1, 1, ' ');
 		}
 	}
-
 
 	private function fixDoWhile(Tokens $tokens)
 	{
@@ -276,7 +268,6 @@ class Foo
 			$tokens->ensureWhitespaceAtIndex($nextNonWhitespaceIndex - 1, 1, ' ');
 		}
 	}
-
 
 	private function fixIndents(Tokens $tokens)
 	{
@@ -476,7 +467,6 @@ class Foo
 		}
 	}
 
-
 	private function fixMissingControlBraces(Tokens $tokens)
 	{
 		$controlTokens = $this->getControlTokens();
@@ -521,7 +511,6 @@ class Foo
 		}
 	}
 
-
 	private function fixSpaceAroundToken(Tokens $tokens)
 	{
 		$controlTokens = $this->getControlTokens();
@@ -547,7 +536,6 @@ class Foo
 			}
 		}
 	}
-
 
 	/**
 	 * @param Tokens $tokens
@@ -584,7 +572,6 @@ class Foo
 		return end($explodedContent);
 	}
 
-
 	/**
 	 * @param Tokens $tokens
 	 * @param int    $structureTokenIndex
@@ -603,7 +590,6 @@ class Foo
 
 		return $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $nextIndex);
 	}
-
 
 	private function findStatementEnd(Tokens $tokens, $parenthesisEndIndex)
 	{
@@ -669,7 +655,6 @@ class Foo
 		throw new \RuntimeException('Statement end not found.');
 	}
 
-
 	private function getControlTokens()
 	{
 		static $tokens = [
@@ -690,7 +675,6 @@ class Foo
 		return $tokens;
 	}
 
-
 	private function getControlContinuationTokens()
 	{
 		static $tokens = [
@@ -702,7 +686,6 @@ class Foo
 
 		return $tokens;
 	}
-
 
 	private function getControlContinuationTokensForOpeningToken($openingTokenKind)
 	{
@@ -727,7 +710,6 @@ class Foo
 		return [];
 	}
 
-
 	private function getFinalControlContinuationTokensForOpeningToken($openingTokenKind)
 	{
 		if ($openingTokenKind === T_IF) {
@@ -740,7 +722,6 @@ class Foo
 
 		return [];
 	}
-
 
 	/**
 	 * @param Tokens $tokens
@@ -764,7 +745,6 @@ class Foo
 		}
 	}
 
-
 	/**
 	 * @param Tokens $tokens
 	 * @param int    $startBraceIndex
@@ -781,7 +761,6 @@ class Foo
 			$tokens->ensureWhitespaceAtIndex($startBraceIndex - 1, 1, ' ');
 		}
 	}
-
 
 	/**
 	 * @param Tokens $tokens

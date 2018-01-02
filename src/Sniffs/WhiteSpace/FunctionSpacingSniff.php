@@ -22,7 +22,6 @@ class FunctionSpacingSniff implements Sniff
 	 */
 	public $spacing = 2;
 
-
 	/**
 	 * Returns an array of tokens this test wants to listen for.
 	 *
@@ -32,7 +31,6 @@ class FunctionSpacingSniff implements Sniff
 	{
 		return [T_FUNCTION];
 	}
-
 
 	/**
 	 * Processes this sniff when one of its tokens is encountered.
