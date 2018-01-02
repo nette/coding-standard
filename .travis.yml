@@ -11,7 +11,7 @@ matrix:
 
 install:
     - composer install
-    - if [[ $COMPOSER_PROJECT != "" ]]; then composer create-project nette/coding-standard:@dev temp/nette-coding-standard; fi
+    - if [[ $COMPOSER_PROJECT != "" ]]; then composer create-project nette/coding-standard:dev-master#7809ca7 temp/nette-coding-standard; fi
 
 script:
     - composer test
