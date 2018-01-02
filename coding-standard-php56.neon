@@ -143,7 +143,7 @@ checkers:
 	Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer:
 		elements: [property, method]
 
-	# Constants, Properties and Methods should be separated by 1 blank line
+	# Constants and Properties should be separated by 1 blank line
 	PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer:
 		elements: [const, property]
 
