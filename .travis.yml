@@ -4,13 +4,18 @@ php:
     - 7.1
     - 7.2
 
+matrix:
+    include:
+        - php: 7.1
+          env: COMPOSER_PROJECT=true
+
 install:
     - composer install
-    - composer create-project nette/coding-standard:@dev temp/nette-coding-standard
+    - if [[ $COMPOSER_PROJECT != "" ]]; then composer create-project nette/coding-standard:@dev temp/nette-coding-standard; fi
 
 script:
-    - temp/nette-coding-standard/ecs check src examples --config temp/nette-coding-standard/coding-standard-php71.neon
     - composer test
+    - if [[ $COMPOSER_PROJECT != "" ]]; then temp/nette-coding-standard/ecs check src examples --config temp/nette-coding-standard/coding-standard-php71.neon; fi
 
 notifications:
     email: false
