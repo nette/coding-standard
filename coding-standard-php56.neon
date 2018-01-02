@@ -145,10 +145,6 @@ checkers:
 	PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer:
 		elements: [const, property, method]
 
-	# Last property and 1st method should be separated by 2 spaces
-	Symplify\CodingStandard\Fixer\ClassNotation\LastPropertyAndFirstMethodSeparationFixer:
-		space_count: 2
-
 	# Control Statements - https://nette.org/en/coding-standard#toc-control-statements
 
 	# The keyword `elseif` should be used instead of `else if` so that all control keywords look like single words.
