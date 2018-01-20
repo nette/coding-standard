@@ -3,7 +3,8 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.1",
-		"symplify/easy-coding-standard": "^3.1"
+		"symplify/easy-coding-standard": "~3.1.0",
+		"friendsofphp/php-cs-fixer": "2.9"
 	},
 	"require-dev": {
 		"tracy/tracy": "^2.4"
@@ -15,9 +16,9 @@
 	},
 	"scripts": {
 		"test": [
-			"ecs check examples --config coding-standard-php56.neon",
-			"ecs check examples --config coding-standard-php70.neon",
-			"ecs check examples --config coding-standard-php71.neon"
+			"ecs check src examples --config coding-standard-php56.neon",
+			"ecs check src examples --config coding-standard-php70.neon",
+			"ecs check src examples --config coding-standard-php71.neon"
 		]
 	}
 }
