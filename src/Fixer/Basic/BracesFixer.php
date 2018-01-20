@@ -43,7 +43,6 @@ final class BracesFixer extends AbstractFixer implements ConfigurationDefinition
 	 */
 	private const LINE_SAME = 'same';
 
-
 	/**
 	 * {@inheritdoc}
 	 */
