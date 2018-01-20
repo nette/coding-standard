@@ -22,7 +22,7 @@ install:
 script:
     - composer test
     - if [[ $COMPOSER_PROJECT != "" ]]; then temp/nette-coding-standard/ecs check src examples --config temp/nette-coding-standard/coding-standard-php71.neon; fi
-    - if [[ RUN_ON_NETTE != "" ]]; then vendor/bin/ecs check temp/nette/vendor/nette --config coding-standard-php56.neon; fi
+    - if [[ RUN_ON_NETTE != "" ]]; then vendor/bin/ecs check temp/nette/vendor/nette temp/nette/vendor/latte temp/nette/vendor/tracy --config coding-standard-php56.neon --clear-cache; fi
 
 notifications:
     email: false
