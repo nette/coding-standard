@@ -144,8 +144,9 @@ checkers:
 		elements: [property, method]
 
 	# Constants and Properties should be separated by 1 blank line
-	PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer:
-		elements: [const, property]
+	# temporary disabled as it influences const/property <=> method spaces as well
+	# PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer:
+	# 	elements: [const, property]
 
 	# Last property and 1st method should be separated by 2 spaces
 	Symplify\CodingStandard\Fixer\ClassNotation\LastPropertyAndFirstMethodSeparationFixer:
