@@ -45,6 +45,8 @@ checkers:
 	# Looks for unused imports from other namespaces.
 	SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff:
 		searchAnnotations: yes
+		ignoredAnnotationNames: [@testCase]
+		ignoredAnnotations: [@internal]
 
 	# Language Construct (should be placed before some other fixers)
 

@@ -4,7 +4,8 @@
 	"require": {
 		"php": "^7.1",
 		"symplify/easy-coding-standard": "3.2.28",
-		"symplify/coding-standard": "3.2.28"
+		"symplify/coding-standard": "3.2.28",
+		"slevomat/coding-standard": "4.6"
 	},
 	"require-dev": {
 		"tracy/tracy": "^2.4"
