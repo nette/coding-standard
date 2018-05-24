@@ -61,6 +61,8 @@ checkers:
 	- PhpCsFixer\Fixer\Operator\StandardizeNotEqualsFixer
 	# Include/Require and file path should be divided with a single space. File path should not be placed under brackets.
 	- PhpCsFixer\Fixer\ControlStructure\IncludeFixer
+	# Requires short ternary operator ?: when possible
+	- SlevomatCodingStandard\Sniffs\ControlStructures\RequireShortTernaryOperatorSniff
 
 	# Arrays - https://nette.org/en/coding-standard#toc-arrays
 
