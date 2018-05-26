@@ -223,6 +223,8 @@ checkers:
 	# Single-line comments comments with only one line of actual content should use the `//` syntax.
 	PhpCsFixer\Fixer\Comment\SingleLineCommentStyleFixer:
 		comment_types: [hash]
+	# Require comments with single-line content to be written as one-liners
+	- SlevomatCodingStandard\Sniffs\Commenting\RequireOneLinePropertyDocCommentSniff
 
 
 	# Properties MUST not be explicitly initialized with `null`.
