@@ -14,9 +14,7 @@ use SplFileInfo;
 
 final class ClassAndTraitVisibilityRequiredFixer extends AbstractFixer implements ConfigurationDefinitionFixerInterface
 {
-	/**
-	 * @var VisibilityRequiredFixer
-	 */
+	/** @var VisibilityRequiredFixer */
 	private $visibilityRequiredFixer;
 
 
