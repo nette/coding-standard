@@ -15,7 +15,7 @@ install:
 
 script:
     - composer test
-    - if [[ $COMPOSER_PROJECT != "" ]]; then temp/nette-coding-standard/ecs check src examples --config temp/nette-coding-standard/coding-standard-php71.neon; fi
+    - if [[ $COMPOSER_PROJECT != "" ]]; then temp/nette-coding-standard/ecs check src examples --config temp/nette-coding-standard/coding-standard-php71.yml; fi
 
 notifications:
     email: false
