@@ -7,7 +7,7 @@ namespace Nette\CodingStandard\Utils;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\Tokenizer\TokensAnalyzer;
-use Symplify\TokenRunner\Guard\TokenTypeGuard;
+use Symplify\CodingStandard\TokenRunner\Guard\TokenTypeGuard;
 
 final class ClassWrapper
 {

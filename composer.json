@@ -3,14 +3,15 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.1",
-		"symplify/better-phpdoc-parser": "5.4.13",
-		"symplify/easy-coding-standard": "5.4.13",
-		"symplify/coding-standard": "5.4.13",
-		"slevomat/coding-standard": "^4.8.5"
+		"symplify/easy-coding-standard": "^5.5",
+		"symplify/coding-standard": "^5.5",
+		"slevomat/coding-standard": "^5.0"
 	},
 	"require-dev": {
 		"tracy/tracy": "^2.5"
 	},
+	"prefer-stable": true,
+	"minimum-stability": "dev",
 	"autoload": {
 		"psr-4": {
 			"Nette\\CodingStandard\\": "src"
