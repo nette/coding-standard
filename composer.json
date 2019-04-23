@@ -15,12 +15,5 @@
 		"psr-4": {
 			"Nette\\CodingStandard\\": "src"
 		}
-	},
-	"scripts": {
-		"test": [
-			"ecs check examples --config coding-standard-php56.yml",
-			"ecs check examples --config coding-standard-php70.yml",
-			"ecs check examples --config coding-standard-php71.yml"
-		]
 	}
 }
