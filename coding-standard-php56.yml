@@ -42,7 +42,7 @@ services:
     # Disallows leading backslash in use statement: use \Foo\Bar;
     SlevomatCodingStandard\Sniffs\Namespaces\UseDoesNotStartWithBackslashSniff: ~
     # Looks for unused imports from other namespaces.
-    SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff:
+    Nette\CodingStandard\Sniffs\Namespaces\UnusedUsesSniff:
         searchAnnotations: yes
         ignoredAnnotationNames: ['@testCase']
         ignoredAnnotations: ['@internal']
