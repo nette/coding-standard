@@ -34,16 +34,18 @@ $configs[] = ConfigFileFinder::provide(
 	['easy-coding-standard.yml', 'easy-coding-standard.yaml', 'ecs.yml', 'ecs.yaml']
 );
 
-if (version_compare(PHP_VERSION, '7.0.0', '<=')) {
-    $configs[] = __DIR__ . '/coding-standard-php56.yml';
-} elseif (version_compare(PHP_VERSION, '7.1.0', '<=')) {
-    $configs[] = __DIR__ . '/coding-standard-php70.yml';
-} else {
-    $configs[] = __DIR__ . '/coding-standard-php71.yml';
-}
-
 // remove empty values
 $configs = array_filter($configs);
+
+if (!$configs) {
+	if (version_compare(PHP_VERSION, '7.0.0', '<=')) {
+	    $configs[] = __DIR__ . '/coding-standard-php56.yml';
+	} elseif (version_compare(PHP_VERSION, '7.1.0', '<=')) {
+	    $configs[] = __DIR__ . '/coding-standard-php70.yml';
+	} else {
+	    $configs[] = __DIR__ . '/coding-standard-php71.yml';
+	}
+}
 
 /**
  * @param string[] $configs
