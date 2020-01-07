@@ -3,8 +3,8 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.1",
-		"symplify/easy-coding-standard": "6.1.0",
-		"symplify/coding-standard": "6.1.0",
+		"symplify/easy-coding-standard": "^6.1.0",
+		"symplify/coding-standard": "^6.1.0",
 		"slevomat/coding-standard": "^5.0.4"
 	},
 	"require-dev": {
