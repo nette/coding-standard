@@ -1,9 +1,17 @@
 parameters:
     indentation: tab
 
-services:
-    Nette\CodingStandard\Finder\SourceProvider: ~
+    file_extensions:
+        - php
+        - phpt
 
+    exclude_files:
+        - fixtures/*
+        - fixtures*/*
+        - temp/*
+        - tmp/*
+
+services:
     # Checkers bellow aim on 1:1 copy of https://nette.org/en/coding-standard
 
     # General rules - https://nette.org/en/coding-standard#toc-general-rules
