@@ -147,7 +147,9 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	$services->set(PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer::class);
 
 	// This sniff checks that there are two blank lines between functions declarations and single between signatures.
-	$services->set(Nette\CodingStandard\Sniffs\WhiteSpace\FunctionSpacingSniff::class);
+	$services->set(Nette\CodingStandard\Sniffs\WhiteSpace\FunctionSpacingSniff::class)
+		->property('spacingBeforeFirst', 0)
+		->property('spacingAfterLast', 0);
 
 
 	// Classes - https://nette.org/en/coding-standard#toc-classes
