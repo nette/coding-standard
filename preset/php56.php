@@ -211,10 +211,6 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 			'elements' => ['property', 'method'],
 		]]);
 
-	// Last property and 1st method should be separated by 2 spaces
-	$services->set(Nette\CodingStandard\Fixer\ClassNotation\LastPropertyAndFirstMethodSeparationFixer::class)
-		->call('configure', [['space_count' => 2]]);
-
 
 	// Control Statements - https://nette.org/en/coding-standard#toc-control-statements
 
