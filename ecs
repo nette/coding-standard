@@ -1,105 +1,101 @@
 #!/usr/bin/env php
 <?php
 
-declare(strict_types=1);
-
+use Nette\Utils\ObjectHelpers;
 use PHP_CodeSniffer\Util\Tokens;
 use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symplify\EasyCodingStandard\Bootstrap\ConfigHasher;
+use Symplify\EasyCodingStandard\Bootstrap\ConfigShifter;
+use Symplify\SetConfigResolver\Bootstrap\InvalidSetReporter;
+use Symplify\EasyCodingStandard\Bootstrap\YamlConfigReporter;
 use Symplify\EasyCodingStandard\ChangedFilesDetector\ChangedFilesDetector;
 use Symplify\EasyCodingStandard\Console\EasyCodingStandardConsoleApplication;
 use Symplify\EasyCodingStandard\HttpKernel\EasyCodingStandardKernel;
-use Symplify\EasyCodingStandard\Set\Set;
-use Symplify\SetConfigResolver\ConfigResolver;
+use Symplify\EasyCodingStandard\Set\EasyCodingStandardSetProvider;
+use Symplify\PackageBuilder\Console\ShellCode;
+use Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory;
 use Symplify\PackageBuilder\Console\Input\InputDetector;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
+use Symplify\SetConfigResolver\Exception\SetNotFoundException;
+use Symplify\SetConfigResolver\SetAwareConfigResolver;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 // performance boost
 gc_disable();
 
 # 1. autoload
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/vendor/squizlabs/php_codesniffer/autoload.php';
 $autoloadIncluder = new AutoloadIncluder();
 $autoloadIncluder->includeCwdVendorAutoloadIfExists();
 $autoloadIncluder->autoloadProjectAutoloaderFile('/../../autoload.php');
 $autoloadIncluder->includeDependencyOrRepositoryVendorAutoloadIfExists();
 $autoloadIncluder->includePhpCodeSnifferAutoloadIfNotInPharAndInitliazeTokens();
 
+$symfonyStyleFactory = new SymfonyStyleFactory();
+$symfonyStyle = $symfonyStyleFactory->create();
+
 # 2. create container
-$configs = [];
+try {
+    $configFileInfos = [];
 
-// 1. --config CLI option or default
-$configResolver = new ConfigResolver();
-$setDirectory = __DIR__ . '/../config/set';
+    // 1. --config CLI option or default
+    $configResolver = new SetAwareConfigResolver(new EasyCodingStandardSetProvider());
 
-$input = new ArgvInput();
-$inputConfig = $configResolver->resolveFromInputWithFallback($input,
-    ['easy-coding-standard.yml', 'easy-coding-standard.yaml', 'ecs.yml', 'ecs.yaml']
-);
-if ($inputConfig) {
-    $configs[] = $inputConfig;
-}
+    $input = new ArgvInput();
+    $inputConfigFileInfo = $configResolver->resolveFromInputWithFallback($input,
+        ['easy-coding-standard.yml', 'easy-coding-standard.yaml', 'ecs.yml', 'ecs.yaml', 'ecs.php']
+    );
 
-// 2. --set CLI option
-$setInputConfig = $configResolver->resolveSetFromInputAndDirectory($input, $setDirectory);
-if ($setInputConfig) {
-    $configs[] = $setInputConfig;
-}
-
-// 3. "parameters > set" in provided yaml files
-$parameterSetsConfigs = $configResolver->resolveFromParameterSetsFromConfigFiles($configs, $setDirectory);
-if ($parameterSetsConfigs !== []) {
-    $configs = array_merge($configs, $parameterSetsConfigs);
-}
-
-/**
- * @param string[] $configs
- */
-function computeConfigHash(array $configs): string
-{
-    $hash = '';
-    foreach ($configs as $config) {
-        $hash .= md5_file($config);
+    if ($inputConfigFileInfo) {
+        $configFileInfos[] = $inputConfigFileInfo;
     }
 
-    return $hash;
-}
-
-$environment = 'prod' . md5(computeConfigHash($configs) . random_int(1, 100000));
-
-// shift input config as last, so the parameters override previous rules loaded from sets
-$mainConfigShiftedAsLast = [];
-foreach ($configs as $config) {
-    if ($config !== $inputConfig) {
-        $mainConfigShiftedAsLast[] = $config;
+    // 2. --set CLI option
+    $setInputConfig = $configResolver->resolveSetFromInput($input);
+    if ($setInputConfig) {
+        $configFileInfos[] = $setInputConfig;
     }
-}
 
-if ($inputConfig !== null) {
-    $mainConfigShiftedAsLast[] = $inputConfig;
-}
+    // 3. "parameters > set" in provided yaml files
+    $parameterSetsConfigs = $configResolver->resolveFromParameterSetsFromConfigFiles($configFileInfos);
+    if ($parameterSetsConfigs !== []) {
+        $configFileInfos = array_merge($configFileInfos, $parameterSetsConfigs);
+    }
 
-$easyCodingStandardKernel = new EasyCodingStandardKernel($environment, InputDetector::isDebug());
-if ($configs !== []) {
-    $easyCodingStandardKernel->setConfigs($mainConfigShiftedAsLast);
-}
+    $configHasher = new ConfigHasher();
+    $environment = 'prod' . md5($configHasher->computeFileInfosHash($configFileInfos) . random_int(1, 100000));
+    $configFileInfosWithInputAsLast = (new ConfigShifter())->shiftInputConfigAsLast($configFileInfos, $inputConfigFileInfo);
 
-$easyCodingStandardKernel->boot();
-$container = $easyCodingStandardKernel->getContainer();
+    (new YamlConfigReporter())->reportYamlConfig($configFileInfos);
+
+    $easyCodingStandardKernel = new EasyCodingStandardKernel($environment, InputDetector::isDebug());
+    if ($configFileInfos !== []) {
+        $easyCodingStandardKernel->setConfigs($configFileInfosWithInputAsLast);
+    }
+
+    $easyCodingStandardKernel->boot();
+    $container = $easyCodingStandardKernel->getContainer();
+} catch (SetNotFoundException $setNotFoundException) {
+    (new InvalidSetReporter())->report($setNotFoundException);
+    exit(ShellCode::ERROR);
+} catch (Throwable $throwable) {
+    $symfonyStyle = (new SymfonyStyleFactory())->create();
+    $symfonyStyle->error($throwable->getMessage());
+    exit(ShellCode::ERROR);
+}
 
 // for cache invalidation on config change
 /** @var ChangedFilesDetector $changedFilesDetector */
 $changedFilesDetector = $container->get(ChangedFilesDetector::class);
-$changedFilesDetector->setUsedConfigs($configs);
+$changedFilesDetector->setUsedConfigs($configFileInfos);
 
 /** @var Configuration $configuration */
 $configuration = $container->get(Configuration::class);
-$configuration->setFirstResolverConfig($configResolver->getFirstResolvedConfig());
+$configuration->setFirstResolvedConfigFileInfo($configResolver->getFirstResolvedConfigFileInfo());
 
 # 3. run
 $application = $container->get(EasyCodingStandardConsoleApplication::class);
 exit($application->run());
-
 
 /**
  * Inspired by https://github.com/rectorphp/rector/pull/2373/files#diff-0fc04a2bb7928cac4ae339d5a8bf67f3
@@ -134,6 +130,7 @@ final class AutoloadIncluder
 
         $this->loadIfNotLoadedYet($devOrPharVendorAutoload, __METHOD__ . '()" on line ' . __LINE__);
     }
+
     /**
      * Inspired by https://github.com/phpstan/phpstan-src/blob/e2308ecaf49a9960510c47f5a992ce7b27f6dba2/bin/phpstan#L19
      */
@@ -202,6 +199,7 @@ final class AutoloadIncluder
         if (! $this->isInPhar()) {
             # 1. autoload
             $possibleAutoloadPaths = [
+                __DIR__ . '/vendor', // fix
                 // after split package
                 __DIR__ . '/../vendor',
                 // dependency
