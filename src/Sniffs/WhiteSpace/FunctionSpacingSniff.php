@@ -78,6 +78,8 @@ class FunctionSpacingSniff implements Sniff
             return;
         }
 
+        $this->spacing = end($tokens[$stackPtr]['conditions']) === T_INTERFACE ? 1 : 2;
+
         // If the ruleset has only overridden the spacing property, use
         // that value for all spacing rules.
         if ($this->rulesetProperties === null) {
