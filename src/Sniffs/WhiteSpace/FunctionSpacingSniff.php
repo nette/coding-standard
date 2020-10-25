@@ -250,6 +250,10 @@ class FunctionSpacingSniff implements Sniff
                 $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($tokens[$prevContent]['comment_opener'] - 1), null, true);
             }
 
+            if ($tokens[$prevContent]['level'] && ($useToken = $phpcsFile->findPrevious(T_USE, $prevContent)) && $tokens[$useToken]['line'] === $tokens[$prevContent]['line'] ) {
+                $this->spacing = 1; // method after 'use'
+            }
+
             $prevLineToken = $prevContent;
 
             // Before we throw an error, check that we are not throwing an error
