@@ -23,7 +23,7 @@ script:
 notifications:
     email: false
 
-sudo: false
+dist: xenial
 
 cache:
     directories:
