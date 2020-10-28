@@ -15,10 +15,10 @@ install:
     - if [[ $COMPOSER_PROJECT != "" ]]; then composer create-project nette/coding-standard:dev-master temp/nette-coding-standard; fi
 
 script:
-    - ./ecs check examples --config coding-standard-php56.yml
-    - ./ecs check examples --config coding-standard-php70.yml
-    - ./ecs check examples --config coding-standard-php71.yml
-    - if [[ $COMPOSER_PROJECT != "" ]]; then temp/nette-coding-standard/ecs check src examples --config temp/nette-coding-standard/coding-standard-php71.yml; fi
+    - ./ecs check examples --preset php56
+    - ./ecs check examples --preset php70
+    - ./ecs check examples --preset php71
+    - if [[ $COMPOSER_PROJECT != "" ]]; then temp/nette-coding-standard/ecs check examples --preset php71; fi
 
 notifications:
     email: false

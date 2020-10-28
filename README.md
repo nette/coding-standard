@@ -15,7 +15,7 @@ This package covers **part of [official rules](https://nette.org/en/coding-stand
 
 When you open [`/examples`](/examples) directory, all files you'll see are checked by this coding standard. The code might look invalid compared to Nette code you know, but it's only because this tool doesn't check it (yet).
 
-All **general rules** you can find in [`coding-standard-php56.yml`](/coding-standard-php56.yml) file.
+All **general rules** you can find in [`preset/php56.php`](/preset/php56.php) file.
 
 
 ## Install and Use
@@ -32,13 +32,13 @@ composer create-project nette/coding-standard nette-coding-standard
 Check coding standard:
 
 ```bash
-nette-coding-standard/ecs check src tests --config nette-coding-standard/coding-standard-php56.yml
+nette-coding-standard/ecs check src tests --preset php71
 ```
 
 And fix it:
 
 ```bash
-nette-coding-standard/ecs check src tests --config nette-coding-standard/coding-standard-php56.yml --fix
+nette-coding-standard/ecs check src tests --preset php71 --fix
 ```
 
 ### Travis Setup
@@ -49,5 +49,5 @@ install:
     - composer create-project nette/coding-standard temp/nette-coding-standard
 
 script:
-    - temp/nette-coding-standard/ecs check src tests --config temp/nette-coding-standard/coding-standard-php56.yml
+    - temp/nette-coding-standard/ecs check src tests --preset php71
 ```
