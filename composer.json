@@ -11,9 +11,7 @@
 		"tracy/tracy": "^2.5"
 	},
 	"autoload": {
-		"psr-4": {
-			"Nette\\CodingStandard\\": "src"
-		}
+		"classmap": ["src/"]
 	},
 	"extra": {
 		"branch-alias": {
