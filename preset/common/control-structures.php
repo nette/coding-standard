@@ -30,8 +30,9 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	$services->set(SlevomatCodingStandard\Sniffs\ControlStructures\NewWithoutParenthesesSniff::class);
 
 	// Ternary operator has to be reformatted to more lines when the line length exceeds the given limit.
-	$services->set(SlevomatCodingStandard\Sniffs\ControlStructures\RequireMultiLineTernaryOperatorSniff::class)
-		->property('lineLengthLimit', 90);
+	$services->set(Nette\SlevomatCodingStandard\Sniffs\ControlStructures\RequireMultiLineTernaryOperatorSniff::class)
+		->property('lineLengthLimit', 90)
+		->property('expressionsMinLength', 20);
 
 	// Enforces conditions of if, elseif, while and do-while with one or more boolean operators to be splitted to more lines so each condition part is on its own line
 	$services->set(SlevomatCodingStandard\Sniffs\ControlStructures\RequireMultiLineConditionSniff::class);
