@@ -154,22 +154,18 @@ SAMPLE
             }
 
             $meaningfulTokenBeforeParenthesis = $tokens[$tokens->getPrevMeaningfulToken($index)];
-            if (
-                $meaningfulTokenBeforeParenthesis->isKeyword()
-                && !$meaningfulTokenBeforeParenthesis->isGivenKind($expectedTokens)
-            ) {
-                continue;
-            }
+            
+            if ($meaningfulTokenBeforeParenthesis->isGivenKind(T_STRING)) {
+				$isMultiline = $this->fixFunction($tokens, $index);
 
-            $isMultiline = $this->fixFunction($tokens, $index);
-
-            if (
-                $isMultiline
-                && 'ensure_fully_multiline' === $this->configuration['on_multiline']
-                && !$meaningfulTokenBeforeParenthesis->isGivenKind(T_LIST)
-            ) {
-                $this->ensureFunctionFullyMultiline($tokens, $index);
-            }
+				if (
+					$isMultiline
+					&& 'ensure_fully_multiline' === $this->configuration['on_multiline']
+					&& !$meaningfulTokenBeforeParenthesis->isGivenKind(T_LIST)
+				) {
+					$this->ensureFunctionFullyMultiline($tokens, $index);
+				}
+			}
         }
     }
 
