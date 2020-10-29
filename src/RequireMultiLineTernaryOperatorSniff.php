@@ -35,6 +35,9 @@ class RequireMultiLineTernaryOperatorSniff implements Sniff
 	/** @var int */
 	public $lineLengthLimit = 0;
 
+	/** @var int|null */
+	public $expressionsMinLength = null;
+
 	/**
 	 * @return array<int, (int|string)>
 	 */
@@ -73,7 +76,11 @@ class RequireMultiLineTernaryOperatorSniff implements Sniff
 				[T_CLOSE_TAG, T_SEMICOLON, T_COMMA, T_DOUBLE_ARROW, T_CLOSE_SHORT_ARRAY, T_COALESCE],
 				true
 			)) {
-				break;
+				$parenthesis = $tokens[$pointerAfterInlineElseEnd]['nested_parenthesis'] ?? [];
+				$lastParenthesis = array_slice($parenthesis, -1, 1, true);
+				if (!$lastParenthesis || key($lastParenthesis) < $inlineElsePointer) {
+					break;
+				}
 			}
 
 			if (
@@ -103,6 +110,14 @@ class RequireMultiLineTernaryOperatorSniff implements Sniff
 		$actualLineLength = strlen(TokenHelper::getContent($phpcsFile, $endOfLineBeforeInlineThenPointer + 1, $pointerAfterInlineElseEnd));
 
 		if ($actualLineLength <= $lineLengthLimit) {
+			return;
+		}
+
+		$expressionsLength = strlen(TokenHelper::getContent($phpcsFile, $inlineThenPointer + 1, $pointerAfterInlineElseEnd));
+
+		if ($this->expressionsMinLength !== null
+			&& SniffSettingsHelper::normalizeInteger($this->expressionsMinLength) >= $expressionsLength
+		) {
 			return;
 		}
 
