@@ -31,5 +31,66 @@ trim(
 2
 );
 
+trim(
+		'hfklasdehfgisdgfkljhsnettefsedhgfsdghflskdhfsdlhfgldkshsdfhgsdlkfh',
+415645646548746845646545646546
+);
 
 test( fn( $a ) :x=>$a + 2 );
+
+
+func($a 
+? $b 
+: $c
+);
+
+
+func($a && ($a
+? $b 
+: $c) && $c, $d
+);
+
+
+if($a && ($a
+? $b
+: $c) && $c
+) {echo 1;}
+
+
+
+if ($this->lastAttrValue === '' && $this->context && Helpers::startsWith($this->context, self::CONTEXT_HTML_ATTRIBUTE)) {
+	x();
+}
+
+if ($tokens->isNext() && (!$tokens->isNext($tokens::T_CHAR) || $tokens->isNext('hfklasdehfgisdgfkljhsnettefsedhgfsdghflskdhf', '\\'))) {
+	x();
+}
+
+if (
+	$tokens->isNext()
+	&& ($tokens->isNext($tokens::T_CHAR)
+		|| $tokens->isNext('hfklasdehfgisdgfkljhsnettefsedhgfsdghflskdhf', '\\'))
+) {
+	x();
+}
+
+
+$s .= ($item['hfklasdehfgisdgfkljhsnettefsedhgfsdghflskdhfsdlhfgldkshsdfhgsdlkfh']
+		? (
+			$a . $b
+		)
+		: ($line
+			? trim($line)
+			: $item
+		)
+	);
+
+$s .= fnc($item['hfklasdehfgisdgfkljhsnettefsedhgfsdghflskdhfsdlhfgldkshsdfhgsdlkfh']
+		? (
+			$a . $b
+		)
+		: ($line
+			? trim($line)
+			: $item
+		)
+	);
