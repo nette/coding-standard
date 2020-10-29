@@ -73,7 +73,7 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	// FUNCTION
 
 	// In the argument list, there must be one space after each comma, and there must no be a space before each comma
-	$services->set(PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer::class)
+	$services->set(Nette\PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer::class)
 		->call('configure', [[
 			//'on_multiline' => 'ensure_fully_multiline', ovlivnuje i zavorky
 		]]);
