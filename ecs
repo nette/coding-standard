@@ -38,7 +38,7 @@ gc_disable();
 
 # 1. autoload
 $autoloadIncluder = new AutoloadIncluder();
-$autoloadIncluder->includeCwdVendorAutoloadIfExists();
+//$autoloadIncluder->includeCwdVendorAutoloadIfExists();
 $autoloadIncluder->autoloadProjectAutoloaderFile('/../../autoload.php');
 $autoloadIncluder->includeDependencyOrRepositoryVendorAutoloadIfExists();
 $autoloadIncluder->includePhpCodeSnifferAutoloadIfNotInPharAndInitliazeTokens();
