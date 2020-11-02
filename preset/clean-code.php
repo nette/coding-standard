@@ -7,6 +7,8 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 
 	$services = $containerConfigurator->services();
 
+	$services->set(PhpCsFixer\Fixer\Strict\StrictComparisonFixer::class);
+
 	// Requires ternary operator when possible
 	$services->set(SlevomatCodingStandard\Sniffs\ControlStructures\RequireTernaryOperatorSniff::class);
 
