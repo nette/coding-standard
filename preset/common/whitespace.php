@@ -15,7 +15,7 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	$services->set(PhpCsFixer\Fixer\Semicolon\SpaceAfterSemicolonFixer::class);
 
 	// Binary operators should be surrounded by at least one space.
-	$services->set(PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class);
+	//$services->set(PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class);
 
 	// Unary operators should be placed adjacent to their operands.
 	$services->set(PhpCsFixer\Fixer\Operator\UnaryOperatorSpacesFixer::class);
