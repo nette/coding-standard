@@ -19,7 +19,7 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 
 	$parameters->set(Option::PATHS, $paths ?: ['.']);
 
-	$parameters->set(Option::EXCLUDE_PATHS, [
+	$parameters->set(Option::SKIP, [
 		'fixtures/*',
 		'fixtures*/*',
 		'temp/*',
