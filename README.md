@@ -1,7 +1,7 @@
 # Check & Fix Your Code with Nette Coding Standard
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/nette/coding-standard.svg)](https://packagist.org/packages/nette/coding-standard)
-[![Build Status](https://travis-ci.org/nette/coding-standard.svg?branch=master)](https://travis-ci.org/nette/coding-standard)
+[![Tests](https://github.com/nette/coding-standard/workflows/Tests/badge.svg?branch=master)](https://github.com/nette/coding-standard/actions)
 [![Latest Stable Version](https://img.shields.io/packagist/v/nette/coding-standard.svg)](https://github.com/nette/coding-standard/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
