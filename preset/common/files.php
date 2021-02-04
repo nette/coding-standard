@@ -31,5 +31,5 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	$services->set(PhpCsFixer\Fixer\Whitespace\SingleBlankLineAtEofFixer::class);
 
 	// File name should match class name if possible.
-	$services->set(PhpCsFixer\Fixer\Basic\Psr4Fixer::class);
+	//$services->set(PhpCsFixer\Fixer\Basic\Psr4Fixer::class);
 };
