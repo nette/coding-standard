@@ -11,6 +11,9 @@
 	"require-dev": {
 		"tracy/tracy": "^2.5"
 	},
+	"conflict": {
+		"symplify/set-config-resolver": ">=9.2"
+	},
 	"autoload": {
 		"classmap": ["src/"]
 	},
