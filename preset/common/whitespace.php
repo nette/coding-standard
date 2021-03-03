@@ -98,7 +98,7 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 
 	// Arrow functions formatting
 	$services->set(SlevomatCodingStandard\Sniffs\Functions\ArrowFunctionDeclarationSniff::class);
-		//->property('spacesCountAfterKeyword', 0); // does not work with FunctionDeclarationFixer #41
+	//->property('spacesCountAfterKeyword', 0); // does not work with FunctionDeclarationFixer #41
 
 	// CLASS
 

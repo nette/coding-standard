@@ -12,4 +12,5 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	$services->set(PhpCsFixer\Fixer\Alias\SetTypeToCastFixer::class);
 	$services->set(PhpCsFixer\Fixer\LanguageConstruct\CombineConsecutiveIssetsFixer::class);
 	$services->set(PhpCsFixer\Fixer\LanguageConstruct\CombineConsecutiveUnsetsFixer::class);
+	$services->set(PhpCsFixer\Fixer\Alias\BacktickToShellExecFixer::class);
 };

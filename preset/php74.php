@@ -14,5 +14,7 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	$services->set(SlevomatCodingStandard\Sniffs\Functions\RequireArrowFunctionSniff::class);
 
 	// Requires use of numeric literal separators.
-	$services->set(SlevomatCodingStandard\Sniffs\Numbers\RequireNumericLiteralSeparatorSniff::class);
+	$services->set(SlevomatCodingStandard\Sniffs\Numbers\RequireNumericLiteralSeparatorSniff::class)
+		->property('minDigitsBeforeDecimalPoint', 7)
+		->property('minDigitsAfterDecimalPoint', 20);
 };

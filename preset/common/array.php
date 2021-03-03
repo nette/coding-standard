@@ -20,4 +20,7 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 		->call('configure', [[
 			'syntax' => 'short',
 		]]);
+
+	// $arr{} to $arr[]
+	$services->set(PhpCsFixer\Fixer\ArrayNotation\NormalizeIndexBraceFixer::class);
 };
