@@ -43,7 +43,9 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	// Class Properties
 
 	// Disallows multi property definition.
-	$services->set(SlevomatCodingStandard\Sniffs\Classes\DisallowMultiPropertyDefinitionSniff::class);
+	if (PHP_MAJOR_VERSION < 8) {
+		$services->set(SlevomatCodingStandard\Sniffs\Classes\DisallowMultiPropertyDefinitionSniff::class);
+	}
 
 	// Properties MUST not be explicitly initialized with `null`.
 	$services->set(PhpCsFixer\Fixer\ClassNotation\NoNullPropertyInitializationFixer::class);

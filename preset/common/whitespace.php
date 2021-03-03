@@ -66,7 +66,9 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	// PROPERTY
 
 	// Checks that there is a certain number of blank lines between properties
-	$services->set(SlevomatCodingStandard\Sniffs\Classes\PropertySpacingSniff::class);
+	if (PHP_MAJOR_VERSION < 8) {
+		$services->set(SlevomatCodingStandard\Sniffs\Classes\PropertySpacingSniff::class);
+	}
 
 	$services->set(SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSpacingSniff::class);
 
@@ -84,7 +86,9 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 		->property('spacingAfterLast', 0);
 
 	// Checks that there's a single space between a typehint and a parameter name and no whitespace between a nullability symbol and a typehint
-	$services->set(SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSpacingSniff::class);
+	if (PHP_MAJOR_VERSION < 8) {
+		$services->set(SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSpacingSniff::class);
+	}
 	$services->set(SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff::class);
 
 	// Spaces should be properly placed in a function declaration.
