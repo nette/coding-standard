@@ -17,7 +17,7 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 		'tests',
 	], 'is_dir');
 
-	$parameters->set(Option::PATHS, $paths ?: ['.']);
+	$parameters->set(Option::PATHS, is_dir('src') ? $paths : ['.']);
 
 	$parameters->set(Option::SKIP, [
 		'fixtures/*',
