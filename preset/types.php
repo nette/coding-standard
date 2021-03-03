@@ -14,7 +14,9 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	$services->set(SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class);
 
 	// Checks for missing property typehints in case they can be declared natively
-	$services->set(SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff::class);
+	if (PHP_MAJOR_VERSION < 8) {
+		$services->set(SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff::class);
+	}
 
 	$services->set(PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer::class);
 
