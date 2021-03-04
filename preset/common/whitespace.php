@@ -94,11 +94,11 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	$services->set(SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff::class);
 
 	// Spaces should be properly placed in a function declaration.
-	$services->set(PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer::class);
+	$services->set(Nette\PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer::class);
 
 	// Arrow functions formatting
-	$services->set(SlevomatCodingStandard\Sniffs\Functions\ArrowFunctionDeclarationSniff::class);
-	//->property('spacesCountAfterKeyword', 0); // does not work with FunctionDeclarationFixer #41
+	$services->set(SlevomatCodingStandard\Sniffs\Functions\ArrowFunctionDeclarationSniff::class)
+		->property('spacesCountAfterKeyword', 0); // does not work with original FunctionDeclarationFixer #41
 
 	// CLASS
 

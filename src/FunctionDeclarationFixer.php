@@ -166,6 +166,8 @@ $f = fn () => null;
                 $tokens->clearAt($startParenthesisIndex - 1);
             }
 
+            $this->configuration['closure_function_spacing'] = $token->isGivenKind(T_FN) ? self::SPACING_NONE : self::SPACING_ONE; // fix
+
             if ($isLambda && self::SPACING_NONE === $this->configuration['closure_function_spacing']) {
                 // optionally remove whitespace after T_FUNCTION of a closure
                 // eg: `function () {}` => `function() {}`
