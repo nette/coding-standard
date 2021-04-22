@@ -62,7 +62,7 @@ try {
     	$json = @json_decode(file_get_contents($composerFile));
     	if (preg_match('#(\d+\.\d+)#', $json->require->php ?? '', $m)) {
     		$requiredPhpVersion = $m[1];
-    		$presetVersions = ['7.4', '7.3', '7.1', '7.0', '5.6'];
+    		$presetVersions = ['8.0', '7.4', '7.3', '7.1', '7.0', '5.6'];
     		foreach ($presetVersions as $presetVersion) {
     			if (version_compare($requiredPhpVersion, $presetVersion, '>=')) {
 					$inputConfigFileInfo = new SmartFileInfo(PRESET_DIR . '/php' . str_replace('.', '', $presetVersion) . '.php');
