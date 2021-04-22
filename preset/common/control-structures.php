@@ -41,7 +41,8 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	$services->set(PhpCsFixer\Fixer\ClassNotation\SelfAccessorFixer::class);
 
 	// Class names should be referenced via ::class constant when possible
-	$services->set(SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff::class);
+	$services->set(SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff::class)
+		->property('enableOnObjects', false);
 
 	// Function defined by PHP should be called using the correct casing
 	$services->set(PhpCsFixer\Fixer\Casing\NativeFunctionCasingFixer::class);

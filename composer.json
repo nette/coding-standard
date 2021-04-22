@@ -5,7 +5,7 @@
 		"php": "^7.2 || ^8.0",
 		"symplify/easy-coding-standard": "^9.0",
 		"symplify/coding-standard": "^9.0",
-		"slevomat/coding-standard": "^6",
+		"slevomat/coding-standard": "^7",
 		"drew/debug-statements-fixers": "^0.5.0"
 	},
 	"require-dev": {
