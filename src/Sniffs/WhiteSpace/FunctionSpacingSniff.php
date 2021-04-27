@@ -121,6 +121,14 @@ class FunctionSpacingSniff implements Sniff
             // Skip past function docblocks.
             $prev = $phpcsFile->findPrevious($ignore, ($tokens[$prev]['comment_opener'] - 1), null, true);
         }
+        if ($tokens[$prev]['code'] === T_ATTRIBUTE_END) {
+            // Skip past attibute.
+            $prev = $phpcsFile->findPrevious(T_ATTRIBUTE, ($tokens[$prev]['attribute_opener'] - 1), null, true);
+        }
+        if ($tokens[$prev]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+            // Skip past function docblocks.
+            $prev = $phpcsFile->findPrevious($ignore, ($tokens[$prev]['comment_opener'] - 1), null, true);
+        }
 
         if ($tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET) {
             $isFirst = true;
