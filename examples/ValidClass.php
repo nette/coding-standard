@@ -38,12 +38,15 @@ class ValidClass
 	}
 
 
+	#[Attribute]
 	public function validMethod()
 	{
 		return true;
 	}
 
 
+	/** doc */
+	#[Attribute]
 	protected function anotherMethod($someArgument, $anotherArgument)
 	{
 		$sum = $someArgument + $anotherArgument;
@@ -51,6 +54,8 @@ class ValidClass
 	}
 
 
+	#[Attribute]
+	/** doc */
 	private function internalMethod()
 	{
 	}
