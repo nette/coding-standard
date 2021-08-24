@@ -11,7 +11,7 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 
 	$services->set(Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer::class)
 		->call('configure', [[
-			'elements' => PHP_MAJOR_VERSION < 8 ? ['const', 'property', 'method'] : ['const', 'method'],
+			'elements' => ['const', 'property', 'method'],
 		]]);
 
 	// short list() syntax []
