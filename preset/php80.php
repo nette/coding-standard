@@ -10,4 +10,7 @@ return function (Symfony\Component\DependencyInjection\Loader\Configurator\Conta
 	// Class names should be referenced via ::class constant when possible
 	$services->set(SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff::class)
 		->property('enableOnObjects', true);
+
+	// Commas after the last parameter in function or method declaration
+	$services->set(SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInDeclarationSniff::class);
 };
