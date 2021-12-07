@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ruleset name="Clean code" namespace="Nette">
+	<!-- Requires ternary operator when possible -->
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator"/>
+
+	<!-- Requires use of early exit -->
+	<!--<rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit">
+		<properties>
+			<property name="ignoreStandaloneIfInScope" value="true"/>
+			<property name="ignoreTrailingIfWithOneInstruction" value="true"/>
+		</properties>
+	</rule> -->
+
+	<rule ref="SlevomatCodingStandard.PHP.DisallowDirectMagicInvokeCall"/>
+
+	<!-- naming -->
+	<rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
+	<rule ref="SlevomatCodingStandard.Classes.SuperfluousErrorNaming"/>
+	<rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
+	<rule ref="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/>
+</ruleset>

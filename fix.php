@@ -100,5 +100,32 @@ passthru(
 $ok = !$code;
 
 
+// PHP CodeSniffer
+if (substr($preset, 0, 3) === 'php' && is_file($presetFile = "$root/ncs.xml")) {
+	echo "used $presetFile\n";
+	$orig = file_get_contents($presetFile);
+	file_put_contents($presetFile, str_replace('ref="$presets/', 'ref="' . __DIR__ . '/preset-sniffer/', $orig));
+} else {
+	$presetFile = __DIR__ . "/preset-sniffer/$preset.xml";
+}
+
+passthru(
+	'php ' . escapeshellarg($vendorDir . '/squizlabs/php_codesniffer/bin/' . ($dry ? 'phpcs' : 'phpcbf'))
+	. ' -s' // show sniff codes, works only in dry mode :-(
+	. ' -p' // progress
+	. (preg_match('~php(\d)(\d)~', $preset, $m) ? " --runtime-set php_version $m[1]0$m[2]00" : '')
+	. ' --colors'
+	. ' --extensions=php,phpt'
+	. ' --no-cache'
+	. ' --standard=' . escapeshellarg($presetFile)
+	. ' --file-list=' . escapeshellarg($fileList),
+	$code
+);
+$ok = $ok && !$code;
+
+if (isset($orig)) {
+	file_put_contents($presetFile, $orig);
+}
+
 // exit
 exit($ok ? 0 : 1);

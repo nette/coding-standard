@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ruleset name="PHP 7.3" namespace="Nette">
+	<rule ref="./php72.xml"/>
+
+	<!-- enforces trailing commas in multi-line calls -->
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
+</ruleset>

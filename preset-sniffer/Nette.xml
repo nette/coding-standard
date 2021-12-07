@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<ruleset name="Nette" namespace="Nette">
+<!--
+https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties
+https://github.com/slevomat/coding-standard
+-->
+
+	<!-- disallow group use declarations use FooLibrary\Bar\Baz\{ ClassA, ClassB, ClassC, ClassD as Fizbo } -->
+	<rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
+
+	<!-- Disallows leading backslash in use statement: use \Foo\Bar; -->
+	<rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+
+	<!-- Looks for unused imports from other namespaces. -->
+	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+		<properties>
+			<property name="searchAnnotations" value="yes"/>
+			<property name="ignoredAnnotationNames" type="array">
+				<element value="@persistent"/>
+				<element value="@crossOrigin"/>
+				<element value="@testCase"/>
+				<element value="@inject"/>
+			</property>
+			<property name="ignoredAnnotations" type="array">
+				<element value="@internal"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
+
+	<!-- Prohibits uses from the same namespace: -->
+	<rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
+
+
+	<!-- WHITESPACE -->
+
+	<!-- A single space or none should be between cast and variable (int) $val -->
+	<rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
+
+	<!-- Checks that there is a certain number of blank lines between properties -->
+	<rule ref="SlevomatCodingStandard.Classes.PropertySpacing"/>
+
+	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHintSpacing"/>
+
+	<!-- This sniff checks that there are two blank lines between functions declarations and single between signatures. -->
+	<rule ref="../../src/Sniffs/WhiteSpace/FunctionSpacingSniff.php">
+		<properties>
+			<property name="spacingBeforeFirst" value="0"/>
+			<property name="spacingAfterLast" value="0"/>
+		</properties>
+	</rule>
+
+	<!-- Checks that there's a single space between a typehint and a parameter name and no whitespace between a nullability symbol and a typehint -->
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
+
+	<!-- Arrow functions formatting -->
+	<rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
+		<properties>
+			<property name="spacesCountAfterKeyword" value="0"/> <!-- does not work with original FunctionDeclarationFixer #41 -->
+		</properties>
+	</rule>
+
+	<!-- Enforces configurable number of lines before first use, after last use and between two use statements. -->
+	<rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing">
+		<properties>
+			<property name="linesCountBeforeFirstUse" value="0"/>
+			<property name="linesCountAfterLastUseWhenLastInClass" value="0"/>
+		</properties>
+	</rule>
+
+	<!-- Checks that there is a certain number of blank lines between constants. -->
+	<rule ref="SlevomatCodingStandard.Classes.ConstantSpacing"/>
+
+
+	<!-- CONTROL STRUCTURES -->
+
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireShortTernaryOperator"/>
+
+	<rule ref="SlevomatCodingStandard.Operators.RequireCombinedAssignmentOperator"/>
+
+	<!-- checks and fixes language construct used with parentheses. -->
+	<rule ref="SlevomatCodingStandard.ControlStructures.LanguageConstructWithParentheses"/>
+
+	<!-- Reports new with useless parentheses. -->
+	<rule ref="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
+
+	<!-- Ternary operator has to be reformatted to more lines when the line length exceeds the given limit. -->
+	<rule ref="../../src/RequireMultiLineTernaryOperatorSniff.php">
+		<properties>
+			<property name="lineLengthLimit" value="90"/>
+			<property name="expressionsMinLength" value="20"/>
+		</properties>
+	</rule>
+
+	<!-- Enforces conditions of if, elseif, while and do-while with one or more boolean operators to be splitted to more lines so each condition part is on its own line -->
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireMultiLineCondition"/>
+
+	<!-- Class names should be referenced via ::class constant when possible -->
+	<rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
+		<properties>
+			<property name="enableOnObjects" value="false"/>
+		</properties>
+	</rule>
+
+	<!-- Enforces using shorthand scalar typehint variants in phpDocs: `int` instead of `integer` and `bool` instead of `boolean` -->
+	<rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
+
+	<rule ref="SlevomatCodingStandard.TypeHints.NullTypeHintOnLastPosition"/>
+
+	<!-- changes if (1 === $cond) to if ($cond === 1) -->
+	<rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
+
+
+	<!-- DEAD CODE -->
+
+	<!-- Looks for useless parameter default value. -->
+	<rule ref="SlevomatCodingStandard.Functions.UselessParameterDefaultValue"/>
+
+	<!-- This sniff finds unreachable catch blocks -->
+	<rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
+
+
+	<!-- DOCBLOCK -->
+
+	<!-- Require comments with single-line content to be written as one-liners -->
+	<rule ref="SlevomatCodingStandard.Commenting.RequireOneLinePropertyDocComment"/>
+
+	<!-- Checks for useless doc comments. If the native method declaration contains everything -->
+	<rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
+	<rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
+
+
+	<!-- CLASSES -->
+
+	<!-- Prohibits multiple traits separated by commas in one use statement. -->
+	<rule ref="SlevomatCodingStandard.Classes.TraitUseDeclaration"/>
+
+	<!-- Reports useless @var annotation (or whole documentation comment) for constants because the type of constant is always clear -->
+	<rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
+
+	<!-- Disallows multi property definition. -->
+	<rule ref="SlevomatCodingStandard.Classes.DisallowMultiPropertyDefinition"/>
+
+	<!-- Enforces method signature to be splitted to more lines so each parameter is on its own line. -->
+	<rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature"/>
+</ruleset>
