@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 
-This is set of [sniff](https://github.com/squizlabs/PHP_CodeSniffer) and [fixers](https://github.com/FriendsOfPHP/PHP-CS-Fixer) combined under [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard) that **checks and fixes** your PHP code against [Coding Standard in Documentation](https://nette.org/en/coding-standard).
+This is set of [sniff](https://github.com/squizlabs/PHP_CodeSniffer) and [fixers](https://github.com/FriendsOfPHP/PHP-CS-Fixer) that **checks and fixes** your PHP code against [Coding Standard in Documentation](https://nette.org/en/coding-standard).
 
 
 ## What Rules are Covered?
