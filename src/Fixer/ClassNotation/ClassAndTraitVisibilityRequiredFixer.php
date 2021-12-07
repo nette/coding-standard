@@ -55,4 +55,10 @@ final class ClassAndTraitVisibilityRequiredFixer extends AbstractFixer implement
 		$method->setAccessible(true);
 		$method->invoke($this->visibilityRequiredFixer, $file, $tokens);
 	}
+
+
+    public function getName()
+    {
+    	return 'Nette/' . parent::getName();
+    }
 }

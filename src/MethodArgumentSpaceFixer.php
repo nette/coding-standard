@@ -504,4 +504,10 @@ SAMPLE
     {
         return $token->isWhitespace() && false !== strpos($token->getContent(), "\n");
     }
+
+
+    public function getName()
+    {
+    	return 'Nette/' . parent::getName();
+    }
 }

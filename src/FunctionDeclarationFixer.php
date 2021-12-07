@@ -216,4 +216,10 @@ $f = fn () => null;
             $tokens->clearAt($start + 1);
         }
     }
+
+
+    public function getName()
+    {
+    	return 'Nette/' . parent::getName();
+    }
 }

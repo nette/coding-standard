@@ -1072,4 +1072,10 @@ class Foo
 
         return $siblingIndex;
     }
+
+
+    public function getName()
+    {
+    	return 'Nette/' . parent::getName();
+    }
 }
