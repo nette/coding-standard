@@ -24,7 +24,7 @@ return [
 	'lowercase_keywords' => true,
 
 	// The PHP constants `true`, `false`, and `null` MUST be in lower case
-	'lowercase_constants' => true,
+	'constant_case' => ['case' => 'lower'],
 
 	// Cast should be written in lower case.
 	'lowercase_cast' => true,

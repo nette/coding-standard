@@ -10,7 +10,7 @@ return [
 	'whitespace_after_comma_in_array' => true,
 
 	// commas
-	'trailing_comma_in_multiline_array' => true,
+	'trailing_comma_in_multiline' => ['elements' => ['arrays']],
 	'no_trailing_comma_in_singleline_array' => true,
 
 	'array_syntax' => ['syntax' => 'short'],
