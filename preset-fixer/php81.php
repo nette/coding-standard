@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-$config = require __DIR__ . '/php72.php';
+$config = require __DIR__ . '/php80.php';
 
 $rules = [
-	'@PHP73Migration' => true,
+	'@PHP81Migration' => true,
 ];
 
 $config->setRules($rules + $config->getRules());

@@ -17,7 +17,6 @@ $rules = [
 	'no_unset_on_property' => true,
 
 	// reformat
-	'Nette/braces' => ['allow_single_line_closure' => true],
 	'no_whitespace_in_blank_line' => true,
 	'no_trailing_whitespace' => true,
 ];

@@ -10,4 +10,10 @@ return [
 	'combine_consecutive_issets' => true,
 	'combine_consecutive_unsets' => true,
 	'backtick_to_shell_exec' => true,
+
+	// Functions should be used with `$strict` param set to `true`
+	'strict_param' => true,
+
+	// replaces is_null(parameter) expression with `null === parameter`.
+	'is_null' => true,
 ];
