@@ -12,6 +12,7 @@ $config->registerCustomFixers([
 	new Nette\PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer,
 	new Nette\PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer,
 ]);
+$config->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers);
 $config->setUsingCache(false);
 $config->setIndent("\t");
 $config->setLineEnding(PHP_EOL);

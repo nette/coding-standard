@@ -185,4 +185,7 @@ return [
 
 	// Properties MUST not be explicitly initialized with `null`.
 	'no_null_property_initialization' => true,
+
+	// Constructor having promoted properties must have them in separate lines
+	PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer::name() => true,
 ];

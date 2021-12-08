@@ -16,4 +16,13 @@ return [
 
 	// replaces is_null(parameter) expression with `null === parameter`.
 	'is_null' => true,
+
+	// The configured functions must be commented out
+	PhpCsFixerCustomFixers\Fixer\CommentedOutFunctionFixer::name() => ['print_r', 'var_dump', 'var_export', 'dump'],
+
+	// Classes defined internally by extension or core must be referenced with the correct case
+	PhpCsFixerCustomFixers\Fixer\InternalClassCasingFixer::name() => true,
+
+	// Classes in the global namespace cannot contain leading slashes
+	PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer::name() => true,
 ];
