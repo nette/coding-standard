@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Nette\SlevomatCodingStandard\Sniffs\ControlStructures;
+namespace NetteSlevomatCodingStandard\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;

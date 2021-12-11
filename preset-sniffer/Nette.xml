@@ -44,7 +44,7 @@ https://github.com/slevomat/coding-standard
 	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHintSpacing"/>
 
 	<!-- This sniff checks that there are two blank lines between functions declarations and single between signatures. -->
-	<rule ref="../src/Sniffs/WhiteSpace/FunctionSpacingSniff.php">
+	<rule ref="../src/Sniffs/FunctionSpacingSniff.php">
 	<!-- is ignored...
 		<properties>
 			<property name="spacingBeforeFirst" value="0"/>
@@ -88,7 +88,7 @@ https://github.com/slevomat/coding-standard
 	<rule ref="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
 
 	<!-- Ternary operator has to be reformatted to more lines when the line length exceeds the given limit. -->
-	<rule ref="../src/RequireMultiLineTernaryOperatorSniff.php">
+	<rule ref="../src/Sniffs/RequireMultiLineTernaryOperatorSniff.php">
 	<!-- is ignored...
 		<properties>
 			<property name="lineLengthLimit" value="90"/>

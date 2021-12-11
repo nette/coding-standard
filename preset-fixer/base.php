@@ -7,10 +7,10 @@ $files = array_map(fn($path) => new SplFileInfo($path), $files);
 
 $config = new PhpCsFixer\Config;
 $config->registerCustomFixers([
-	new Nette\CodingStandard\Fixer\Basic\BracesFixer,
-	new Nette\CodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer,
-	new Nette\PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer,
-	new Nette\PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer,
+	new NetteCodingStandard\Fixer\Basic\BracesFixer,
+	new NetteCodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer,
+	new NetteCodingStandard\Fixer\FunctionNotation\MethodArgumentSpaceFixer,
+	new NetteCodingStandard\Fixer\FunctionNotation\FunctionDeclarationFixer,
 ]);
 $config->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers);
 $config->setUsingCache(false);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Nette\CodingStandard\Fixer\ClassNotation;
+namespace NetteCodingStandard\Fixer\ClassNotation;
 
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer;
