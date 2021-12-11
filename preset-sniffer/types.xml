@@ -1,14 +1,37 @@
 <?xml version="1.0"?>
 <ruleset name="Types" namespace="Nette">
-	<!-- Checks for missing parameter typehints in case they can be declared natively -->
-	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
+		<properties>
+			<property name="traversableTypeHints" type="array">
+				<element value="Traversable"/>
+			</property>
+		</properties>
+	</rule>
 
-	<!-- Checks for missing return typehints in case they can be declared natively -->
-	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
+		<properties>
+			<property name="traversableTypeHints" type="array">
+				<element value="Traversable"/>
+			</property>
+		</properties>
+	</rule>
 
-	<!-- Checks for missing property typehints in case they can be declared natively -->
-	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint"/>
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
+		<properties>
+			<property name="traversableTypeHints" type="array">
+				<element value="Traversable"/>
+			</property>
+		</properties>
+	</rule>
 
 	<!-- reformat -->
-	<rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
+	<rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment">
+		<properties>
+			<property name="traversableTypeHints" type="array">
+				<element value="Traversable"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
 </ruleset>
