@@ -33,10 +33,10 @@ class RequireMultiLineTernaryOperatorSniff implements Sniff
 	private const SPACES_INDENT = '    ';
 
 	/** @var int */
-	public $lineLengthLimit = 0;
+	public $lineLengthLimit = 90;
 
 	/** @var int|null */
-	public $expressionsMinLength = null;
+	public $expressionsMinLength = 20;
 
 	/**
 	 * @return array<int, (int|string)>

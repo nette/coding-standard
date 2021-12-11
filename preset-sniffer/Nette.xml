@@ -44,11 +44,12 @@ https://github.com/slevomat/coding-standard
 	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHintSpacing"/>
 
 	<!-- This sniff checks that there are two blank lines between functions declarations and single between signatures. -->
-	<rule ref="../../src/Sniffs/WhiteSpace/FunctionSpacingSniff.php">
+	<rule ref="../src/Sniffs/WhiteSpace/FunctionSpacingSniff.php">
+	<!-- is ignored...
 		<properties>
 			<property name="spacingBeforeFirst" value="0"/>
 			<property name="spacingAfterLast" value="0"/>
-		</properties>
+		</properties> -->
 	</rule>
 
 	<!-- Checks that there's a single space between a typehint and a parameter name and no whitespace between a nullability symbol and a typehint -->
@@ -87,11 +88,12 @@ https://github.com/slevomat/coding-standard
 	<rule ref="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
 
 	<!-- Ternary operator has to be reformatted to more lines when the line length exceeds the given limit. -->
-	<rule ref="../../src/RequireMultiLineTernaryOperatorSniff.php">
+	<rule ref="../src/RequireMultiLineTernaryOperatorSniff.php">
+	<!-- is ignored...
 		<properties>
 			<property name="lineLengthLimit" value="90"/>
 			<property name="expressionsMinLength" value="20"/>
-		</properties>
+		</properties> -->
 	</rule>
 
 	<!-- Enforces conditions of if, elseif, while and do-while with one or more boolean operators to be splitted to more lines so each condition part is on its own line -->
