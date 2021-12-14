@@ -9,6 +9,7 @@ return [
 	'single_line_after_imports' => false, // Nette uses two empty lines
 	'blank_line_after_namespace' => false,
 	'ordered_imports' => true, // Use statements are alphabetically ordered
+	'blank_line_between_import_groups' => false,
 
 	// overriden rules
 	'braces' => false,
