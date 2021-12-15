@@ -1,53 +1,47 @@
-# Check & Fix Your Code with Nette Coding Standard
+# Nette Coding Standard code checker & fixer
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/nette/coding-standard.svg)](https://packagist.org/packages/nette/coding-standard)
-[![Tests](https://github.com/nette/coding-standard/workflows/Tests/badge.svg?branch=master)](https://github.com/nette/coding-standard/actions)
 [![Latest Stable Version](https://img.shields.io/packagist/v/nette/coding-standard.svg)](https://github.com/nette/coding-standard/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 
-This is set of [sniff](https://github.com/squizlabs/PHP_CodeSniffer) and [fixers](https://github.com/FriendsOfPHP/PHP-CS-Fixer) that **checks and fixes** your PHP code against [Coding Standard in Documentation](https://nette.org/en/coding-standard).
+This is set of [sniffs](https://github.com/squizlabs/PHP_CodeSniffer) and [fixers](https://github.com/FriendsOfPHP/PHP-CS-Fixer) that **checks and fixes** code of Nette Framework against [Coding Standard in Documentation](https://nette.org/en/coding-standard).
 
 
-## What Rules are Covered?
+## Installation and Usage
 
-This package covers **part of [official rules](https://nette.org/en/coding-standard)**, not all.
-
-When you open [`/examples`](/examples) directory, all files you'll see are checked by this coding standard. The code might look invalid compared to Nette code you know, but it's only because this tool doesn't check it (yet).
-
-All **general rules** you can find in [`preset/php56.php`](/preset/php56.php) file.
-
-
-## Install and Use
-
-
-### Local Setup
-
-Installation into global folder named `nette-coding-standard`:
+Install the tool in a global directory. Its name will be for example `/nette-cs`:
 
 ```
-composer create-project nette/coding-standard nette-coding-standard
+composer create-project nette/coding-standard /nette-cs
 ```
 
-Check coding standard:
+Check coding standard for PHP 7.1 in folders `src` and `tests`:
 
 ```bash
-nette-coding-standard/ecs check src tests --preset php71
+/nette-cs/ecs check src tests --preset php71
 ```
 
 And fix it:
 
 ```bash
-nette-coding-standard/ecs check src tests --preset php71 --fix
+/nette-cs/ecs fix src tests --preset php71
 ```
 
-### Travis Setup
+If no PHP version is specified, it will try to find out from the `composer.json` file.
+
+
+### GitHub Actions
 
 ```yaml
-# .travis.yml
-install:
-    - composer create-project nette/coding-standard temp/nette-coding-standard
+# .github/workflows/coding-style.yml
+steps:
+    - uses: actions/checkout@v2
+    - uses: shivammathur/setup-php@v2
+      with:
+          php-version: 8.0
 
-script:
-    - temp/nette-coding-standard/ecs check src tests --preset php71
+    - run: composer create-project nette/coding-standard temp/coding-standard
+    - run: php temp/coding-standard/ecs check src tests --preset php71
+
 ```
