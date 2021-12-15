@@ -14,6 +14,7 @@
 	"autoload": {
 		"classmap": ["src/"]
 	},
+	"bin": ["ecs"],
 	"extra": {
 		"branch-alias": {
 			"dev-master": "3-dev"
