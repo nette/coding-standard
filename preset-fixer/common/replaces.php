@@ -21,7 +21,7 @@ return [
 	PhpCsFixerCustomFixers\Fixer\CommentedOutFunctionFixer::name() => ['print_r', 'var_dump', 'var_export', 'dump'],
 
 	// Classes defined internally by extension or core must be referenced with the correct case
-	PhpCsFixerCustomFixers\Fixer\InternalClassCasingFixer::name() => true,
+	'class_reference_name_casing' => true,
 
 	// Classes in the global namespace cannot contain leading slashes
 	PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer::name() => true,
