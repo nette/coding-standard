@@ -3,7 +3,7 @@
 	"license": "MIT",
 	"require": {
 		"php": "^7.2 || ^8.0",
-		"slevomat/coding-standard": "^7",
+		"slevomat/coding-standard": "^8",
 		"friendsofphp/php-cs-fixer": "^3",
 		"squizlabs/php_codesniffer": "^3.6",
 		"kubawerlos/php-cs-fixer-custom-fixers": "^3.5"
