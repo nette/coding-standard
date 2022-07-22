@@ -41,7 +41,7 @@ https://github.com/slevomat/coding-standard
 	<!-- Checks that there is a certain number of blank lines between properties -->
 	<rule ref="SlevomatCodingStandard.Classes.PropertySpacing"/>
 
-	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHintSpacing"/>
+	<rule ref="SlevomatCodingStandard.Classes.PropertyDeclaration"/>
 
 	<!-- This sniff checks that there are two blank lines between functions declarations and single between signatures. -->
 	<rule ref="../src/Sniffs/FunctionSpacingSniff.php">
@@ -297,6 +297,7 @@ https://github.com/slevomat/coding-standard
 	<rule ref="SlevomatCodingStandard.PHP.ReferenceSpacing"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
 		<exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing.IncorrectLinesCountBeforeControlStructure"/>
+		<exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing.IncorrectLinesCountAfterControlStructure"/>
 		<exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing.IncorrectLinesCountBeforeFirstControlStructure"/>
 		<properties>
 			<property name="controlStructures" type="array">
