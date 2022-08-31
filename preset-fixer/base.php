@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 $files = file(__DIR__ . '/../filelist.tmp', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-$files = array_map(fn($path) => new SplFileInfo($path), $files);
+$files = array_map(function ($path) {
+	return new SplFileInfo($path);
+}, $files);
 
 $config = new PhpCsFixer\Config;
 $config->registerCustomFixers([
