@@ -180,7 +180,6 @@ https://github.com/slevomat/coding-standard
 	<rule ref="Squiz.PHP.GlobalKeyword"/>
 	<rule ref="Squiz.PHP.InnerFunctions"/>
 	<rule ref="Squiz.PHP.LowercasePHPFunctions"/>
-	<rule ref="Squiz.PHP.NonExecutableCode"/>
 	<rule ref="Squiz.Scope.StaticThisUsage"/>
 	<rule ref="Squiz.Strings.ConcatenationSpacing">
 		<properties>
