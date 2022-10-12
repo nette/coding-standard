@@ -17,8 +17,6 @@ return [
 	'single_space_after_construct' => true,
 	// The body of each control structure MUST be enclosed within braces
 	'control_structure_braces' => true,
-	// Curly braces must be placed as configured
-	'curly_braces_position' => true,
 	// Control structure continuation keyword must be on the configured line
 	'control_structure_continuation_position' => true,
 	// There must not be spaces around declare statement parentheses
@@ -28,6 +26,9 @@ return [
 
 
 	// overriden rules
+
+	// Curly braces must be placed as configured
+	'Nette/curly_braces_position' => true,
 
 	// Each statement must be indented
 	'Nette/statement_indentation' => true,

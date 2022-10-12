@@ -12,7 +12,7 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace PhpCsFixer\Fixer\Basic;
+namespace NetteCodingStandard\Fixer\Basic;
 
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
@@ -252,12 +252,14 @@ $bar = function () { $result = true;
             if (self::NEXT_LINE_UNLESS_NEWLINE_AT_SIGNATURE_END === $this->configuration[$positionOption]) {
                 $whitespace = $this->whitespacesConfig->getLineEnding().$this->getLineIndentation($tokens, $index);
 
+	            $colon = false;
                 $previousTokenIndex = $openBraceIndex;
                 do {
                     $previousTokenIndex = $tokens->getPrevMeaningfulToken($previousTokenIndex);
+                    $colon = $colon || $tokens[$previousTokenIndex]->isGivenKind([CT::T_TYPE_COLON]);
                 } while ($tokens[$previousTokenIndex]->isGivenKind([CT::T_TYPE_COLON, CT::T_NULLABLE_TYPE, T_STRING, T_NS_SEPARATOR, CT::T_ARRAY_TYPEHINT, T_STATIC, CT::T_TYPE_ALTERNATION, CT::T_TYPE_INTERSECTION]));
 
-                if ($tokens[$previousTokenIndex]->equals(')')) {
+                if (!$colon && $tokens[$previousTokenIndex]->equals(')')) {
                     if ($tokens[--$previousTokenIndex]->isComment()) {
                         --$previousTokenIndex;
                     }
@@ -425,5 +427,10 @@ $bar = function () { $result = true;
         }
 
         return $token->isComment();
+    }
+
+    public function getName(): string
+    {
+        return 'Nette/' . parent::getName();
     }
 }
