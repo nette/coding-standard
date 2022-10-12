@@ -11,11 +11,25 @@ return [
 	'ordered_imports' => true, // Use statements are alphabetically ordered
 	'blank_line_between_import_groups' => false,
 
-	// overriden rules
+	// braces split
 	'braces' => false,
-	'Nette/braces' => [
-		'allow_single_line_closure' => true,
-	],
+	// Ensures a single space after language constructs
+	'single_space_after_construct' => true,
+	// The body of each control structure MUST be enclosed within braces
+	'control_structure_braces' => true,
+	// Curly braces must be placed as configured
+	'curly_braces_position' => true,
+	// Control structure continuation keyword must be on the configured line
+	'control_structure_continuation_position' => true,
+	// There must not be spaces around declare statement parentheses
+	'declare_parentheses' => true,
+	// There must not be more than one statement per line
+	'no_multiple_statements_per_line' => true,
+	// Each statement must be indented
+	'statement_indentation' => true,
+
+
+	// overriden rules
 
 	// In the argument list, there must be one space after each comma, and there must no be a space before each comma
 	'method_argument_space' => false,
