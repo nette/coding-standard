@@ -25,11 +25,12 @@ return [
 	'declare_parentheses' => true,
 	// There must not be more than one statement per line
 	'no_multiple_statements_per_line' => true,
-	// Each statement must be indented
-	'statement_indentation' => true,
 
 
 	// overriden rules
+
+	// Each statement must be indented
+	'Nette/statement_indentation' => true,
 
 	// In the argument list, there must be one space after each comma, and there must no be a space before each comma
 	'method_argument_space' => false,

@@ -12,7 +12,7 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace PhpCsFixer\Fixer\Whitespace;
+namespace NetteCodingStandard\Fixer\Whitespace;
 
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\Indentation;
@@ -386,7 +386,7 @@ else {
                 --$currentScope;
             }
 
-            if ($token->isComment() || $token->equalsAny([';', ',', '}', [T_OPEN_TAG], [T_CLOSE_TAG], [CT::T_ATTRIBUTE_CLOSE]])) {
+            if ($token->equalsAny([';', '}', [T_OPEN_TAG], [T_CLOSE_TAG], [CT::T_ATTRIBUTE_CLOSE]])) {
                 continue;
             }
 
@@ -611,5 +611,10 @@ else {
         }
 
         return $siblingIndex;
+    }
+
+    public function getName(): string
+    {
+        return 'Nette/' . parent::getName();
     }
 }
