@@ -214,6 +214,7 @@ https://github.com/slevomat/coding-standard
 	<!-- Slevomat -->
 
 	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+	<rule ref="SlevomatCodingStandard.Attributes.RequireAttributeAfterDocComment"/>
 	<rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility">
 		<properties>
 			<property name="fixable" value="true"/>
@@ -294,6 +295,7 @@ https://github.com/slevomat/coding-standard
 	<rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable"/>
 	<rule ref="SlevomatCodingStandard.PHP.RequireNowdoc"/>
 	<rule ref="SlevomatCodingStandard.PHP.ReferenceSpacing"/>
+	<rule ref="SlevomatCodingStandard.PHP.RequireExplicitAssertion"/>
 	<rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
 		<exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing.IncorrectLinesCountBeforeControlStructure"/>
 		<exclude name="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing.IncorrectLinesCountAfterControlStructure"/>
