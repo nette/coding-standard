@@ -74,6 +74,7 @@ $finder = PhpCsFixer\Finder::create()
 	->name(['*.php', '*.phpt'])
 	->notPath([
 		'/fixtures.*/',
+		'expected',
 		'temp',
 		'tmp',
 		'vendor',
