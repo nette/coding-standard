@@ -166,6 +166,9 @@ return [
 
 	'escape_implicit_backslashes' => true,
 
+	// Convert ${..} to {$..}
+	'simple_to_complex_string_variable' => true,
+
 
 	// PHPDoc
 
