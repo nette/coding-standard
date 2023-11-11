@@ -117,6 +117,7 @@ passthru(
 	. (preg_match('~php(\d)(\d)~', $preset, $m) ? " --runtime-set php_version $m[1]0$m[2]00" : '')
 	. ' --colors'
 	. ' --extensions=php,phpt'
+	. ' --runtime-set ignore_warnings_on_exit true'
 	. ' --no-cache'
 	. ' --standard=' . escapeshellarg($presetFile)
 	. ' --file-list=' . escapeshellarg($fileList),
