@@ -28,6 +28,8 @@ set_time_limit(0);
 
 // parse arguments
 $paths = [];
+$finderFormat = 'txt';
+$snifferFormat = 'source';
 $preset = null;
 $dry = true;
 
@@ -39,7 +41,11 @@ for ($i = 1; $i < count($argv); $i++) {
 		$dry = false;
 	} elseif ($arg === 'check') {
 		// ignore
-	} else {
+	} elseif ($arg === '--finder-output-format') {
+		$finderFormat = $argv[++$i];
+	} elseif ($arg === '--sniffer-output-format') {
+		$snifferFormat = $argv[++$i];
+	}else {
 		$paths[] = $arg;
 	}
 }
@@ -85,7 +91,7 @@ $finder = PhpCsFixer\Finder::create()
 			|| version_compare(PHP_VERSION, $m[1], '>=');
 	})
 	->in($paths);
-
+	
 $fileList = __DIR__ . '/filelist.tmp';
 file_put_contents($fileList, implode("\n", iterator_to_array($finder)));
 
@@ -95,6 +101,7 @@ passthru(
 	PHP_BINARY . ' ' . escapeshellarg($vendorDir . '/friendsofphp/php-cs-fixer/php-cs-fixer')
 	. ' fix -v'
 	. ($dry ? ' --dry-run' : '')
+	. ' --format ' . $finderFormat
 	. ' --config ' . escapeshellarg(__DIR__ . "/preset-fixer/$preset.php"),
 	$code
 );
@@ -119,6 +126,7 @@ passthru(
 	. ' --extensions=php,phpt'
 	. ' --runtime-set ignore_warnings_on_exit true'
 	. ' --no-cache'
+	. ' --report=' . $snifferFormat
 	. ' --standard=' . escapeshellarg($presetFile)
 	. ' --file-list=' . escapeshellarg($fileList),
 	$code
