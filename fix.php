@@ -46,7 +46,7 @@ for ($i = 1; $i < count($argv); $i++) {
 
 
 // try to find out the PHP version from the composer.json
-$presetVersions = ['8.1', '8.0', '7.4', '7.3', '7.1'];
+$presetVersions = ['8.3', '8.2', '8.1', '8.0', '7.4', '7.3', '7.1'];
 
 
 $root = getcwd();

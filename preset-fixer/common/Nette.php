@@ -5,16 +5,14 @@ declare(strict_types=1);
 return [
 	'@PSR12' => true,
 	'@PSR12:risky' => true,
-	'new_with_braces' => false, // new stdClass
+	'new_with_parentheses' => false, // new stdClass
 	'single_line_after_imports' => false, // Nette uses two empty lines
 	'blank_line_after_namespace' => false,
-	'ordered_imports' => true, // Use statements are alphabetically ordered
+	'ordered_imports' => false, // Use statements are alphabetically ordered
 	'blank_line_between_import_groups' => false,
 
-	// braces split
-	'braces' => false,
 	// Ensures a single space after language constructs
-	'single_space_after_construct' => true,
+	'single_space_around_construct' => true,
 	// The body of each control structure MUST be enclosed within braces
 	'control_structure_braces' => true,
 	// Control structure continuation keyword must be on the configured line
@@ -23,15 +21,10 @@ return [
 	'declare_parentheses' => true,
 	// There must not be more than one statement per line
 	'no_multiple_statements_per_line' => true,
-
-
-	// overriden rules
-
 	// Curly braces must be placed as configured
-	'Nette/curly_braces_position' => true,
-
+	'braces_position' => true,
 	// Each statement must be indented
-	'Nette/statement_indentation' => true,
+	'statement_indentation' => true,
 
 	// In the argument list, there must be one space after each comma, and there must no be a space before each comma
 	'method_argument_space' => false,
@@ -106,7 +99,7 @@ return [
 	// Remove useless semicolon statements
 	'no_empty_statement' => true,
 
-	'no_unneeded_curly_braces' => true,
+	'no_unneeded_braces' => true,
 
 	// Remove trailing commas in list() calls.
 	'no_trailing_comma_in_singleline' => true,
@@ -164,7 +157,7 @@ return [
 	// Convert double quotes to single quotes for simple strings.
 	'single_quote' => true,
 
-	'escape_implicit_backslashes' => true,
+	'string_implicit_backslashes' => true,
 
 	// Convert ${..} to {$..}
 	'simple_to_complex_string_variable' => true,

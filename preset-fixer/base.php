@@ -8,9 +8,8 @@ $files = array_map(function ($path) {
 }, $files);
 
 $config = new PhpCsFixer\Config;
+$config->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect());
 $config->registerCustomFixers([
-	new NetteCodingStandard\Fixer\Whitespace\StatementIndentationFixer,
-	new NetteCodingStandard\Fixer\Basic\CurlyBracesPositionFixer,
 	new NetteCodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer,
 	new NetteCodingStandard\Fixer\FunctionNotation\MethodArgumentSpaceFixer,
 	new NetteCodingStandard\Fixer\FunctionNotation\FunctionDeclarationFixer,
