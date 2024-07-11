@@ -2,6 +2,11 @@
 <ruleset name="PHP 7.1" namespace="Nette">
 	<rule ref="./Nette.xml"/>
 
+	<!-- Fixer and Sniffer do not have the same result of sorting uses. -->
+	<rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses.IncorrectlyOrderedUses">
+		<exclude-pattern>*\.phpt?</exclude-pattern>
+	</rule>
+
 	<!-- Enforces consistent formatting of return typehints: function foo(): ?int -->
 	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
 
