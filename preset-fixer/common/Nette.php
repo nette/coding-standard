@@ -23,6 +23,10 @@ return [
 	'declare_parentheses' => true,
 	// There must not be more than one statement per line
 	'no_multiple_statements_per_line' => true,
+	// Spaces should be properly placed in a function declaration.
+	'function_declaration' => [
+		'closure_fn_spacing' => 'none',
+	],
 
 
 	// overriden rules
@@ -36,10 +40,6 @@ return [
 	// In the argument list, there must be one space after each comma, and there must no be a space before each comma
 	'method_argument_space' => false,
 	'Nette/method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
-
-	// Spaces should be properly placed in a function declaration.
-	'function_declaration' => false,
-	'Nette/function_declaration' => true,
 
 	'visibility_required' => false,
 	'Nette/class_and_trait_visibility_required' => true,
