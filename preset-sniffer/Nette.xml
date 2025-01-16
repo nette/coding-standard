@@ -74,6 +74,9 @@ https://github.com/slevomat/coding-standard
 	<!-- Checks that there is a certain number of blank lines between constants. -->
 	<rule ref="SlevomatCodingStandard.Classes.ConstantSpacing"/>
 
+	<rule ref="SlevomatCodingStandard.Functions.NamedArgumentSpacing"/>
+	
+
 
 	<!-- CONTROL STRUCTURES -->
 
@@ -324,4 +327,5 @@ https://github.com/slevomat/coding-standard
 		</properties>
 	</rule>
 	<rule ref="SlevomatCodingStandard.Functions.StrictCall"/>
+	<rule ref="SlevomatCodingStandard.Commenting.AnnotationName"/>
 </ruleset>

@@ -209,4 +209,10 @@ return [
 
 	// Constructor having promoted properties must have them in separate lines
 	PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer::name() => true,
+
+	// Use the Elvis operator ?: where possible.
+	'ternary_to_elvis_operator' => true,
+
+	// Adds or removes ? before single type declarations or |null at the end of union types when parameters have a default null value.
+	'nullable_type_declaration_for_default_null_value' => true,
 ];
