@@ -119,6 +119,7 @@ passthru(
 	. ' --extensions=php,phpt'
 	. ' --runtime-set ignore_warnings_on_exit true'
 	. ' --no-cache'
+	. ' --parallel=10'
 	. ' --standard=' . escapeshellarg($presetFile)
 	. ' --file-list=' . escapeshellarg($fileList),
 	$code
