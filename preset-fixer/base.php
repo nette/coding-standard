@@ -10,7 +10,7 @@ $files = array_map(function ($path) {
 $config = new PhpCsFixer\Config;
 $config->registerCustomFixers([
 	new NetteCodingStandard\Fixer\Whitespace\StatementIndentationFixer,
-	new NetteCodingStandard\Fixer\Basic\CurlyBracesPositionFixer,
+	new NetteCodingStandard\Fixer\Basic\BracesPositionFixer,
 	new NetteCodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer,
 	new NetteCodingStandard\Fixer\FunctionNotation\MethodArgumentSpaceFixer,
 ]);
