@@ -35,6 +35,7 @@ return [
 	'Nette/curly_braces_position' => true,
 
 	// Each statement must be indented
+	'statement_indentation' => false,
 	'Nette/statement_indentation' => true,
 
 	// In the argument list, there must be one space after each comma, and there must no be a space before each comma
