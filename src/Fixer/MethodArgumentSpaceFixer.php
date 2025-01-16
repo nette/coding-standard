@@ -161,23 +161,18 @@ final class MethodArgumentSpaceFixer extends AbstractFixer implements Configurab
             }
 
             $meaningfulTokenBeforeParenthesis = $tokens[$tokens->getPrevMeaningfulToken($index)];
+            
+            if ($meaningfulTokenBeforeParenthesis->isGivenKind(T_STRING)) {
+				$isMultiline = $this->fixFunction($tokens, $index);
 
-            if (
-                $meaningfulTokenBeforeParenthesis->isKeyword()
-                && !$meaningfulTokenBeforeParenthesis->isGivenKind($expectedTokens)
-            ) {
-                continue;
-            }
-
-            $isMultiline = $this->fixFunction($tokens, $index);
-
-            if (
-                $isMultiline
-                && 'ensure_fully_multiline' === $this->configuration['on_multiline']
-                && !$meaningfulTokenBeforeParenthesis->isGivenKind(T_LIST)
-            ) {
-                $this->ensureFunctionFullyMultiline($tokens, $index);
-            }
+				if (
+					$isMultiline
+					&& 'ensure_fully_multiline' === $this->configuration['on_multiline']
+					&& !$meaningfulTokenBeforeParenthesis->isGivenKind(T_LIST)
+				) {
+					$this->ensureFunctionFullyMultiline($tokens, $index);
+				}
+			}
         }
     }
 
@@ -506,5 +501,10 @@ final class MethodArgumentSpaceFixer extends AbstractFixer implements Configurab
     private function isNewline(Token $token): bool
     {
         return $token->isWhitespace() && str_contains($token->getContent(), "\n");
+    }
+
+    public function getName(): string
+    {
+        return 'Nette/' . parent::getName();
     }
 }
