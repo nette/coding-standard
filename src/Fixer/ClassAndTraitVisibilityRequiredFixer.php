@@ -7,17 +7,9 @@ namespace NetteCodingStandard\Fixer\ClassNotation;
 use PhpCsFixer\AbstractFixer;
 use PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\FixerConfiguration\AllowedValueSubset;
-use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
 use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
-use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
-use PhpCsFixer\FixerDefinition\CodeSample;
-use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Tokenizer\CT;
-use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
-use PhpCsFixer\Tokenizer\TokensAnalyzer;
 use ReflectionMethod;
 use SplFileInfo;
 
@@ -46,10 +38,22 @@ final class ClassAndTraitVisibilityRequiredFixer extends AbstractFixer implement
 	}
 
 
-	public function configure(array $configuration = null): void
+	public function getPriority(): int
+	{
+		return $this->visibilityRequiredFixer->getPriority();
+	}
+
+
+	public function configure(array $configuration): void
 	{
 		$this->configuration = $configuration;
 		$this->visibilityRequiredFixer->configure($configuration);
+	}
+
+
+	public function getConfigurationDefinition(): FixerConfigurationResolverInterface
+	{
+		return $this->visibilityRequiredFixer->getConfigurationDefinition();
 	}
 
 
@@ -66,8 +70,8 @@ final class ClassAndTraitVisibilityRequiredFixer extends AbstractFixer implement
 	}
 
 
-    public function getName(): string
-    {
-        return 'Nette/' . parent::getName();
-    }
+	public function getName(): string
+	{
+		return 'Nette/' . parent::getName();
+	}
 }
