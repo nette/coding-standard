@@ -32,6 +32,7 @@ return [
 	// overriden rules
 
 	// Curly braces must be placed as configured
+	'braces_position' => false,
 	'Nette/braces_position' => true,
 
 	// Each statement must be indented
