@@ -88,12 +88,11 @@ https://github.com/slevomat/coding-standard
 	<rule ref="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses"/>
 
 	<!-- Ternary operator has to be reformatted to more lines when the line length exceeds the given limit. -->
-	<rule ref="../src/Sniffs/RequireMultiLineTernaryOperatorSniff.php">
-	<!-- is ignored...
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator">
 		<properties>
 			<property name="lineLengthLimit" value="90"/>
-			<property name="expressionsMinLength" value="20"/>
-		</properties> -->
+			<property name="minExpressionsLength" value="20"/>
+		</properties>
 	</rule>
 
 	<!-- Enforces conditions of if, elseif, while and do-while with one or more boolean operators to be splitted to more lines so each condition part is on its own line -->
