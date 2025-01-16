@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="PHP 8.4" namespace="Nette">
+	<rule ref="./php83.xml"/>
+
+	<config name="php_version" value="80400"/>
+</ruleset>
