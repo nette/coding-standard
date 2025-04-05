@@ -9,9 +9,6 @@ class Checker
 {
 	private string $fileListPath;
 
-	/** @var string[] Default preset versions if detection fails */
-	private array $presetVersions = ['8.1', '8.0', '7.4', '7.3', '7.1'];
-
 
 	public function __construct(
 		private string $vendorDir,
@@ -35,20 +32,10 @@ class Checker
 				'vendor',
 			])
 			->filter(fn(SplFileInfo $file) => !preg_match('#@phpVersion\s+([0-9.]+)#i', file_get_contents((string) $file), $m)
-					|| version_compare(PHP_VERSION, $m[1], '>='))
+				|| version_compare(PHP_VERSION, $m[1], '>='))
 			->in($paths);
 
 		file_put_contents($this->fileListPath, implode("\n", iterator_to_array($finder)));
-	}
-
-
-	/**
-	 * Derives a preset name (e.g., 'php81') from a PHP version string (e.g., '8.1').
-	 */
-	public function derivePresetFromVersion(?string $phpVersion = null): string
-	{
-		$phpVersion ??= $this->detectPhpVersion() ?? end($this->presetVersions);
-		return $this->preset = 'php' . str_replace('.', '', $phpVersion);
 	}
 
 
@@ -61,7 +48,12 @@ class Checker
 		$fixerBin = $this->vendorDir . '/friendsofphp/php-cs-fixer/php-cs-fixer';
 
 		$presetPath = dirname(__DIR__) . '/preset-fixer';
-		$presetFile = "$presetPath/$this->preset.php";
+		$preset = $this->preset;
+		if ($preset === null) {
+			$preset = $this->derivePresetFromVersion($presetPath);
+			echo "Preset: $preset detected from PHP version\n";
+		}
+		$presetFile = "$presetPath/$preset.php";
 		if (!is_file($presetFile)) {
 			fwrite(STDERR, "Error: Preset configuration not found for PHP CS Fixer: {$presetFile}\n");
 			return false;
@@ -86,7 +78,12 @@ class Checker
 		$snifferBin = $this->vendorDir . '/squizlabs/php_codesniffer/bin/' . ($this->dryRun ? 'phpcs' : 'phpcbf');
 
 		$presetPath = dirname(__DIR__) . '/preset-sniffer';
-		$presetFile = "$presetPath/$this->preset.xml";
+		$preset = $this->preset;
+		if ($preset === null) {
+			$preset = $this->derivePresetFromVersion($presetPath);
+			echo "Preset: $preset detected from PHP version\n";
+		}
+		$presetFile = "$presetPath/$preset.xml";
 		if (!is_file($presetFile)) {
 			fwrite(STDERR, "Error: Preset ruleset not found for PHP_CodeSniffer: {$presetFile}\n");
 			return false;
@@ -97,7 +94,7 @@ class Checker
 		$ncsPath = $this->projectDir . '/ncs.xml';
 
 		try {
-			if (preg_match('~php(\d)(\d)~', $this->preset, $m)) {
+			if (preg_match('~php(\d)(\d)~', $preset, $m)) {
 				$phpVersionOption = " --runtime-set php_version {$m[1]}0{$m[2]}00";
 				if (is_file($ncsPath)) {
 					echo "Using custom ruleset: $ncsPath\n";
@@ -131,6 +128,26 @@ class Checker
 		// phpcs returns 0 for no errors, 1 for errors found, 2 for fixable errors found (with --report=...), 3 for processing errors
 		// phpcbf returns 0 for no errors, 1 for errors fixed, 2 for errors remaining, 3 for processing errors
 		return $this->dryRun ? $exitCode === 0 : ($exitCode === 0 || $exitCode === 1);
+	}
+
+
+	/**
+	 * Derives a preset name (e.g., 'php81') from a PHP version.
+	 */
+	private function derivePresetFromVersion(string $path): string
+	{
+		$phpVersion = $this->detectPhpVersion();
+		$versions = array_map(
+			fn($file) => preg_match('/php(\d)(\d+)\.\w+$/', $file, $m) ? "$m[1].$m[2]" : null,
+			glob("$path/php*"),
+		);
+		usort($versions, fn($a, $b) => -version_compare($a, $b));
+		foreach ($versions as $version) {
+			if (version_compare($version, $phpVersion ?? '0', '<=')) {
+				break;
+			}
+		}
+		return 'php' . str_replace('.', '', $version);
 	}
 
 

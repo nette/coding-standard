@@ -60,12 +60,8 @@ echo 'Mode: ' . ($dryRun ? 'Check (dry-run)' : 'Fix') . "\n";
 $paths = $paths ?: array_filter(['src', 'tests'], 'is_dir') ?: ['.'];
 $checker->setPaths($paths);
 echo 'Paths: ' . implode(', ', $paths) . "\n";
-
-// Determine and set preset
 if ($preset) {
 	echo "Preset: {$preset}\n";
-} else {
-	echo "Preset: {$checker->derivePresetFromVersion()} (detected from PHP version)\n";
 }
 
 // Signal Handling
