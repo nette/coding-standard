@@ -9,12 +9,16 @@
 		"kubawerlos/php-cs-fixer-custom-fixers": "^3.22"
 	},
 	"require-dev": {
-		"tracy/tracy": "^2.5"
+		"tracy/tracy": "^2.5",
+		"nette/tester": "^2.5"
 	},
 	"autoload": {
 		"classmap": ["src/"]
 	},
 	"bin": ["ecs"],
+	"scripts": {
+		"tester": "tester tests -s"
+	},
 	"extra": {
 		"branch-alias": {
 			"dev-master": "3-dev"
