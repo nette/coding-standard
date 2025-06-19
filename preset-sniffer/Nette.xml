@@ -153,6 +153,7 @@ https://github.com/slevomat/coding-standard
 
 	<!-- MISC -->
 
+    <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
 	<rule ref="Generic.PHP.DeprecatedFunctions"/>
 	<rule ref="Generic.Strings.UnnecessaryStringConcat">
 		<properties>
@@ -192,7 +193,6 @@ https://github.com/slevomat/coding-standard
 	<rule ref="Squiz.Strings.EchoedStrings"/>
 	<rule ref="Squiz.WhiteSpace.CastSpacing"/>
 	<rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace"/>
-	<rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
 	<rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
 	<rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing">
 		<exclude name="Squiz.WhiteSpace.ObjectOperatorSpacing.Before"/>
