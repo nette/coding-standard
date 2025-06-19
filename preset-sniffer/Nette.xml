@@ -13,6 +13,7 @@ https://github.com/slevomat/coding-standard
 	<rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
 
 	<!-- Looks for unused imports from other namespaces. -->
+	<!--
 	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
 		<properties>
 			<property name="searchAnnotations" value="yes"/>
@@ -26,7 +27,7 @@ https://github.com/slevomat/coding-standard
 				<element value="@internal"/>
 			</property>
 		</properties>
-	</rule>
+	</rule>-->
 
 	<rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
 
@@ -254,21 +255,37 @@ https://github.com/slevomat/coding-standard
 		</properties>
 	</rule>
 	<rule ref="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly"/>
+	
 	<rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
-	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly"> <!-- use statements for classes -->
 		<properties>
 			<property name="allowWhenNoNamespace" value="false"/>
-			<property name="allowFallbackGlobalConstants" value="true"/>
-			<property name="allowFallbackGlobalFunctions" value="true"/>
 			<property name="allowFullyQualifiedGlobalClasses" value="true"/>
 			<property name="allowFullyQualifiedGlobalConstants" value="true"/>
 			<property name="allowFullyQualifiedGlobalFunctions" value="true"/>
-			<property name="allowFullyQualifiedNameForCollidingClasses" value="true"/>
 			<property name="allowFullyQualifiedNameForCollidingConstants" value="true"/>
 			<property name="allowFullyQualifiedNameForCollidingFunctions" value="true"/>
 			<property name="searchAnnotations" value="true"/>
 		</properties>
 	</rule>
+	<rule ref="NetteCodingStandard.Namespaces.OptimizeGlobalCalls"> <!-- use statements for functions & constants -->
+		<properties>
+			<property name="optimizedFunctionsOnly" value="true"/>
+			<property name="ignoredFunctions" type="array">
+				<element value="dump"/>
+				<element value="var_dump"/>
+				<element value="print_r"/>
+				<element value="error_get_last"/>
+				<element value="trigger_error"/>
+				<element value="debug_backtrace"/>
+			</property>
+			<property name="ignoredConstants" type="array">
+				<element value="E_*"/>
+				<element value="DEBUG_BACKTRACE_IGNORE_ARGS"/>
+			</property>
+		</properties>
+	</rule>
+
 	<rule ref="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment">
 		<exclude name="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment.OneLinePropertyComment"/>
 	</rule>
