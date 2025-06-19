@@ -4,7 +4,7 @@
 https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties
 https://github.com/slevomat/coding-standard
 -->
-	<rule ref="../src/NetteCodingStandard/ruleset.xml"/>
+	<rule ref="../src/NetteCodingStandard/Sniffs/WhiteSpace/FunctionSpacingSniff.php"/>
 
 	<!-- disallow group use declarations use FooLibrary\Bar\Baz\{ ClassA, ClassB, ClassC, ClassD as Fizbo } -->
 	<rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>

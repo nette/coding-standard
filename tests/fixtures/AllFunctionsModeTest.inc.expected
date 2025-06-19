@@ -1,0 +1,17 @@
+<?php // {"optimizedFunctionsOnly": false}
+
+namespace App;
+
+use const PHP_OS, PHP_VERSION;
+use function count, strlen;
+
+class MyClass
+{
+    public function run()
+    {
+        strlen('test');
+        $c = count([]);
+        $v = PHP_VERSION;
+        $os = PHP_OS;
+    }
+}

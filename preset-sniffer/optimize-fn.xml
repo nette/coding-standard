@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<ruleset name="Optimize function calls" namespace="Nette">
+	<!-- Disable UnusedUses (conflicts with grouped use function/const imports) -->
+	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+		<severity>0</severity>
+	</rule>
+
+	<!-- Override ReferenceUsedNamesOnly: disable fallback for functions & constants -->
+	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+		<properties>
+			<property name="allowWhenNoNamespace" value="false"/>
+			<property name="allowFullyQualifiedGlobalClasses" value="true"/>
+			<property name="allowFullyQualifiedGlobalConstants" value="true"/>
+			<property name="allowFullyQualifiedGlobalFunctions" value="true"/>
+			<property name="allowFullyQualifiedNameForCollidingConstants" value="true"/>
+			<property name="allowFullyQualifiedNameForCollidingFunctions" value="true"/>
+			<property name="searchAnnotations" value="true"/>
+		</properties>
+	</rule>
+
+	<!-- Optimize global function and constant calls by generating grouped use statements -->
+	<rule ref="../src/NetteCodingStandard/Sniffs/Namespaces/OptimizeGlobalCallsSniff.php">
+		<properties>
+			<property name="optimizedFunctionsOnly" value="true"/>
+			<property name="ignoredFunctions" type="array">
+				<element value="dump"/>
+				<element value="var_dump"/>
+				<element value="print_r"/>
+				<element value="error_get_last"/>
+				<element value="trigger_error"/>
+				<element value="debug_backtrace"/>
+			</property>
+			<property name="ignoredConstants" type="array">
+				<element value="E_*"/>
+				<element value="INFO_*"/>
+				<element value="CURL*"/>
+				<element value="DEBUG_BACKTRACE_IGNORE_ARGS"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

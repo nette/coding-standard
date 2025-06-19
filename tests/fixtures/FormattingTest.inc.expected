@@ -1,0 +1,15 @@
+<?php // {"optimizedFunctionsOnly": false}
+
+namespace App;
+
+use stdClass;
+use function is_string;
+
+
+class MyClass
+{
+    public function run()
+    {
+        is_string('foo');
+    }
+}

@@ -1,0 +1,17 @@
+<?php // {"optimizedFunctionsOnly": false}
+
+namespace App;
+
+use function trim;
+use function strlen;
+use const PHP_EOL;
+use const PHP_VERSION;
+
+class MyClass
+{
+    public function run()
+    {
+        strlen('foo');
+        echo PHP_VERSION;
+    }
+}
