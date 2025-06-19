@@ -8,7 +8,8 @@ return [
 	'new_with_parentheses' => false, // new stdClass
 	'single_line_after_imports' => false, // Nette uses two empty lines
 	'blank_line_after_namespace' => false,
-	'ordered_imports' => true, // Use statements are alphabetically ordered
+	'single_import_per_statement' => false,
+	'ordered_imports' => ['imports_order' => ['class', 'function', 'const']],
 	'blank_line_between_import_groups' => false,
 
 	// Ensures a single space after language constructs

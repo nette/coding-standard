@@ -255,7 +255,6 @@ https://github.com/slevomat/coding-standard
 	</rule>
 	<rule ref="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly"/>
 	<rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
-	<rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
 	<rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
 		<properties>
 			<property name="allowWhenNoNamespace" value="false"/>
