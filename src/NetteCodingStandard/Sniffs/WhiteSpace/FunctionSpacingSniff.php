@@ -28,14 +28,14 @@ class FunctionSpacingSniff implements Sniff
      *
      * @var integer
      */
-    public $spacingBeforeFirst = 0;
+    public $spacingBeforeFirst = 2;
 
     /**
      * The number of blank lines after the last function in a class.
      *
      * @var integer
      */
-    public $spacingAfterLast = 0;
+    public $spacingAfterLast = 2;
 
     /**
      * Original properties as set in a custom ruleset (if any).
