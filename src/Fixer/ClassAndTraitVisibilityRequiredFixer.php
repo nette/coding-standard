@@ -65,7 +65,9 @@ final class ClassAndTraitVisibilityRequiredFixer extends AbstractFixer implement
 		 * and "applyFix()" is final, there is no other way round it.
 		 */
 		$method = new ReflectionMethod($this->visibilityRequiredFixer, 'applyFix');
-		$method->setAccessible(true);
+		if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+			$method->setAccessible(true);
+		}
 		$method->invoke($this->visibilityRequiredFixer, $file, $tokens);
 	}
 
