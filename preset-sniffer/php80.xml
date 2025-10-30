@@ -1,6 +1,29 @@
 <?xml version="1.0"?>
 <ruleset name="PHP 8.0" namespace="Nette">
-	<rule ref="./php74.xml"/>
+	<rule ref="./Nette.xml"/>
+
+	<!-- Enforces consistent formatting of return typehints: function foo(): ?int -->
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
+
+	<!-- Requires use of null coalesce operator when possible -->
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
+
+	<!-- enforces trailing commas in multi-line calls -->
+	<rule ref="SlevomatCodingStandard.Functions.RequireTrailingCommaInCall"/>
+
+	<!-- Requires use of null coalesce equal operator when possible -->
+	<rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator"/>
+
+	<!-- Requires arrow functions -->
+	<rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
+
+	<!-- Requires use of numeric literal separators. -->
+	<rule ref="SlevomatCodingStandard.Numbers.RequireNumericLiteralSeparator">
+		<properties>
+			<property name="minDigitsBeforeDecimalPoint" value="7"/>
+			<property name="minDigitsAfterDecimalPoint" value="20"/>
+		</properties>
+	</rule>
 
 	<!-- Class names should be referenced via ::class constant when possible -->
 	<rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
