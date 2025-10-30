@@ -42,7 +42,7 @@ return [
 	'method_argument_space' => false,
 	'Nette/method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
 
-	'visibility_required' => false,
+	'modifier_keywords' => false,
 	'Nette/class_and_trait_visibility_required' => true,
 
 
