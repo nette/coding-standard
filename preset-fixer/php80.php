@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-$config = require __DIR__ . '/php74.php';
+$config = require __DIR__ . '/base.php';
+
+foreach (glob(__DIR__ . '/common/*.php') as $file) {
+	$config->setRules(array_merge($config->getRules(), require $file));
+}
 
 $rules = [
-	'@PHP80Migration' => true,
-	'@PHP80Migration:risky' => true,
 	'void_return' => false,
 ];
 
-$config->setRules($rules + $config->getRules());
+$config->setRules(array_merge($rules, $config->getRules(), $customRules));
 return $config;
