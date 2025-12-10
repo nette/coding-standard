@@ -209,7 +209,7 @@ return [
 	'no_null_property_initialization' => true,
 
 	// Constructor having promoted properties must have them in separate lines
-	PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer::name() => true,
+	'multiline_promoted_properties' => true,
 
 	// Use the Elvis operator ?: where possible.
 	'ternary_to_elvis_operator' => true,
