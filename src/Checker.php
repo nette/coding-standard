@@ -60,7 +60,9 @@ class Checker
 		}
 
 		passthru(
-			PHP_BINARY . ' ' . escapeshellarg($fixerBin)
+			PHP_BINARY
+			. (php_ini_loaded_file() ? ' -c ' . escapeshellarg(php_ini_loaded_file()) : '')
+			. ' ' . escapeshellarg($fixerBin)
 			. ' fix -v'
 			. ($this->dryRun ? ' --dry-run' : '')
 			. ' --config=' . escapeshellarg($presetFile),
@@ -105,7 +107,9 @@ class Checker
 			}
 
 			passthru(
-				PHP_BINARY . ' ' . escapeshellarg($snifferBin)
+				PHP_BINARY
+				. (php_ini_loaded_file() ? ' -c ' . escapeshellarg(php_ini_loaded_file()) : '')
+				. ' ' . escapeshellarg($snifferBin)
 				. ' -s' // show sniff codes, works only in dry mode :-(
 				. ' -p' // progress
 				. $phpVersionOption
