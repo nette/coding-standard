@@ -10,25 +10,29 @@ This is set of [sniffs](https://github.com/squizlabs/PHP_CodeSniffer) and [fixer
 
 ## Installation and Usage
 
-Install the tool in a global directory. Its name will be for example `/nette-cs`:
+Install the tool globally:
 
 ```
-composer create-project nette/coding-standard /nette-cs
+composer global require nette/coding-standard
 ```
 
-Check coding standard for PHP 7.1 in folders `src` and `tests`:
+Check coding standard in folders `src` and `tests`:
 
 ```bash
-/nette-cs/ecs check src tests --preset php71
+ecs check src tests
 ```
 
 And fix it:
 
 ```bash
-/nette-cs/ecs fix src tests --preset php71
+ecs fix src tests
 ```
 
-If no PHP version is specified, it will try to find out from the `composer.json` file.
+The PHP version preset is automatically detected from your project's `composer.json`. If auto-detection is not possible, you can specify it manually:
+
+```bash
+ecs check src tests --preset php81
+```
 
 
 ### GitHub Actions
@@ -36,12 +40,12 @@ If no PHP version is specified, it will try to find out from the `composer.json`
 ```yaml
 # .github/workflows/coding-style.yml
 steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - uses: shivammathur/setup-php@v2
       with:
-          php-version: 8.0
+          php-version: 8.1
 
     - run: composer create-project nette/coding-standard temp/coding-standard
-    - run: php temp/coding-standard/ecs check src tests --preset php71
+    - run: php temp/coding-standard/ecs check src tests
 
 ```
