@@ -7,6 +7,14 @@ declare(strict_types=1);
  */
 class Checker
 {
+	private const IgnoredPaths = [
+		'/fixtures.*/',
+		'expected',
+		'temp',
+		'tmp',
+		'vendor',
+	];
+
 	private string $fileListPath;
 
 
@@ -22,20 +30,41 @@ class Checker
 
 	public function setPaths(array $paths): void
 	{
-		$finder = PhpCsFixer\Finder::create()
-			->name(['*.php', '*.phpt'])
-			->notPath([
-				'/fixtures.*/',
-				'expected',
-				'temp',
-				'tmp',
-				'vendor',
-			])
-			->filter(fn(SplFileInfo $file) => !preg_match('#@phpVersion\s+([0-9.]+)#i', file_get_contents((string) $file), $m)
-				|| version_compare(PHP_VERSION, $m[1], '>='))
-			->in($paths);
+		$files = [];
+		$dirs = [];
+		foreach ($paths as $path) {
+			if (is_file($path)) {
+				$files[] = $path;
+			} elseif (is_dir($path)) {
+				$dirs[] = $path;
+			} else {
+				fwrite(STDERR, "Warning: Path not found: $path\n");
+			}
+		}
 
-		file_put_contents($this->fileListPath, implode("\n", iterator_to_array($finder)));
+		$versionFilter = fn($path) => !preg_match('#@phpVersion\s+([0-9.]+)#i', file_get_contents($path), $m)
+			|| version_compare(PHP_VERSION, $m[1], '>=');
+
+		$result = [];
+		if ($dirs) {
+			$finder = PhpCsFixer\Finder::create()
+				->name(['*.php', '*.phpt'])
+				->notPath(self::IgnoredPaths)
+				->filter(fn(SplFileInfo $file) => $versionFilter((string) $file))
+				->in($dirs);
+
+			foreach ($finder as $file) {
+				$result[] = (string) $file;
+			}
+		}
+
+		foreach ($files as $file) {
+			if (preg_match('#\.(php|phpt)$#', $file) && $versionFilter($file)) {
+				$result[] = realpath($file) ?: $file;
+			}
+		}
+
+		file_put_contents($this->fileListPath, implode("\n", $result));
 	}
 
 
