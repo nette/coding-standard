@@ -39,14 +39,14 @@ trim(
 test( fn( $a ) :x=>$a + 2 );
 
 
-func($a 
-? $b 
+func($a
+? $b
 : $c
 );
 
 
 func($a && ($a
-? $b 
+? $b
 : $c) && $c, $d
 );
 

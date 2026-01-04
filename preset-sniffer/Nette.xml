@@ -75,7 +75,7 @@ https://github.com/slevomat/coding-standard
 	<rule ref="SlevomatCodingStandard.Classes.ConstantSpacing"/>
 
 	<rule ref="SlevomatCodingStandard.Functions.NamedArgumentSpacing"/>
-	
+
 
 
 	<!-- CONTROL STRUCTURES -->

@@ -26,7 +26,7 @@ for ($i = 1; $i < $argc; $i++) {
 	} elseif ($arg === 'check') {
 		$dryRun = true;
 	} elseif ($arg === '--help' || $arg === '-h') {
-		echo "Usage: php fix.php [check|fix] [--preset <name>] [path1 path2 ...]\n";
+		echo "Usage: php run.php [check|fix] [--preset <name>] [path1 path2 ...]\n";
 		echo "  check (default): Run tools in dry-run mode.\n";
 		echo "  fix: Run tools and apply fixes.\n";
 		echo "  --preset <name>: Specify preset (e.g., php81). Autodetected if omitted.\n";

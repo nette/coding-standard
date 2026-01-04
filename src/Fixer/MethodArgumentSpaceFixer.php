@@ -161,7 +161,7 @@ final class MethodArgumentSpaceFixer extends AbstractFixer implements Configurab
             }
 
             $meaningfulTokenBeforeParenthesis = $tokens[$tokens->getPrevMeaningfulToken($index)];
-            
+
             if ($meaningfulTokenBeforeParenthesis->isGivenKind(T_STRING)) {
 				$isMultiline = $this->fixFunction($tokens, $index);
 
