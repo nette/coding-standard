@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+const VERSION = '3.0';
+
 // Autoloader
 if (
 	!(is_file($file = ($vendorDir = __DIR__ . '/vendor') . '/autoload.php') && include $file) &&
@@ -30,7 +32,11 @@ for ($i = 1; $i < $argc; $i++) {
 		echo "  check (default): Run tools in dry-run mode.\n";
 		echo "  fix: Run tools and apply fixes.\n";
 		echo "  --preset <name>: Specify preset (e.g., php81). Autodetected if omitted.\n";
+		echo "  --version, -V: Show version information.\n";
 		echo "  path1 path2 ...: Specific files or directories to process. Defaults to src/, tests/ or ./\n";
+		exit(0);
+	} elseif ($arg === '--version' || $arg === '-V') {
+		echo 'Nette Coding Standard ' . VERSION . "\n";
 		exit(0);
 	} elseif (!str_starts_with($arg, '-')) {
 		$paths[] = $arg;
@@ -81,7 +87,7 @@ try {
 	$fixerOk = $checker->runFixer();
 	echo "\n\n";
 	$snifferOk = $checker->runSniffer();
-} catch (Exception) {
+} catch (\Throwable) {
 	echo "Terminated\n";
 	$checker->cleanup();
 	exit(1);
