@@ -175,6 +175,7 @@ https://github.com/slevomat/coding-standard
 	<rule ref="Squiz.Commenting.VariableComment">
 		<exclude
 			name="Squiz.Commenting.VariableComment.IncorrectVarType"/>
+		<exclude name="Squiz.Commenting.VariableComment.DeprecatedTagNotAllowed"/>
 		<exclude name="Squiz.Commenting.VariableComment.TagNotAllowed"/>
 		<exclude name="Squiz.Commenting.VariableComment.MissingVar"/>
 		<exclude name="Squiz.Commenting.VariableComment.Missing"/>
