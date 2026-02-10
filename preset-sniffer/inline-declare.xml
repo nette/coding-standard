@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<ruleset name="Declare strict_types on same line" namespace="Nette">
+	<rule ref="../src/NetteCodingStandard/Sniffs/PHP/DeclareStrictTypesSniff.php"/>
+</ruleset>
