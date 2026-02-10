@@ -82,7 +82,10 @@ class Checker
 		}
 		$presetFile = "$presetPath/$preset.php";
 		if (!is_file($presetFile)) {
-			fwrite(STDERR, "Error: Preset configuration not found for PHP CS Fixer: {$presetFile}\n");
+			if (is_file(dirname(__DIR__) . "/preset-sniffer/$preset.xml")) {
+				return true;
+			}
+			fwrite(STDERR, "Error: Preset '$preset' not found.\n");
 			return false;
 		}
 
@@ -114,7 +117,10 @@ class Checker
 		}
 		$presetFile = "$presetPath/$preset.xml";
 		if (!is_file($presetFile)) {
-			fwrite(STDERR, "Error: Preset ruleset not found for PHP_CodeSniffer: {$presetFile}\n");
+			if (is_file(dirname(__DIR__) . "/preset-fixer/$preset.php")) {
+				return true;
+			}
+			fwrite(STDERR, "Error: Preset '$preset' not found.\n");
 			return false;
 		}
 
