@@ -54,8 +54,8 @@ class ValidClass
 	}
 
 
-	#[Attribute]
 	/** doc */
+	#[Attribute]
 	private function internalMethod()
 	{
 	}

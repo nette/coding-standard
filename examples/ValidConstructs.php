@@ -15,7 +15,8 @@ function &test2(): int
 }
 
 
-$a = (int) $b; $x = 2;
+$a = (int) $b;
+$x = 2;
 
 $a = [1, 2, 3];
 $a = [
@@ -31,12 +32,12 @@ trim('a', $b);
 
 trim(
 	1,
-	2
+	2,
 );
 
 trim(
 	'hfklasdehfgisdgfkljhsnettefsedhgfsdghflskdhfsdlhfgldkshsdfhgsdlkfh',
-	415645646548746845646545646546
+	415_645_646_548_746_845_646_545_646_546,
 );
 
 test(fn($a): x => $a + 2);
@@ -45,7 +46,7 @@ test(fn($a): x => $a + 2);
 func(
 	$a
 		? $b
-		: $c
+		: $c,
 );
 
 
@@ -53,7 +54,7 @@ func(
 	$a && ($a
 		? $b
 		: $c) && $c,
-	$d
+	$d,
 );
 
 
@@ -101,7 +102,7 @@ $s .= ($item['hfklasdehfgisdgfkljhsnettefsedhgfsdghflskdhfsdlhfgldkshsdfhgsdlkfh
 			? trim($line)
 			: $item
 		)
-	);
+);
 
 $s .= fnc(
 	$item['hfklasdehfgisdgfkljhsnettefsedhgfsdghflskdhfsdlhfgldkshsdfhgsdlkfh']
@@ -111,5 +112,5 @@ $s .= fnc(
 		: ($line
 			? trim($line)
 			: $item
-		)
+		),
 );
