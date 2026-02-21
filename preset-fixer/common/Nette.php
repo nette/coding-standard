@@ -3,6 +3,7 @@
 return [
 	'@PSR12' => true,
 	'@PSR12:risky' => true,
+	'blank_line_after_opening_tag' => false, // <?php declare(strict_types=1);
 	'new_with_parentheses' => false, // new stdClass
 	'single_line_after_imports' => false, // Nette uses two empty lines
 	'blank_line_after_namespace' => false,
@@ -75,9 +76,6 @@ return [
 
 
 	// Control structures
-
-	// Ensure there is no code on the same line as the PHP open tag.
-	'linebreak_after_opening_tag' => true,
 
 	'no_alternative_syntax' => true,
 
