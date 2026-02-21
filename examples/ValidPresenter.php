@@ -1,7 +1,5 @@
-<?php
+<?php declare(strict_types=1);
 // 8.0
-
-declare(strict_types=1);
 
 namespace Nette\CodingStandard\Examples;
 
