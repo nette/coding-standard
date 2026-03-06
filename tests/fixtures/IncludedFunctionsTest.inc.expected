@@ -1,0 +1,16 @@
+<?php // {"includedFunctions": ["str*", "count"]}
+
+namespace App;
+
+use function count, strlen, strpos;
+
+class MyClass
+{
+    public function run()
+    {
+        $a = strlen('hello');
+        $b = strpos('hello', 'e');
+        $c = count([]);
+        $d = trim(' x ');
+    }
+}

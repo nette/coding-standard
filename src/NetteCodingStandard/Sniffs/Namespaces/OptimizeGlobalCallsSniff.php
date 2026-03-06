@@ -31,12 +31,13 @@ declare(strict_types=1);
  * <rule ref="NetteCodingStandard.Namespaces.OptimizeGlobalCalls">
  *     <properties>
  *         <property name="optimizedFunctionsOnly" value="false"/>
- *         <property name="ignoredFunctions" type="array">
+ *         <property name="includedConstants" type="array">
+ *             <element value="PHP_*"/>
+ *             <element value="DIRECTORY_SEPARATOR"/>
+ *         </property>
+ *         <property name="excludedFunctions" type="array">
  *             <element value="dump"/>
  *             <element value="dd"/>
- *         </property>
- *         <property name="ignoredConstants" type="array">
- *             <element value="SOME_CONSTANT"/>
  *         </property>
  *     </properties>
  * </rule>
@@ -53,8 +54,10 @@ use function count, defined, in_array;
 class OptimizeGlobalCallsSniff implements Sniff
 {
 	public $optimizedFunctionsOnly = true;
-	public $ignoredFunctions = [];
-	public $ignoredConstants = [];
+	public $includedFunctions = [];
+	public $excludedFunctions = [];
+	public $includedConstants = [];
+	public $excludedConstants = [];
 	private static $processedFiles = [];
 
 	private $compilerOptimizedFunctions = [
@@ -102,19 +105,26 @@ class OptimizeGlobalCallsSniff implements Sniff
 			$usedConstants = $this->findUsedGlobalConstants($phpcsFile, $existingUseStatements);
 
 			$finalFunctions = $usedFunctions;
-			if ($this->optimizedFunctionsOnly) {
-				$nonOptimizedToKeep = [];
+			if (!empty($this->includedFunctions) || $this->optimizedFunctionsOnly) {
+				$nonIncludedToKeep = [];
 				foreach ($existingUseStatements['all_functions'] as $name) {
-					if (!in_array(strtolower($name), $this->compilerOptimizedFunctions, true)) {
-						if ($this->isFunctionUsedInCode($phpcsFile, $name)) {
-							$nonOptimizedToKeep[] = $name;
-						}
+					if (!$this->isFunctionIncluded($name) && $this->isFunctionUsedInCode($phpcsFile, $name)) {
+						$nonIncludedToKeep[] = $name;
 					}
 				}
-				$finalFunctions = array_values(array_unique(array_merge($finalFunctions, $nonOptimizedToKeep)));
+				$finalFunctions = array_values(array_unique(array_merge($finalFunctions, $nonIncludedToKeep)));
 			}
 
 			$finalConstants = $usedConstants;
+			if (!empty($this->includedConstants)) {
+				$nonIncludedToKeep = [];
+				foreach ($existingUseStatements['all_constants'] as $name) {
+					if (!$this->isConstantIncluded($name) && $this->isConstantUsedInCode($phpcsFile, $name)) {
+						$nonIncludedToKeep[] = $name;
+					}
+				}
+				$finalConstants = array_values(array_unique(array_merge($finalConstants, $nonIncludedToKeep)));
+			}
 
 			$isCorrect = $this->isStateCorrect($phpcsFile, $finalFunctions, $finalConstants, $existingUseStatements);
 			$hasBackslashesToRemove = $this->hasBackslashesToRemove($phpcsFile, $finalFunctions, $finalConstants);
@@ -293,6 +303,29 @@ class OptimizeGlobalCallsSniff implements Sniff
 	}
 
 
+	private function isConstantUsedInCode(File $phpcsFile, string $constantName): bool
+	{
+		$tokens = $phpcsFile->getTokens();
+		for ($i = 0; $i < $phpcsFile->numTokens; $i++) {
+			if ($tokens[$i]['code'] === T_STRING && $tokens[$i]['content'] === $constantName) {
+				$nextToken = $phpcsFile->findNext(T_WHITESPACE, $i + 1, null, true);
+				if ($nextToken !== false && $tokens[$nextToken]['code'] === T_OPEN_PARENTHESIS) {
+					continue; // function call, not constant
+				}
+
+				$prevToken = $phpcsFile->findPrevious(T_WHITESPACE, $i - 1, null, true);
+				if (
+					$prevToken === false
+					|| !in_array($tokens[$prevToken]['code'], [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR, T_COLON], true)
+				) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
 	private function isFunctionDeclaration(File $phpcsFile, int $stackPtr): bool
 	{
 		$prevSemicolon = $phpcsFile->findPrevious(T_SEMICOLON, $stackPtr - 1);
@@ -322,7 +355,6 @@ class OptimizeGlobalCallsSniff implements Sniff
 	{
 		$tokens = $phpcsFile->getTokens();
 		$usedFunctions = [];
-		$ignoredFunctions = array_map('strtolower', $this->ignoredFunctions);
 
 		for ($i = 0; $i < $phpcsFile->numTokens; $i++) {
 			if ($this->isWithinUseStatement($i, $existingUseStatements)) {
@@ -342,20 +374,9 @@ class OptimizeGlobalCallsSniff implements Sniff
 					continue;
 				}
 
-				if (in_array(strtolower($functionName), $ignoredFunctions, true)) {
-					continue;
+				if ($this->isFunctionIncluded($functionName)) {
+					$usedFunctions[] = $functionName;
 				}
-
-				if ($this->optimizedFunctionsOnly) {
-					if (!in_array(strtolower($functionName), $this->compilerOptimizedFunctions, true)) {
-						continue;
-					}
-				} else {
-					if (!function_exists($functionName)) {
-						continue;
-					}
-				}
-				$usedFunctions[] = $functionName;
 				continue;
 			}
 
@@ -369,9 +390,6 @@ class OptimizeGlobalCallsSniff implements Sniff
 			}
 
 			$functionName = $tokens[$i]['content'];
-			if (in_array(strtolower($functionName), $ignoredFunctions, true)) {
-				continue;
-			}
 
 			$nextToken = $phpcsFile->findNext(T_WHITESPACE, $i + 1, null, true);
 			if ($nextToken === false || $tokens[$nextToken]['code'] !== T_OPEN_PARENTHESIS) {
@@ -393,16 +411,9 @@ class OptimizeGlobalCallsSniff implements Sniff
 				}
 			}
 
-			if ($this->optimizedFunctionsOnly) {
-				if (!in_array(strtolower($functionName), $this->compilerOptimizedFunctions, true)) {
-					continue;
-				}
-			} else {
-				if (!function_exists($functionName)) {
-					continue;
-				}
+			if ($this->isFunctionIncluded($functionName)) {
+				$usedFunctions[] = $functionName;
 			}
-			$usedFunctions[] = $functionName;
 		}
 		return array_values(array_unique($usedFunctions));
 	}
@@ -431,14 +442,9 @@ class OptimizeGlobalCallsSniff implements Sniff
 					continue; // This is a function call, not a constant
 				}
 
-				if ($this->isIgnoredConstant($constantName)) {
-					continue;
+				if ($this->isConstantIncluded($constantName)) {
+					$usedConstants[] = $constantName;
 				}
-
-				if (!defined($constantName)) {
-					continue;
-				}
-				$usedConstants[] = $constantName;
 				continue;
 			}
 
@@ -447,9 +453,6 @@ class OptimizeGlobalCallsSniff implements Sniff
 			}
 
 			$constantName = $tokens[$i]['content'];
-			if ($this->isIgnoredConstant($constantName)) {
-				continue;
-			}
 
 			$prevTokenPtr = $phpcsFile->findPrevious(T_WHITESPACE, $i - 1, null, true);
 			$nextTokenPtr = $phpcsFile->findNext(T_WHITESPACE, $i + 1, null, true);
@@ -482,10 +485,9 @@ class OptimizeGlobalCallsSniff implements Sniff
 				continue;
 			}
 
-			if (!defined($constantName)) {
-				continue;
+			if ($this->isConstantIncluded($constantName)) {
+				$usedConstants[] = $constantName;
 			}
-			$usedConstants[] = $constantName;
 		}
 		return array_values(array_unique($usedConstants));
 	}
@@ -681,17 +683,56 @@ class OptimizeGlobalCallsSniff implements Sniff
 	}
 
 
-	private function isIgnoredConstant(string $constantName): bool
+	private function matchesPatternList(string $name, array $patterns, bool $caseSensitive = false): bool
 	{
-		$ignored = array_merge($this->builtInIgnoredConstants, $this->ignoredConstants);
-		foreach ($ignored as $pattern) {
+		foreach ($patterns as $pattern) {
 			$regex = str_replace('\*', '.*', preg_quote($pattern, '/'));
-			if (preg_match('/^' . $regex . '$/i', $constantName)) {
+			$flags = $caseSensitive ? '' : 'i';
+			if (preg_match('/^' . $regex . '$/' . $flags, $name)) {
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+
+	private function isExcludedConstant(string $constantName): bool
+	{
+		$excluded = array_merge($this->builtInIgnoredConstants, $this->excludedConstants);
+		return $this->matchesPatternList($constantName, $excluded);
+	}
+
+
+	private function isFunctionIncluded(string $functionName): bool
+	{
+		if ($this->matchesPatternList($functionName, $this->excludedFunctions)) {
+			return false;
+		}
+
+		if (!empty($this->includedFunctions)) {
+			return $this->matchesPatternList($functionName, $this->includedFunctions);
+		}
+
+		if ($this->optimizedFunctionsOnly) {
+			return in_array(strtolower($functionName), $this->compilerOptimizedFunctions, true);
+		}
+
+		return function_exists($functionName);
+	}
+
+
+	private function isConstantIncluded(string $constantName): bool
+	{
+		if ($this->isExcludedConstant($constantName)) {
+			return false;
+		}
+
+		if (!empty($this->includedConstants)) {
+			return $this->matchesPatternList($constantName, $this->includedConstants);
+		}
+
+		return defined($constantName);
 	}
 
 

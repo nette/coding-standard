@@ -1,4 +1,4 @@
-<?php // {"optimizedFunctionsOnly": false, "ignoredFunctions": ["dd", "dump"]}
+<?php // {"optimizedFunctionsOnly": false, "excludedFunctions": ["dd", "dump"]}
 
 namespace App;
 

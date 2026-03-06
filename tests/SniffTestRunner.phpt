@@ -157,7 +157,7 @@ class SniffTestRunner
 
 	/**
 	 * Parses a special JSON comment on the first line of the code to set sniff properties.
-	 * E.g., <?php // {"optimizedFunctionsOnly": true, "ignoredFunctions": ["dd"]}
+	 * E.g., <?php // {"optimizedFunctionsOnly": true, "excludedFunctions": ["dd"]}
 	 */
 	private function parsePropertiesFromJsonComment(string $code): array
 	{
