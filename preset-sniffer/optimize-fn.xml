@@ -30,11 +30,9 @@
 				<element value="trigger_error"/>
 				<element value="debug_backtrace"/>
 			</property>
-			<property name="excludedConstants" type="array">
-				<element value="E_*"/>
-				<element value="INFO_*"/>
-				<element value="CURL*"/>
-				<element value="DEBUG_BACKTRACE_IGNORE_ARGS"/>
+			<property name="includedConstants" type="array">
+				<element value="PHP_*"/>
+				<element value="DIRECTORY_SEPARATOR"/>
 			</property>
 		</properties>
 	</rule>
