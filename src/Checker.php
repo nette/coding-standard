@@ -125,46 +125,72 @@ class Checker
 		}
 
 		$phpVersionOption = '';
-		$originalNcsContent = null;
-		$ncsPath = $this->projectDir . '/ncs.xml';
 
-		try {
-			if (preg_match('~php(\d)(\d)~', $preset, $m)) {
-				$phpVersionOption = " --runtime-set php_version {$m[1]}0{$m[2]}00";
-				if (is_file($ncsPath)) {
-					echo "Using custom ruleset: $ncsPath\n";
-					$presetFile = $ncsPath;
-					$originalNcsContent = file_get_contents($ncsPath);
-					file_put_contents($ncsPath, str_replace('ref="$presets/', "ref=\"$presetPath/", $originalNcsContent));
-				}
+		if (preg_match('~php(\d)(\d)~', $preset, $m)) {
+			$phpVersionOption = " --runtime-set php_version {$m[1]}0{$m[2]}00";
+
+			$refs = [$presetFile];
+			$projectXml = $this->projectDir . '/ncs.xml';
+			if (is_file($projectXml)) {
+				echo "Using custom ruleset: $projectXml\n";
+				$refs[] = $this->prepareRulesetCopy($projectXml, $presetPath, 'project');
 			}
 
-			passthru(
-				PHP_BINARY
-				. (php_ini_loaded_file() ? ' -c ' . escapeshellarg(php_ini_loaded_file()) : '')
-				. ' ' . escapeshellarg($snifferBin)
-				. ' -s' // show sniff codes, works only in dry mode :-(
-				. ' -p' // progress
-				. $phpVersionOption
-				. ' --colors'
-				. ' --extensions=php,phpt'
-				. ' --runtime-set ignore_warnings_on_exit true'
-				. ' --no-cache'
-				. ' --parallel=10'
-				. ' --standard=' . escapeshellarg($presetFile)
-				. ' --file-list=' . escapeshellarg($this->fileListPath),
-				$exitCode,
-			);
-
-		} finally {
-			if ($originalNcsContent !== null) {
-				file_put_contents($ncsPath, $originalNcsContent);
-			}
+			$presetFile = $this->buildWrapperRuleset($refs);
 		}
+
+		passthru(
+			PHP_BINARY
+			. (php_ini_loaded_file() ? ' -c ' . escapeshellarg(php_ini_loaded_file()) : '')
+			. ' ' . escapeshellarg($snifferBin)
+			. ' -s' // show sniff codes, works only in dry mode :-(
+			. ' -p' // progress
+			. $phpVersionOption
+			. ' --colors'
+			. ' --extensions=php,phpt'
+			. ' --runtime-set ignore_warnings_on_exit true'
+			. ' --no-cache'
+			. ' --parallel=10'
+			. ' --standard=' . escapeshellarg($presetFile)
+			. ' --file-list=' . escapeshellarg($this->fileListPath),
+			$exitCode,
+		);
 
 		// phpcs returns 0 for no errors, 1 for errors found, 2 for fixable errors found (with --report=...), 3 for processing errors
 		// phpcbf returns 0 for no errors, 1 for errors fixed, 2 for errors remaining, 3 for processing errors
 		return $this->dryRun ? $exitCode === 0 : ($exitCode === 0 || $exitCode === 1);
+	}
+
+
+	/**
+	 * Substitutes `$presets/` references and stores as temp file.
+	 */
+	private function prepareRulesetCopy(string $source, string $presetPath, string $tag): string
+	{
+		$target = dirname(__DIR__) . "/ruleset-$tag.tmp.xml";
+		file_put_contents(
+			$target,
+			str_replace('ref="$presets/', "ref=\"$presetPath/", file_get_contents($source)),
+		);
+		return $target;
+	}
+
+
+	/**
+	 * Builds a wrapper ruleset that references given files in order.
+	 */
+	private function buildWrapperRuleset(array $refs): string
+	{
+		$wrapper = dirname(__DIR__) . '/ruleset-wrapper.tmp.xml';
+		$refsXml = '';
+		foreach ($refs as $r) {
+			$refsXml .= '	<rule ref="' . htmlspecialchars($r, ENT_XML1) . '"/>' . "\n";
+		}
+		file_put_contents(
+			$wrapper,
+			"<?xml version=\"1.0\"?>\n<ruleset name=\"Combined\">\n$refsXml</ruleset>\n",
+		);
+		return $wrapper;
 	}
 
 
@@ -210,5 +236,8 @@ class Checker
 	public function cleanup(): void
 	{
 		@unlink($this->fileListPath);
+		foreach (glob(dirname(__DIR__) . '/ruleset-*.tmp.xml') ?: [] as $f) {
+			@unlink($f);
+		}
 	}
 }
