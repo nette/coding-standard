@@ -35,6 +35,45 @@ ecs check src tests --preset php81
 ```
 
 
+### Custom Configuration
+
+You can tweak rules per-project by placing `ncs.php` (PHP CS Fixer) and/or `ncs.xml` (PHP_CodeSniffer) in your project root. Both are discovered automatically and merged on top of the preset.
+
+**`ncs.php`** returns an associative array of fixer overrides:
+
+```php
+<?php
+return [
+	'strict_comparison' => false,
+	'PhpCsFixerCustomFixers/commented_out_function' => false, // don't comment out dump(), var_dump(), ...
+];
+```
+
+**`ncs.xml`** is a PHP_CodeSniffer ruleset. It does not need to reference the version preset – it is automatically combined with it. Use `$presets/` to reference any bundled preset:
+
+```xml
+<?xml version="1.0"?>
+<ruleset name="MyProject">
+	<!-- Optional: enable use function/const imports -->
+	<rule ref="$presets/optimize-fn.xml"/>
+
+	<!-- Disable a rule -->
+	<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint"/>
+</ruleset>
+```
+
+
+### Ad-hoc Configuration via `--config-file`
+
+For one-off runs (e.g. when you want to keep `dump()` calls intact during debugging) you can point to an additional config file without committing it to the project:
+
+```bash
+ecs fix src --config-file ./my-overrides.php
+```
+
+The tool is selected by extension: `.php` applies to PHP CS Fixer, `.xml` to PHP_CodeSniffer. You can pass `--config-file` twice to configure both tools. Project-level `ncs.php`/`ncs.xml` are still used; values from `--config-file` take precedence.
+
+
 ### GitHub Actions
 
 ```yaml

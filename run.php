@@ -16,20 +16,41 @@ if (
 $paths = [];
 $preset = null;
 $dryRun = true;
+$configFilePhp = null;
+$configFileXml = null;
 
 for ($i = 1; $i < $argc; $i++) {
 	$arg = $argv[$i];
 	if ($arg === '--preset' && isset($argv[$i + 1])) {
 		$preset = $argv[++$i];
+	} elseif ($arg === '--config-file' && isset($argv[$i + 1])) {
+		$path = $argv[++$i];
+		if (!is_file($path)) {
+			fwrite(STDERR, "Config file not found: $path\n");
+			exit(1);
+		}
+		$abs = realpath($path);
+		$ext = strtolower(pathinfo($abs, PATHINFO_EXTENSION));
+		if ($ext === 'php') {
+			$configFilePhp = $abs;
+		} elseif ($ext === 'xml') {
+			$configFileXml = $abs;
+		} else {
+			fwrite(STDERR, "Config file must have .php or .xml extension: $path\n");
+			exit(1);
+		}
 	} elseif ($arg === '--fix' || $arg === 'fix') {
 		$dryRun = false;
 	} elseif ($arg === 'check') {
 		$dryRun = true;
 	} elseif ($arg === '--help' || $arg === '-h') {
-		echo "Usage: php run.php [check|fix] [--preset <name>] [path1 path2 ...]\n";
+		echo "Usage: php run.php [check|fix] [--preset <name>] [--config-file <path>] [path1 path2 ...]\n";
 		echo "  check (default): Run tools in dry-run mode.\n";
 		echo "  fix: Run tools and apply fixes.\n";
 		echo "  --preset <name>: Specify preset (e.g., php81). Autodetected if omitted.\n";
+		echo "  --config-file <path>: Additional config file (.php for PHP CS Fixer, .xml for PHP_CodeSniffer).\n";
+		echo "                        May be given twice (once per tool). Merged on top of auto-discovered\n";
+		echo "                        ncs.php / ncs.xml; values from CLI file take precedence.\n";
 		echo "  --version, -V: Show version information.\n";
 		echo "  path1 path2 ...: Specific files or directories to process. Defaults to src/, tests/ or ./\n";
 		exit(0);
@@ -57,7 +78,14 @@ if (!is_file("$root/composer.json")) {
 
 
 // Instantiate and Configure Checker
-$checker = new Checker($vendorDir, $root, $dryRun, $preset);
+if ($configFilePhp !== null) {
+	putenv('NCS_CONFIG_FILE_PHP=' . $configFilePhp);
+	echo "Additional fixer config: $configFilePhp\n";
+}
+if ($configFileXml !== null) {
+	echo "Additional sniffer config: $configFileXml\n";
+}
+$checker = new Checker($vendorDir, $root, $dryRun, $preset, $configFileXml);
 echo 'Mode: ' . ($dryRun ? 'Check (dry-run)' : 'Fix') . "\n";
 
 // Determine and set paths

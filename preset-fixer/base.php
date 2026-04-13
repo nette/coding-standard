@@ -20,13 +20,20 @@ $config->setFinder($files);
 
 
 $customRules = [];
+
 $root = getcwd();
 while (!is_file("$root/ncs.php") && substr_count($root, DIRECTORY_SEPARATOR) > 1) {
 	$root = dirname($root);
 }
-if (is_file($file = "$root/ncs.php")) {
-	echo "used $file\n";
-	$customRules = require $file;
+if (is_file($projectFile = "$root/ncs.php")) {
+	echo "used $projectFile\n";
+	$customRules = require $projectFile;
+}
+
+$cliFile = getenv('NCS_CONFIG_FILE_PHP') ?: null;
+if ($cliFile !== null && is_file($cliFile)) {
+	echo "used $cliFile\n";
+	$customRules = array_merge($customRules, require $cliFile);
 }
 
 $config->setRules([]);

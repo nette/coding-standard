@@ -21,6 +21,7 @@ class Checker
 		private string $projectDir,
 		private bool $dryRun = true,
 		private ?string $preset = null,
+		private ?string $snifferConfig = null,
 	) {
 		$this->fileListPath = dirname(__DIR__) . '/filelist.tmp';
 	}
@@ -130,10 +131,15 @@ class Checker
 			$phpVersionOption = " --runtime-set php_version {$m[1]}0{$m[2]}00";
 
 			$refs = [$presetFile];
-			$projectXml = $this->projectDir . '/ncs.xml';
-			if (is_file($projectXml)) {
-				echo "Using custom ruleset: $projectXml\n";
-				$refs[] = $this->prepareRulesetCopy($projectXml, $presetPath, 'project');
+			$sources = [
+				'project' => $this->projectDir . '/ncs.xml',
+				'cli' => $this->snifferConfig,
+			];
+			foreach ($sources as $tag => $src) {
+				if ($src !== null && is_file($src)) {
+					echo "Using custom ruleset: $src\n";
+					$refs[] = $this->prepareRulesetCopy($src, $presetPath, $tag);
+				}
 			}
 
 			$presetFile = $this->buildWrapperRuleset($refs);
