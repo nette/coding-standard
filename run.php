@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use Nette\CommandLine\Console;
 use Nette\CommandLine\Parser;
 
 const VERSION = '3.5.0';
@@ -25,6 +26,7 @@ $cmd = new Parser(<<<'XX'
 	    --config-file <path>  Additional config file (.php for PHP CS Fixer, .xml for PHP_CodeSniffer).
 	                          May be given twice (once per tool).
 	    --fix                 Shortcut for 'fix' mode.
+	    --no-progress         Disable progress indicator.
 	    -h | --help           Show this help.
 	    -V | --version        Show version information.
 
@@ -95,7 +97,9 @@ if ($configFilePhp !== null) {
 if ($configFileXml !== null) {
 	echo "Additional sniffer config: $configFileXml\n";
 }
-$checker = new Checker($vendorDir, $root, $dryRun, $preset, $configFileXml);
+$tty = Console::detectTerminal();
+$showProgress = $tty && empty($options['--no-progress']);
+$checker = new Checker($vendorDir, $root, $dryRun, $preset, $configFileXml, $showProgress, $tty);
 echo 'Mode: ' . ($dryRun ? 'Check (dry-run)' : 'Fix') . "\n";
 
 // Determine and set paths

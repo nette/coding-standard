@@ -22,6 +22,8 @@ class Checker
 		private bool $dryRun = true,
 		private ?string $preset = null,
 		private ?string $snifferConfig = null,
+		private bool $showProgress = true,
+		private bool $showColors = true,
 	) {
 		$this->fileListPath = dirname(__DIR__) . '/filelist.tmp';
 	}
@@ -150,9 +152,9 @@ class Checker
 			. (php_ini_loaded_file() ? ' -c ' . escapeshellarg(php_ini_loaded_file()) : '')
 			. ' ' . escapeshellarg($snifferBin)
 			. ' -s' // show sniff codes, works only in dry mode :-(
-			. ' -p' // progress
+			. ($this->showProgress ? ' -p' : '')
+			. ($this->showColors ? ' --colors' : '')
 			. $phpVersionOption
-			. ' --colors'
 			. ' --extensions=php,phpt'
 			. ' --runtime-set ignore_warnings_on_exit true'
 			. ' --no-cache'
