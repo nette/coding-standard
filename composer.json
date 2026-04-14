@@ -3,6 +3,7 @@
 	"license": "MIT",
 	"require": {
 		"php": "^8.0",
+		"nette/command-line": "^1.9.2",
 		"slevomat/coding-standard": "^8.16",
 		"friendsofphp/php-cs-fixer": "^3.87",
 		"squizlabs/php_codesniffer": "^4.0",

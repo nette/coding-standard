@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+use Nette\CommandLine\Parser;
+
 const VERSION = '3.5.0';
 
 // Autoloader
@@ -13,54 +15,62 @@ if (
 
 
 // Argument Parsing
-$paths = [];
-$preset = null;
-$dryRun = true;
-$configFilePhp = null;
-$configFileXml = null;
+$cmd = new Parser(<<<'XX'
 
-for ($i = 1; $i < $argc; $i++) {
-	$arg = $argv[$i];
-	if ($arg === '--preset' && isset($argv[$i + 1])) {
-		$preset = $argv[++$i];
-	} elseif ($arg === '--config-file' && isset($argv[$i + 1])) {
-		$path = $argv[++$i];
-		if (!is_file($path)) {
-			fwrite(STDERR, "Config file not found: $path\n");
-			exit(1);
-		}
-		$abs = realpath($path);
-		$ext = strtolower(pathinfo($abs, PATHINFO_EXTENSION));
-		if ($ext === 'php') {
-			$configFilePhp = $abs;
-		} elseif ($ext === 'xml') {
-			$configFileXml = $abs;
-		} else {
-			fwrite(STDERR, "Config file must have .php or .xml extension: $path\n");
-			exit(1);
-		}
-	} elseif ($arg === '--fix' || $arg === 'fix') {
-		$dryRun = false;
-	} elseif ($arg === 'check') {
-		$dryRun = true;
-	} elseif ($arg === '--help' || $arg === '-h') {
-		echo "Usage: php run.php [check|fix] [--preset <name>] [--config-file <path>] [path1 path2 ...]\n";
-		echo "  check (default): Run tools in dry-run mode.\n";
-		echo "  fix: Run tools and apply fixes.\n";
-		echo "  --preset <name>: Specify preset (e.g., php81). Autodetected if omitted.\n";
-		echo "  --config-file <path>: Additional config file (.php for PHP CS Fixer, .xml for PHP_CodeSniffer).\n";
-		echo "                        May be given twice (once per tool). Merged on top of auto-discovered\n";
-		echo "                        ncs.php / ncs.xml; values from CLI file take precedence.\n";
-		echo "  --version, -V: Show version information.\n";
-		echo "  path1 path2 ...: Specific files or directories to process. Defaults to src/, tests/ or ./\n";
-		exit(0);
-	} elseif ($arg === '--version' || $arg === '-V') {
-		echo 'Nette Coding Standard ' . VERSION . "\n";
-		exit(0);
-	} elseif (!str_starts_with($arg, '-')) {
-		$paths[] = $arg;
+	Usage:
+	    ecs [check | fix] [options] [<path>...]
+
+	Options:
+	    --preset <name>       Specify preset (e.g., php81). Autodetected if omitted.
+	    --config-file <path>  Additional config file (.php for PHP CS Fixer, .xml for PHP_CodeSniffer).
+	                          May be given twice (once per tool).
+	    --fix                 Shortcut for 'fix' mode.
+	    -h | --help           Show this help.
+	    -V | --version        Show version information.
+
+
+	XX, [
+	'--config-file' => [Parser::RealPath => true, Parser::Repeatable => true],
+	'path' => [Parser::Repeatable => true, Parser::Optional => true],
+]);
+
+try {
+	$options = $cmd->parse();
+} catch (Throwable $e) {
+	fwrite(STDERR, 'Error: ' . $e->getMessage() . "\n");
+	exit(1);
+}
+
+if ($cmd->isEmpty() || !empty($options['--help'])) {
+	echo 'Nette Coding Standard ' . VERSION . "\n";
+	$cmd->help();
+	exit(0);
+}
+if (!empty($options['--version'])) {
+	echo 'Nette Coding Standard ' . VERSION . "\n";
+	exit(0);
+}
+
+$paths = $options['path'] ?? [];
+$dryRun = true;
+if (!empty($paths) && in_array($paths[0], ['check', 'fix'], true)) {
+	$dryRun = array_shift($paths) === 'check';
+}
+if (!empty($options['--fix'])) {
+	$dryRun = false;
+}
+
+$preset = $options['--preset'] ?? null;
+$configFilePhp = $configFileXml = null;
+foreach ($options['--config-file'] ?? [] as $path) {
+	$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+	if ($ext === 'php') {
+		$configFilePhp = $path;
+	} elseif ($ext === 'xml') {
+		$configFileXml = $path;
 	} else {
-		fwrite(STDERR, "Warning: Ignoring unknown option '{$arg}'\n");
+		fwrite(STDERR, "Config file must have .php or .xml extension: $path\n");
+		exit(1);
 	}
 }
 
@@ -113,7 +123,7 @@ try {
 	$fixerOk = $checker->runFixer();
 	echo "\n\n";
 	$snifferOk = $checker->runSniffer();
-} catch (\Throwable) {
+} catch (Throwable) {
 	echo "Terminated\n";
 	$checker->cleanup();
 	exit(1);
