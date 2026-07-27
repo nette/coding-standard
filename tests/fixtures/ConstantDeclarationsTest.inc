@@ -1,0 +1,34 @@
+<?php // {"optimizedFunctionsOnly": true, "includedConstants": ["PHP_*", "DIRECTORY_SEPARATOR"]}
+
+namespace App;
+
+class Token
+{
+    // Declared names, not usages. Should be ignored even though they match PHP_* case-insensitively.
+    public const
+        Php_LogicalOr = 257,
+        Php_LogicalAnd = 259;
+
+    public const Php_Whitespace = 336;
+
+    // RHS of a declaration is a real usage. Should be imported.
+    public const Limit = \PHP_INT_MAX;
+
+    public function run()
+    {
+        $e = \PHP_EOL;
+        $x = self::Php_LogicalOr;
+        // Case mismatch with PHP_*. Should be left alone.
+        $y = \Php_LogicalXor;
+    }
+}
+
+enum Backed: int
+{
+    case Php_Hearts = 1;
+}
+
+enum Pure
+{
+    case Php_Spades;
+}

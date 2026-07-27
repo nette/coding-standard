@@ -313,10 +313,14 @@ class OptimizeGlobalCallsSniff implements Sniff
 					continue; // function call, not constant
 				}
 
+				if ($nextToken !== false && $tokens[$nextToken]['code'] === T_EQUAL) {
+					continue; // declared name, not a usage
+				}
+
 				$prevToken = $phpcsFile->findPrevious(T_WHITESPACE, $i - 1, null, true);
 				if (
 					$prevToken === false
-					|| !in_array($tokens[$prevToken]['code'], [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR, T_COLON], true)
+					|| !in_array($tokens[$prevToken]['code'], [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR, T_COLON, T_CONST, T_ENUM_CASE], true)
 				) {
 					return true;
 				}
@@ -461,9 +465,14 @@ class OptimizeGlobalCallsSniff implements Sniff
 				continue;
 			}
 
+			// declared names (const FOO = ..., enum case FOO), not usages
+			if ($nextTokenPtr !== false && $tokens[$nextTokenPtr]['code'] === T_EQUAL) {
+				continue;
+			}
+
 			if (
 				$prevTokenPtr !== false
-				&& in_array($tokens[$prevTokenPtr]['code'], [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR, T_COLON], true)
+				&& in_array($tokens[$prevTokenPtr]['code'], [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR, T_COLON, T_CONST, T_ENUM_CASE], true)
 			) {
 				continue;
 			}
@@ -729,7 +738,8 @@ class OptimizeGlobalCallsSniff implements Sniff
 		}
 
 		if (!empty($this->includedConstants)) {
-			return $this->matchesPatternList($constantName, $this->includedConstants);
+			// constants are case-sensitive in PHP
+			return $this->matchesPatternList($constantName, $this->includedConstants, caseSensitive: true);
 		}
 
 		return defined($constantName);
