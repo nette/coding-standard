@@ -84,3 +84,24 @@ then run `/nette-cs/ecs ...` from anywhere.
 - The actual rule catalogs live in the preset files (`preset-fixer/common/*.php`,
   `preset-sniffer/Nette.xml`, ...) - read those, don't mirror them here. User-facing
   usage (`ncs.php`/`ncs.xml` overrides, CI setup) is in the README / web manual.
+
+## The optimize-fn preset
+
+`preset-sniffer/optimize-fn.xml` (opt-in, sniffer-only - it deliberately has no
+fixer-tree mirror) configures `OptimizeGlobalCallsSniff` to generate grouped
+`use function` / `use const` imports and strip the corresponding `\` prefixes
+from the code body. What gets imported is intentionally narrow:
+
+- **Functions:** with `optimizedFunctionsOnly=true` only the calls the PHP
+  compiler replaces with special opcodes - the list is hardcoded in the sniff
+  (`$compilerOptimizedFunctions`, taken from `zend_compile.c`): `strlen`, the
+  `is_*` family, `boolval`/`intval`/`floatval`/`strval`, `defined`, `chr`, `ord`,
+  `call_user_func(_array)`, `in_array`, `count`/`sizeof`, `get_class`,
+  `get_called_class`, `gettype`, `func_num_args`, `func_get_args`, `array_slice`,
+  `array_key_exists`, `sprintf`. Importing these is what unlocks the opcodes;
+  other global functions gain nothing, so they are not imported.
+- **Constants:** only names matching `includedConstants` in the preset - `PHP_*`
+  and `DIRECTORY_SEPARATOR`. `TRUE`/`FALSE`/`NULL` are always ignored (hardcoded).
+- Existing `use function`/`use const` imports outside these lists are **kept** as
+  long as the symbol is still used in the file; imports are merged into one
+  alphabetically sorted grouped statement per kind.
