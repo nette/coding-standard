@@ -49,7 +49,9 @@ then run `/nette-cs/ecs ...` from anywhere.
 
 - The tool dogfoods its own standard (run `./ecs fix` on it). Sniff tests are
   `tests/SniffTestRunner.phpt` with `tests/fixtures/*.inc` (+ optional `.inc.expected`;
-  a leading `<?php // {"prop": val}` JSON comment injects sniff properties).
+  a leading `<?php // {"prop": val}` JSON comment injects sniff properties). Fixer
+  tests are `tests/FixerTestRunner.phpt` with `tests/fixtures.fixer/*.inc` (same
+  convention, but the JSON comment is the enabled-rules array).
 
 ## Working in this repo
 
@@ -69,11 +71,13 @@ then run `/nette-cs/ecs ...` from anywhere.
   which `php80.php` folds into the merge - **wrapping a preset in a function or
   renaming that variable silently drops all overrides.** Merge operators differ on
   purpose: `array_merge` (right wins) in `php80.php` vs `+` (left wins) in `php81+`.
-- **The four `src/Fixer/*` shadow their upstream fixers** ("disable stock, enable
+- **The five `src/Fixer/*` shadow their upstream fixers** ("disable stock, enable
   `Nette/*`"). Priority ordering matters (`method_argument_space` 30, then
   `braces_position` -2, then `statement_indentation` -3). `MethodArgumentSpaceFixer`
   only touches CALLS, not declarations; `ClassAndTraitVisibilityRequiredFixer`
-  reflection-wraps a `final` upstream fixer.
+  reflection-wraps a `final` upstream fixer; `NoLeadingSlashInGlobalNamespaceFixer`
+  forks the `PhpCsFixerCustomFixers` one to keep the slash when an import in the same
+  file shadows the first name segment.
 - **The sniffer wrapper ruleset (preset -> `ncs.xml` -> CLI xml) is built only for a
   `phpDD`-named preset** - a custom-named preset silently ignores project sniffer
   overrides. `src/NetteCodingStandard/ruleset.xml` is vestigial; custom sniffs are

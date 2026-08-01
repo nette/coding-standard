@@ -22,5 +22,7 @@ return [
 	'class_reference_name_casing' => true,
 
 	// Classes in the global namespace cannot contain leading slashes
-	PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer::name() => true,
+	// (fork of the PhpCsFixerCustomFixers one, which ignores imports shadowing the name)
+	PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer::name() => false,
+	'Nette/no_leading_slash_in_global_namespace' => true,
 ];

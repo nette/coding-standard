@@ -1,5 +1,12 @@
 <?php declare(strict_types=1);
 
+use Foo\Foo;
+
+// the import shadows the root namespace, so these leading slashes must stay
+$foo = new Foo;
+$bar = new \Foo\Bar\Baz;
+$baz = \Foo\Bar::CONSTANT;
+
 
 function test(?array $a, int $b)
 {

@@ -111,7 +111,14 @@ the same concern:
 'modifier_keywords' => false,    'Nette/class_and_trait_visibility_required' => true,
 ```
 
-So the four `src/Fixer/*` classes *shadow* their upstream equivalents. Two facts
+`common/replaces.php` does the same for a *third-party* fixer:
+
+```
+PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer::name() => false,
+'Nette/no_leading_slash_in_global_namespace' => true,
+```
+
+So the five `src/Fixer/*` classes *shadow* their upstream equivalents. Three facts
 worth carrying:
 
 - **Ordering is by `getPriority()`, and it matters.** `method_argument_space`
@@ -121,6 +128,14 @@ worth carrying:
   fork of the stock fixer gated on `isGivenKind(T_STRING)` (~line 165); multiline
   *declaration* formatting is intentionally out of its scope. If declaration
   spacing looks unenforced, this is why.
+- **`NoLeadingSlashInGlobalNamespaceFixer` exists for one guard the original lacks.**
+  Upstream decides purely from the *preceding* token, so in a file with no `namespace`
+  declaration it turns `new \Foo\Bar` into `new Foo\Bar` even when `use Foo\Foo;` makes
+  `Foo` an alias — the name then resolves to `Foo\Foo\Bar` and the code breaks at
+  runtime with no fixer, sniffer or PHPStan complaint. The fork collects the file's
+  class imports and keeps the slash whenever the first segment of the name matches one
+  (case-insensitively). Single-segment names are equally exposed (`use Foo\Exception;`
+  shadows `\Exception`), so the check is on the segment, not on the name's arity.
 - **`ClassAndTraitVisibilityRequiredFixer` wraps the stock fixer via Reflection.**
   The upstream `VisibilityRequiredFixer` and its `applyFix()` are `final`, so it
   can't be subclassed; the fork holds an instance and reflection-invokes
@@ -189,6 +204,7 @@ The success predicate is not uniform:
 | Sniffer rule sets | `preset-sniffer/{php8N.xml, Nette.xml, clean-code.xml, types.xml, optimize-fn.xml}` |
 | Custom sniffs | `src/NetteCodingStandard/Sniffs/**` |
 | Sniff test harness (isolated per-sniff ruleset) | `tests/SniffTestRunner.phpt`, `tests/fixtures/*.inc[.expected]` |
+| Fixer test harness (isolated per-rule config) | `tests/FixerTestRunner.phpt`, `tests/fixtures.fixer/*.inc[.expected]` |
 
 Project-side extension points: `ncs.php` (fixer overrides, highest precedence),
 `ncs.xml` (sniffer overrides, needs no preset ref — the wrapper adds it), and

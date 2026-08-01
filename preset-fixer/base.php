@@ -9,6 +9,7 @@ $config->registerCustomFixers([
 	new NetteCodingStandard\Fixer\Basic\BracesPositionFixer,
 	new NetteCodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer,
 	new NetteCodingStandard\Fixer\FunctionNotation\MethodArgumentSpaceFixer,
+	new NetteCodingStandard\Fixer\Import\NoLeadingSlashInGlobalNamespaceFixer,
 ]);
 $config->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect());
 $config->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers);
