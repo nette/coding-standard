@@ -1,0 +1,16 @@
+<?php // {"Nette/ordered_imports": true}
+
+namespace First {
+	use Nette\Utils\Strings;
+	use function strlen;
+	use const PHP_EOL;
+
+	echo Strings::upper('x') . strlen('y') . PHP_EOL;
+}
+
+namespace Second {
+	use Nette\Utils\Arrays;
+	use const PHP_INT_MAX;
+
+	echo Arrays::first([1]) . PHP_INT_MAX;
+}

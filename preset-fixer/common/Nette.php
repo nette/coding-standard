@@ -8,7 +8,10 @@ return [
 	'single_line_after_imports' => false, // Nette uses two empty lines
 	'blank_line_after_namespace' => false,
 	'single_import_per_statement' => false,
-	'ordered_imports' => ['imports_order' => ['class', 'function', 'const']],
+	// (fork of the stock one, which pours sorted names back into the original statement
+	// prefixes and thus mixes types together when imports are comma-separated)
+	'ordered_imports' => false,
+	'Nette/ordered_imports' => true,
 	'blank_line_between_import_groups' => false,
 
 	// Ensures a single space after language constructs

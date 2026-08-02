@@ -10,6 +10,7 @@ $config->registerCustomFixers([
 	new NetteCodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer,
 	new NetteCodingStandard\Fixer\FunctionNotation\MethodArgumentSpaceFixer,
 	new NetteCodingStandard\Fixer\Import\NoLeadingSlashInGlobalNamespaceFixer,
+	new NetteCodingStandard\Fixer\Import\OrderedImportsFixer,
 ]);
 $config->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect());
 $config->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers);

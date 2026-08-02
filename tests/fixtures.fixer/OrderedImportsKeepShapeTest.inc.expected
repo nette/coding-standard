@@ -1,0 +1,16 @@
+<?php // {"Nette/ordered_imports": true}
+
+namespace Demo;
+
+use Demo\First, Demo\Second;
+use Demo\Third;
+use function strlen;
+use const PHP_EOL;
+
+class Demo
+{
+	public function go(): string
+	{
+		return First::x() . Second::y() . Third::z() . strlen('x') . PHP_EOL;
+	}
+}

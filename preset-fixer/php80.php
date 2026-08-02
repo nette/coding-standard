@@ -10,5 +10,11 @@ $rules = [
 	'void_return' => false,
 ];
 
-$config->setRules(array_merge($rules, $config->getRules(), $customRules));
+// enabling the stock fixer again would let it run alongside `Nette/ordered_imports`
+// (same priority, undefined order) and corrupt comma-separated imports, so it stays off
+$enforced = [
+	'ordered_imports' => false,
+];
+
+$config->setRules(array_merge($rules, $config->getRules(), $customRules, $enforced));
 return $config;

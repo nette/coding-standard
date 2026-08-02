@@ -1,0 +1,20 @@
+<?php // {"Nette/ordered_imports": true}
+
+namespace Demo;
+
+use Other\SomeTrait;
+use function strlen;
+use const PHP_EOL;
+
+class Demo
+{
+	use SomeTrait;
+
+	public function go(): callable
+	{
+		$x = 1;
+		return function () use ($x) {
+			return $x . strlen('a') . PHP_EOL;
+		};
+	}
+}

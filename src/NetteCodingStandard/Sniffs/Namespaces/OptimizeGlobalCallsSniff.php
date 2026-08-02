@@ -237,7 +237,7 @@ class OptimizeGlobalCallsSniff implements Sniff
 
 	private function addNewUseBlock(File $phpcsFile, string $type, array $names)
 	{
-		$insertPointInfo = $this->findInsertionPointInfo($phpcsFile);
+		$insertPointInfo = $this->findInsertionPointInfo($phpcsFile, $type);
 		if ($insertPointInfo === null) {
 			return;
 		}
@@ -248,6 +248,11 @@ class OptimizeGlobalCallsSniff implements Sniff
 		sort($names);
 		$eol = $phpcsFile->eolChar;
 		$content = 'use ' . $type . ' ' . implode(', ', $names) . ';';
+
+		if ($insertPointInfo['before']) {
+			$phpcsFile->fixer->addContentBefore($insertPosition, $content . $eol);
+			return;
+		}
 
 		$prefix = ($afterType === 'namespace') ? $eol . $eol : $eol;
 
@@ -502,30 +507,47 @@ class OptimizeGlobalCallsSniff implements Sniff
 	}
 
 
-	private function findInsertionPointInfo(File $phpcsFile): ?array
+	/**
+	 * Imports are kept in the order class, function, const, so a new block is anchored to the
+	 * last statement it may follow, not simply to the last one in the file.
+	 */
+	private function findInsertionPointInfo(File $phpcsFile, string $type): ?array
 	{
 		$tokens = $phpcsFile->getTokens();
-		$lastUsePos = null;
+		$anchorPos = $firstConstPos = null;
 
-		for ($i = $phpcsFile->numTokens - 1; $i >= 0; $i--) {
-			if ($tokens[$i]['code'] === T_USE && $this->isTopLevelUseStatement($phpcsFile, $i)) {
-				$lastUsePos = $i;
-				break;
+		for ($i = 0; $i < $phpcsFile->numTokens; $i++) {
+			if ($tokens[$i]['code'] !== T_USE || !$this->isTopLevelUseStatement($phpcsFile, $i)) {
+				continue;
+			}
+
+			$statement = $this->parseUseStatement($phpcsFile, $i);
+			$isConst = $statement !== null && $statement['type'] === 'const';
+			if ($isConst && $firstConstPos === null) {
+				$firstConstPos = $i;
+			}
+
+			if ($type === 'const' || !$isConst) {
+				$anchorPos = $i;
 			}
 		}
 
-		if ($lastUsePos !== null) {
-			$semicolonPos = $phpcsFile->findNext(T_SEMICOLON, $lastUsePos);
+		if ($anchorPos !== null) {
+			$semicolonPos = $phpcsFile->findNext(T_SEMICOLON, $anchorPos);
 			if ($semicolonPos !== false) {
-				return ['position' => $semicolonPos, 'after' => 'use'];
+				return ['position' => $semicolonPos, 'after' => 'use', 'before' => false];
 			}
+		}
+
+		if ($firstConstPos !== null) { // constants are the only imports, the new block goes above them
+			return ['position' => $firstConstPos, 'after' => 'use', 'before' => true];
 		}
 
 		$namespacePos = $phpcsFile->findNext(T_NAMESPACE, 0);
 		if ($namespacePos !== false) {
 			$semicolonPos = $phpcsFile->findNext(T_SEMICOLON, $namespacePos);
 			if ($semicolonPos !== false) {
-				return ['position' => $semicolonPos, 'after' => 'namespace'];
+				return ['position' => $semicolonPos, 'after' => 'namespace', 'before' => false];
 			}
 		}
 

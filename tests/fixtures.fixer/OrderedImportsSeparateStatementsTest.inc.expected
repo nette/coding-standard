@@ -1,0 +1,17 @@
+<?php // {"Nette/ordered_imports": true}
+
+namespace Demo;
+
+use Nette\Utils\Arrays;
+use Nette\Utils\Validators;
+use function count;
+use function strlen;
+use const PHP_EOL;
+
+class Demo
+{
+	public function go(array $items): string
+	{
+		return Arrays::first($items) . Validators::isList($items) . count($items) . strlen('x') . PHP_EOL;
+	}
+}

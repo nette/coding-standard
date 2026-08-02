@@ -1,0 +1,9 @@
+<?php // {"Nette/ordered_imports": true}
+
+declare(strict_types=1);
+
+use Nette\Utils\Strings;
+use function strlen;
+use const PHP_EOL;
+
+echo Strings::upper('x') . strlen('y') . PHP_EOL;

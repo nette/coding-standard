@@ -52,6 +52,7 @@ class FixerTestRunner
 		$php .= '	new NetteCodingStandard\Fixer\ClassNotation\ClassAndTraitVisibilityRequiredFixer,' . PHP_EOL;
 		$php .= '	new NetteCodingStandard\Fixer\FunctionNotation\MethodArgumentSpaceFixer,' . PHP_EOL;
 		$php .= '	new NetteCodingStandard\Fixer\Import\NoLeadingSlashInGlobalNamespaceFixer,' . PHP_EOL;
+		$php .= '	new NetteCodingStandard\Fixer\Import\OrderedImportsFixer,' . PHP_EOL;
 		$php .= ']);' . PHP_EOL;
 		$php .= '$config->setUsingCache(false);' . PHP_EOL;
 		$php .= '$config->setIndent("\t");' . PHP_EOL;

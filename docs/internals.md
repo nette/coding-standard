@@ -91,9 +91,11 @@ php85.php → … → php81.php → php80.php → base.php → (common/*.php)
   which folds it into the final merge. Wrapping any preset in a function, or
   renaming the variable, silently drops all project/CLI overrides.
 - **Merge operator differs by layer, deliberately:**
-  - `php80.php`: `array_merge($versionDefaults, $commonRules, $customRules)` —
+  - `php80.php`: `array_merge($versionDefaults, $commonRules, $customRules, $enforced)` —
     right wins, so **project/CLI overrides have the highest precedence**, then
-    common rules, then version defaults (e.g. `void_return => false`).
+    common rules, then version defaults (e.g. `void_return => false`). `$enforced` is
+    the one exception, a short list a project must not override; see
+    `Nette/ordered_imports` below for why it holds `'ordered_imports' => false`.
   - `php81+`: `$migration + $config->getRules()` — the `+` union keeps
     **left/earlier** keys; safe only because migration keys are new. Do not swap
     `+` and `array_merge` when editing presets; they resolve conflicts opposite
@@ -118,7 +120,7 @@ PhpCsFixerCustomFixers\Fixer\NoLeadingSlashInGlobalNamespaceFixer::name() => fal
 'Nette/no_leading_slash_in_global_namespace' => true,
 ```
 
-So the five `src/Fixer/*` classes *shadow* their upstream equivalents. Three facts
+So the six `src/Fixer/*` classes *shadow* their upstream equivalents. Facts
 worth carrying:
 
 - **Ordering is by `getPriority()`, and it matters.** `method_argument_space`
@@ -136,6 +138,21 @@ worth carrying:
   class imports and keeps the slash whenever the first segment of the name matches one
   (case-insensitively). Single-segment names are equally exposed (`use Foo\Exception;`
   shadows `\Exception`), so the check is on the segment, not on the name's arity.
+- **`OrderedImportsFixer` exists because the stock one corrupts comma-separated
+  imports.** `single_import_per_statement` is off (Nette groups `use function` /
+  `use const`), and upstream `setNewOrder()` keeps the original statement prefixes in
+  place and pours the sorted names back into them. With mixed types the names then leak
+  across the boundary: `use const A, B;` above `use function c, d;` comes back as
+  `use function c, d, A;` / `use function B;`, and a class statement can end up holding
+  a function. The fork regenerates the whole block instead, so a name can never change
+  its import type. It keeps each type's *shape* (the number of statements and how many
+  names each held), so it only reorders and never merges or splits what the author
+  wrote. **A comment anywhere in the block makes the whole block untouchable**, including
+  one behind the last semicolon: rewriting the block would drop it, and reordering around
+  it would silently reattach it to an import it never described. `php80.php` therefore
+  also *enforces* `'ordered_imports' => false` after merging `$customRules` — a project
+  re-enabling the stock fixer would get both, at the same priority `-30` and in undefined
+  order, and the stock one would corrupt the result the fork just produced.
 - **`ClassAndTraitVisibilityRequiredFixer` wraps the stock fixer via Reflection.**
   The upstream `VisibilityRequiredFixer` and its `applyFix()` are `final`, so it
   can't be subclassed; the fork holds an instance and reflection-invokes
@@ -174,6 +191,12 @@ Temp artefacts (`filelist.tmp`, `ruleset-*.tmp.xml`) are removed by
 - **`OptimizeGlobalCallsSniff` is not in the default `Nette.xml`.** It ships only
   in the optional `optimize-fn.xml` preset; the test runner registers it via
   `<config name="installed_paths">` pointing at `src/NetteCodingStandard`.
+- **`optimize-fn` has no fixer preset, so running it skips PHP CS Fixer entirely**
+  (`Checker::runFixer()` prints "has no fixer rules, skipped"). The sniff therefore
+  cannot lean on `Nette/ordered_imports` to place its output: `findInsertionPointInfo()`
+  anchors a new block to the last statement it may follow, so `use function` lands above
+  an existing `use const` (and above it, if constants are the only imports so far).
+  It only places new blocks; reordering statements that already exist is the fixer's job.
 
 ### PHPCS 4 / PHP 8 token compatibility
 

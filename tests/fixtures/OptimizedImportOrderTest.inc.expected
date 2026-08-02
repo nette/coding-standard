@@ -1,0 +1,15 @@
+<?php // {"optimizedFunctionsOnly": true, "includedConstants": ["PHP_*"]}
+
+namespace App;
+
+use function strlen;
+use const PHP_EOL;
+
+class MyClass
+{
+    public function run()
+    {
+        $len = strlen('foo');
+        echo $len . PHP_EOL;
+    }
+}

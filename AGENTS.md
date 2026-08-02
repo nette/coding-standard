@@ -71,13 +71,14 @@ then run `/nette-cs/ecs ...` from anywhere.
   which `php80.php` folds into the merge - **wrapping a preset in a function or
   renaming that variable silently drops all overrides.** Merge operators differ on
   purpose: `array_merge` (right wins) in `php80.php` vs `+` (left wins) in `php81+`.
-- **The five `src/Fixer/*` shadow their upstream fixers** ("disable stock, enable
+- **The six `src/Fixer/*` shadow their upstream fixers** ("disable stock, enable
   `Nette/*`"). Priority ordering matters (`method_argument_space` 30, then
   `braces_position` -2, then `statement_indentation` -3). `MethodArgumentSpaceFixer`
   only touches CALLS, not declarations; `ClassAndTraitVisibilityRequiredFixer`
   reflection-wraps a `final` upstream fixer; `NoLeadingSlashInGlobalNamespaceFixer`
   forks the `PhpCsFixerCustomFixers` one to keep the slash when an import in the same
-  file shadows the first name segment.
+  file shadows the first name segment; `OrderedImportsFixer` forks the stock one,
+  which corrupts comma-separated imports of mixed types.
 - **The sniffer wrapper ruleset (preset -> `ncs.xml` -> CLI xml) is built only for a
   `phpDD`-named preset** - a custom-named preset silently ignores project sniffer
   overrides. `src/NetteCodingStandard/ruleset.xml` is vestigial; custom sniffs are
