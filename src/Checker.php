@@ -14,6 +14,7 @@ class Checker
 	];
 
 	private string $fileListPath;
+	private array $files = [];
 
 
 	public function __construct(
@@ -65,7 +66,36 @@ class Checker
 			}
 		}
 
+		$this->files = $result;
 		file_put_contents($this->fileListPath, implode("\n", $result));
+	}
+
+
+	/**
+	 * Returns hashes of all files on the list, to be compared by getModified().
+	 */
+	public function snapshot(): array
+	{
+		$res = [];
+		foreach ($this->files as $file) {
+			$res[$file] = @md5_file($file);
+		}
+		return $res;
+	}
+
+
+	/**
+	 * Returns files whose content differs from the given snapshot.
+	 */
+	public function getModified(array $snapshot): array
+	{
+		$res = [];
+		foreach ($this->snapshot() as $file => $hash) {
+			if (($snapshot[$file] ?? null) !== $hash) {
+				$res[] = $file;
+			}
+		}
+		return $res;
 	}
 
 
@@ -75,6 +105,7 @@ class Checker
 	 */
 	public function runFixer(): bool
 	{
+		echo "\n== PHP CS Fixer ==\n";
 		$fixerBin = $this->vendorDir . '/friendsofphp/php-cs-fixer/php-cs-fixer';
 
 		$presetPath = dirname(__DIR__) . '/preset-fixer';
@@ -86,6 +117,7 @@ class Checker
 		$presetFile = "$presetPath/$preset.php";
 		if (!is_file($presetFile)) {
 			if (is_file(dirname(__DIR__) . "/preset-sniffer/$preset.xml")) {
+				echo "Preset '$preset' has no fixer rules, skipped.\n";
 				return true;
 			}
 			fwrite(STDERR, "Error: Preset '$preset' not found.\n");
@@ -110,6 +142,7 @@ class Checker
 	 */
 	public function runSniffer(): bool
 	{
+		echo "\n== PHP_CodeSniffer ==\n";
 		$snifferBin = $this->vendorDir . '/squizlabs/php_codesniffer/bin/' . ($this->dryRun ? 'phpcs' : 'phpcbf');
 
 		$presetPath = dirname(__DIR__) . '/preset-sniffer';
@@ -121,6 +154,7 @@ class Checker
 		$presetFile = "$presetPath/$preset.xml";
 		if (!is_file($presetFile)) {
 			if (is_file(dirname(__DIR__) . "/preset-fixer/$preset.php")) {
+				echo "Preset '$preset' has no sniffer rules, skipped.\n";
 				return true;
 			}
 			fwrite(STDERR, "Error: Preset '$preset' not found.\n");

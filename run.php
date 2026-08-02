@@ -123,22 +123,39 @@ if (function_exists('pcntl_signal')) {
 }
 
 // Run
+$snapshot = $dryRun ? [] : $checker->snapshot();
+
+// each engine reports its own findings, but only their union tells whether anything really changed
+$reportModified = function () use ($checker, $snapshot, $dryRun) {
+	if ($dryRun) {
+		return;
+	}
+	$count = count($checker->getModified($snapshot));
+	echo $count
+		? "Modified $count file" . ($count > 1 ? 's' : '') . ".\n"
+		: "No file was modified.\n";
+};
+
 try {
 	$fixerOk = $checker->runFixer();
-	echo "\n\n";
 	$snifferOk = $checker->runSniffer();
 } catch (Throwable) {
-	echo "Terminated\n";
+	echo "\n== Summary ==\nTerminated.\n";
+	$reportModified();
 	$checker->cleanup();
 	exit(1);
 }
 
 $checker->cleanup();
 
-if ($fixerOk && $snifferOk) {
-	echo $dryRun ? "Code style checks passed.\n" : "Code style fixed successfully.\n";
-	exit(0);
+echo "\n== Summary ==\n";
+$ok = $fixerOk && $snifferOk;
+$reportModified();
+
+if ($dryRun) {
+	echo $ok ? "Code style checks passed.\n" : "Code style issues found.\n";
 } else {
-	echo $dryRun ? "Code style issues found.\n" : "Code style fixing failed or issues remain.\n";
-	exit(1);
+	echo $ok ? "Code style fixed successfully.\n" : "Code style fixing failed or issues remain.\n";
 }
+
+exit($ok ? 0 : 1);

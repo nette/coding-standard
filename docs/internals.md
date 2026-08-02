@@ -25,6 +25,16 @@ engine's preset tree; adding a version rule usually means editing **both** trees
 Both engines run in both modes. `check` is dry-run for both; `fix` lets both
 rewrite. A run "passes" only if both engines pass.
 
+**Neither engine knows what the other did, so neither one's summary is the run's
+verdict.** Each prints its own ("Fixed 1 of 2 files" / "No violations were
+found"), and the sniffer's, printed last, used to read as the final word even
+when the fixer had just rewritten files. Hence the `== engine ==` headers around
+each subprocess and the `== Summary ==` block: in fix mode (only) `run.php`
+md5-hashes the file list before the run (`Checker::snapshot()`) and diffs it
+afterwards (`getModified()`); that diff is the only source that spans both
+engines. Hashing, not mtime: a fix landing in the same second as the snapshot
+leaves mtime untouched.
+
 ## Preset resolution: two mirrored trees
 
 Presets come in two parallel trees keyed by an **identical name**:
@@ -37,11 +47,12 @@ Presets come in two parallel trees keyed by an **identical name**:
 - **Auto-detection** (`detectPhpVersion` + `derivePresetFromVersion`): read the
   *consumer* project's `composer.json` `require.php`, extract `X.Y`, then pick the
   **highest `phpXX` preset ≤ that version**. `--preset` overrides detection.
-- **Trap — one-sided presets are silent no-ops.** If a preset name resolves in
-  only one tree, the *other* engine returns success without doing anything
+- **Trap — one-sided presets are no-ops.** If a preset name resolves in only one
+  tree, the *other* engine returns success without doing anything
   (`Checker::runFixer`/`runSniffer` `return true` when their file is missing).
   A preset that exists only as `.xml` therefore skips the fixer entirely, and
-  vice versa — no error is raised. Keep the trees in lockstep.
+  vice versa — it is announced ("has no fixer rules, skipped") but is not an
+  error. Keep the trees in lockstep.
 
 ## How the file list reaches each engine (asymmetric)
 
