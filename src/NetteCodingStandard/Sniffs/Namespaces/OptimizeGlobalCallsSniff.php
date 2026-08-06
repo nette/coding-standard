@@ -59,6 +59,7 @@ class OptimizeGlobalCallsSniff implements Sniff
 	public $includedConstants = [];
 	public $excludedConstants = [];
 	private static $processedFiles = [];
+	private $blockInsertPositions = [];
 
 	private $compilerOptimizedFunctions = [
 		'strlen', 'is_null', 'is_bool', 'is_long', 'is_int', 'is_integer',
@@ -157,6 +158,7 @@ class OptimizeGlobalCallsSniff implements Sniff
 	): bool
 	{
 		try {
+			$this->blockInsertPositions = [];
 			$phpcsFile->fixer->beginChangeset();
 
 			$this->processUseStatements($phpcsFile, 'function', $finalFunctions, $existingUseStatements['functions']);
@@ -254,9 +256,12 @@ class OptimizeGlobalCallsSniff implements Sniff
 			return;
 		}
 
-		$prefix = ($afterType === 'namespace') ? $eol . $eol : $eol;
+		// a blank line separates the block from the namespace, but not two blocks
+		// appended to the same position within one changeset
+		$blankLine = $afterType === 'namespace' && !in_array($insertPosition, $this->blockInsertPositions, true);
+		$this->blockInsertPositions[] = $insertPosition;
 
-		$phpcsFile->fixer->addContent($insertPosition, $prefix . $content);
+		$phpcsFile->fixer->addContent($insertPosition, ($blankLine ? $eol . $eol : $eol) . $content);
 	}
 
 

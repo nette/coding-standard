@@ -197,6 +197,14 @@ Temp artefacts (`filelist.tmp`, `ruleset-*.tmp.xml`) are removed by
   anchors a new block to the last statement it may follow, so `use function` lands above
   an existing `use const` (and above it, if constants are the only imports so far).
   It only places new blocks; reordering statements that already exist is the fixer's job.
+- **Both new blocks can land on one insertion point, and only the first may carry the
+  blank line.** With no imports at all, `findInsertionPointInfo()` returns the namespace
+  semicolon for `use function` *and* for `use const`, and the fixer concatenates the two
+  `addContent()` calls there. Each block asks for a `\n\n` separator from the namespace,
+  so the second one would open a blank line between them; `addNewUseBlock()` therefore
+  tracks positions already used in this changeset (`$blockInsertPositions`, reset in
+  `applyFixWithErrorHandling()`). Without it the output is not idempotent - the stray
+  blank line survives until the next default-preset run removes it.
 
 ### PHPCS 4 / PHP 8 token compatibility
 
