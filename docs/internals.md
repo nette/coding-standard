@@ -47,6 +47,12 @@ Presets come in two parallel trees keyed by an **identical name**:
 - **Auto-detection** (`detectPhpVersion` + `derivePresetFromVersion`): read the
   *consumer* project's `composer.json` `require.php`, extract `X.Y`, then pick the
   **highest `phpXX` preset ≤ that version**. `--preset` overrides detection.
+- **`--preset php` (`Checker::AutoPreset`) asks for that same detection**, so it is
+  equivalent to omitting the option. It exists for callers that always pass
+  `--preset` and would otherwise have to special-case the default. `resolvePreset()`
+  runs once per tree because detection globs whichever tree it is handed; as long as
+  the trees stay mirrored both answers are identical. The name is reserved either
+  way: a real `preset-*/php.*` file would be unreachable.
 - **Trap — one-sided presets are no-ops.** If a preset name resolves in only one
   tree, the *other* engine returns success without doing anything
   (`Checker::runFixer`/`runSniffer` `return true` when their file is missing).

@@ -67,6 +67,12 @@ The tool supports PHP 8.0 to 8.5 and applies the rules incrementally according t
 ecs check --preset php81
 ```
 
+The name `php` stands for the auto-detected version preset, so `--preset php` behaves exactly like omitting the option. That is useful for tools that always pass `--preset`:
+
+```shell
+ecs fix --preset php
+```
+
 
 ### Custom Configuration
 

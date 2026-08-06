@@ -5,6 +5,9 @@
  */
 class Checker
 {
+	/** preset name standing for the one derived from the PHP version */
+	public const AutoPreset = 'php';
+
 	private const IgnoredPaths = [
 		'/fixtures.*/',
 		'expected',
@@ -109,9 +112,8 @@ class Checker
 		$fixerBin = $this->vendorDir . '/friendsofphp/php-cs-fixer/php-cs-fixer';
 
 		$presetPath = dirname(__DIR__) . '/preset-fixer';
-		$preset = $this->preset;
-		if ($preset === null) {
-			$preset = $this->derivePresetFromVersion($presetPath);
+		$preset = $this->resolvePreset($presetPath);
+		if ($preset !== $this->preset) {
 			echo "Preset: $preset detected from PHP version\n";
 		}
 		$presetFile = "$presetPath/$preset.php";
@@ -146,9 +148,8 @@ class Checker
 		$snifferBin = $this->vendorDir . '/squizlabs/php_codesniffer/bin/' . ($this->dryRun ? 'phpcs' : 'phpcbf');
 
 		$presetPath = dirname(__DIR__) . '/preset-sniffer';
-		$preset = $this->preset;
-		if ($preset === null) {
-			$preset = $this->derivePresetFromVersion($presetPath);
+		$preset = $this->resolvePreset($presetPath);
+		if ($preset !== $this->preset) {
 			echo "Preset: $preset detected from PHP version\n";
 		}
 		$presetFile = "$presetPath/$preset.xml";
@@ -233,6 +234,18 @@ class Checker
 			"<?xml version=\"1.0\"?>\n<ruleset name=\"Combined\">\n$refsXml</ruleset>\n",
 		);
 		return $wrapper;
+	}
+
+
+	/**
+	 * Returns the preset to use in the given tree; the name 'php' asks for the
+	 * same auto-detection as omitting --preset altogether.
+	 */
+	private function resolvePreset(string $presetPath): string
+	{
+		return $this->preset === null || $this->preset === self::AutoPreset
+			? $this->derivePresetFromVersion($presetPath)
+			: $this->preset;
 	}
 
 

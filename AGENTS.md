@@ -30,6 +30,7 @@ fixers/sniffs and version-specific presets.
 # Check (dry-run) / fix, with optional paths (default: src tests) and preset
 ./ecs check src tests
 ./ecs fix src tests --preset php81
+./ecs fix src tests --preset php     # 'php' = the auto-detected version preset
 
 # Extra config layered on top (.php -> Fixer, .xml -> Sniffer; repeat for both)
 ./ecs fix src --config-file ./overrides.php --config-file ./overrides.xml

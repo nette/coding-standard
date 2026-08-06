@@ -22,7 +22,8 @@ $cmd = new Parser(<<<'XX'
 	    ecs [check | fix] [options] [<path>...]
 
 	Options:
-	    --preset <name>       Specify preset (e.g., php81). Autodetected if omitted.
+	    --preset <name>       Specify preset (e.g., php81), or 'php' for the one
+	                          matching the PHP version. Autodetected if omitted.
 	    --config-file <path>  Additional config file (.php for PHP CS Fixer, .xml for PHP_CodeSniffer).
 	                          May be given twice (once per tool).
 	    --fix                 Shortcut for 'fix' mode.
@@ -106,7 +107,7 @@ echo 'Mode: ' . ($dryRun ? 'Check (dry-run)' : 'Fix') . "\n";
 $paths = $paths ?: array_filter(['src', 'tests'], 'is_dir') ?: ['.'];
 $checker->setPaths($paths);
 echo 'Paths: ' . implode(', ', $paths) . "\n";
-if ($preset) {
+if ($preset && $preset !== Checker::AutoPreset) {
 	echo "Preset: {$preset}\n";
 }
 
