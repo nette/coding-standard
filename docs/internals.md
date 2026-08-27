@@ -205,6 +205,13 @@ Temp artefacts (`filelist.tmp`, `ruleset-*.tmp.xml`) are removed by
   tracks positions already used in this changeset (`$blockInsertPositions`, reset in
   `applyFixWithErrorHandling()`). Without it the output is not idempotent - the stray
   blank line survives until the next default-preset run removes it.
+- **The sniff writes statements, not the gap below them, so it caps that gap itself.**
+  Nothing in either preset governs the blank lines between the import block and the code
+  under it, and a removed statement leaves its line behind as an extra blank one - whether
+  the sniff removed it or someone did by hand before the run. `limitBlankLinesAfterBlock()`
+  therefore closes the changeset by reducing a gap wider than two blank lines to two,
+  measured from the last statement that survives the changeset (or from the namespace, when
+  the block ends up empty). It only shrinks: a file that already fits is never reformatted.
 
 ### PHPCS 4 / PHP 8 token compatibility
 

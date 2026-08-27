@@ -164,6 +164,7 @@ class OptimizeGlobalCallsSniff implements Sniff
 			$this->processUseStatements($phpcsFile, 'function', $finalFunctions, $existingUseStatements['functions']);
 			$this->processUseStatements($phpcsFile, 'const', $finalConstants, $existingUseStatements['constants']);
 			$this->removeBackslashesFromCode($phpcsFile, $finalFunctions, $finalConstants);
+			$this->limitBlankLinesAfterBlock($phpcsFile);
 
 			$phpcsFile->fixer->endChangeset();
 			return true;
@@ -262,6 +263,70 @@ class OptimizeGlobalCallsSniff implements Sniff
 		$this->blockInsertPositions[] = $insertPosition;
 
 		$phpcsFile->fixer->addContent($insertPosition, ($blankLine ? $eol . $eol : $eol) . $content);
+	}
+
+
+	/**
+	 * Caps the gap below the import block at two blank lines, the widest the standard allows.
+	 * Deleting the last statement of a block, or inserting into a file where one was already
+	 * deleted by hand, otherwise leaves the removed line behind as an extra blank one.
+	 */
+	private function limitBlankLinesAfterBlock(File $phpcsFile)
+	{
+		$tokens = $phpcsFile->getTokens();
+		$blockEnd = null;
+
+		for ($i = 0; $i < $phpcsFile->numTokens; $i++) {
+			if (
+				$tokens[$i]['code'] !== T_USE
+				|| !$this->isTopLevelUseStatement($phpcsFile, $i)
+				|| $phpcsFile->fixer->getTokenContent($i) === '' // deleted in this changeset
+			) {
+				continue;
+			}
+
+			$semicolon = $phpcsFile->findNext(T_SEMICOLON, $i);
+			if ($semicolon !== false) {
+				$blockEnd = $semicolon;
+			}
+		}
+
+		foreach ($this->blockInsertPositions as $position) {
+			if ($blockEnd === null || $position > $blockEnd) {
+				$blockEnd = $position;
+			}
+		}
+
+		if ($blockEnd === null) { // nothing left to import, the namespace closes the header
+			$namespacePos = $phpcsFile->findNext(T_NAMESPACE, 0);
+			$blockEnd = $namespacePos === false ? false : $phpcsFile->findNext(T_SEMICOLON, $namespacePos);
+			if ($blockEnd === false) {
+				return;
+			}
+		}
+
+		$gap = '';
+		$next = null;
+		for ($i = $blockEnd + 1; $i < $phpcsFile->numTokens; $i++) {
+			$content = $phpcsFile->fixer->getTokenContent($i);
+			if (trim($content) !== '') {
+				$next = $i;
+				break;
+			}
+			$gap .= $content;
+		}
+
+		if ($next === null || substr_count($gap, "\n") <= 3) {
+			return;
+		}
+
+		for ($i = $blockEnd + 1; $i < $next; $i++) {
+			$phpcsFile->fixer->replaceToken($i, '');
+		}
+
+		$eol = $phpcsFile->eolChar;
+		$indent = substr($gap, strrpos($gap, "\n") + 1);
+		$phpcsFile->fixer->addContent($blockEnd, $eol . $eol . $eol . $indent);
 	}
 
 

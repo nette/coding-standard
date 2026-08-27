@@ -1,0 +1,12 @@
+<?php // {"optimizedFunctionsOnly": true}
+
+namespace App;
+
+
+class MyClass
+{
+    public function run(array $items)
+    {
+        echo $items[0];
+    }
+}
