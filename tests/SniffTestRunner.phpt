@@ -125,7 +125,7 @@ class SniffTestRunner
 		$properties = $this->parsePropertiesFromJsonComment($inputCode);
 		$rulesetPath = $this->createRuleset($properties);
 
-		$command = escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg($this->phpcbfPath);
+		$command = escapeshellarg(phpCliBinary()) . ' ' . escapeshellarg($this->phpcbfPath);
 		$command .= ' --standard=' . escapeshellarg($rulesetPath);
 		$command .= ' --no-cache';
 		$command .= ' ' . escapeshellarg($tempInputFile);

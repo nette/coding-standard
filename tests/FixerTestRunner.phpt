@@ -114,7 +114,7 @@ class FixerTestRunner
 		$rules = $this->parseRulesFromJsonComment($inputCode);
 		$configPath = $this->createConfig($rules, $tempInputFile);
 
-		$command = escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg($this->fixerPath);
+		$command = escapeshellarg(phpCliBinary()) . ' ' . escapeshellarg($this->fixerPath);
 		$command .= ' fix --config=' . escapeshellarg($configPath);
 
 		$descriptorSpec = [
