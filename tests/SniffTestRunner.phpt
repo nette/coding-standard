@@ -136,10 +136,12 @@ class SniffTestRunner
 		];
 
 		$process = proc_open($command, $descriptorSpec, $pipes);
+		$output = '';
 		$errors = '';
 		$exitCode = -1;
 
 		if (is_resource($process)) {
+			$output = stream_get_contents($pipes[1]);
 			fclose($pipes[1]);
 			$errors = stream_get_contents($pipes[2]);
 			fclose($pipes[2]);
@@ -148,7 +150,7 @@ class SniffTestRunner
 
 		// phpcbf exit codes: 0 = nothing to fix, 1 = fixed successfully, 2+ = error
 		if ($exitCode > 1) {
-			return "PHPCBF FAILED WITH EXIT CODE {$exitCode}:\n" . $errors;
+			return "PHPCBF FAILED WITH EXIT CODE {$exitCode}:\n" . $output . $errors;
 		}
 
 		return file_get_contents($tempInputFile);
