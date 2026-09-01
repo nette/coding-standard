@@ -1,5 +1,6 @@
 {
 	"name": "nette/coding-standard",
+	"type": "phpcodesniffer-standard",
 	"license": "MIT",
 	"require": {
 		"php": "^8.0",
