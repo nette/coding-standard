@@ -15,6 +15,7 @@
 			"Nette\\CodingStandard\\": "src"
 		}
 	},
+	"bin": ["ecs"],
 	"scripts": {
 		"tester": "tester tests -s",
 		"phpstan": "phpstan analyse"

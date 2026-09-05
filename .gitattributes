@@ -5,4 +5,5 @@ phpstan.neon    export-ignore
 tests/          export-ignore
 
 *.php*          diff=php
+ecs             text eol=lf
 tests/fixtures*/**  -text

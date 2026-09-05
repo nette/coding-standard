@@ -1,0 +1,67 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+// the entry point of version 3: its command line is translated and handed to DressCode, a version preset
+// maps to the standard itself because the PHP version now comes from the project
+
+foreach ([__DIR__ . '/vendor/autoload.php', __DIR__ . '/../../autoload.php'] as $file) {
+	if (is_file($file)) {
+		require $file;
+		break;
+	}
+}
+
+if (!class_exists(DressCode\Console\Application::class)) {
+	fwrite(STDERR, "Install dependencies using `composer install`.\n");
+	exit(2);
+}
+
+$command = null;
+$forceFix = false;
+$paths = [];
+$options = [];
+$args = array_slice($argv, 1);
+for ($i = 0; $i < count($args); $i++) {
+	$arg = $args[$i];
+	if ($arg === '-h' || $arg === '--help') {
+		$options[] = '--help';
+	} elseif ($arg === '-V' || $arg === '--version') {
+		$options[] = '--version';
+	} elseif ($arg === '--fix') {
+		$forceFix = true;
+	} elseif ($arg === '--no-progress') {
+		// nothing to disable
+	} elseif (preg_match('~^--(preset|config-file)(?:=(.*))?$~', $arg, $m)) {
+		$value = $m[2] ?? $args[++$i] ?? '';
+		if ($m[1] === 'config-file') {
+			fwrite(STDERR, "Option --config-file is no longer supported: configure the project with dresscode.neon or dresscode:ignore comments.\n");
+			exit(2);
+		}
+
+		$presets = [
+			'optimize-fn' => Nette\CodingStandard\Presets\OptimizeFn::class,
+			'clean-code' => Nette\CodingStandard\Presets\CleanCode::class,
+			'types' => Nette\CodingStandard\Presets\Types::class,
+		];
+		if (!preg_match('~^php\d*$~', $value)) {
+			array_push($options, '--preset', $presets[$value] ?? $value);
+		}
+	} elseif ($command === null && $paths === [] && ($arg === 'check' || $arg === 'fix')) {
+		$command = $arg;
+	} else {
+		$paths[] = $arg;
+	}
+}
+
+if (!array_intersect($options, ['--help', '--version'])) {
+	$command = $forceFix ? 'fix' : ($command ?? 'check'); // the paths are left to the configuration, which knows whether it decides them
+}
+
+// what a project without a configuration file gets; version 3 checked src and tests by itself
+$default = DressCode\Config::create()
+	->extension(Nette\CodingStandard\Extension::class)
+	->preset('dresscode/nette')
+	->paths(array_filter(['src', 'tests'], 'is_dir') ?: ['.']);
+
+$argv = array_merge([$argv[0]], $command === null ? [] : [$command], $paths, $options);
+exit((new DressCode\Console\Application(defaultConfig: $default))->run($argv));
