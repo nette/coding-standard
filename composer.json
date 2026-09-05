@@ -3,7 +3,8 @@
 	"description": "Nette Coding Standard: the presets, the file filter and the version 3 entry point on top of DressCode",
 	"license": "MIT",
 	"require": {
-		"dresscode/dresscode": "dev-master"
+		"dresscode/dresscode": "dev-master",
+		"nette/neon": "^3.4"
 	},
 	"require-dev": {
 		"nette/tester": "^2.6",

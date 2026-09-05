@@ -16,6 +16,33 @@ if (!class_exists(DressCode\Console\Application::class)) {
 	exit(2);
 }
 
+if (($argv[1] ?? null) === 'migrate') { // version 3 configuration (ncs.php, ncs.xml) to dresscode.neon
+	$cwd = (string) getcwd();
+	if (is_file("$cwd/dresscode.neon")) {
+		fwrite(STDERR, "Error: dresscode.neon already exists here.\n");
+		exit(2);
+	}
+
+	$migration = new Nette\CodingStandard\ConfigMigration;
+	$config = $migration->migrate($cwd);
+	if ($config === null) {
+		fwrite(STDERR, "Error: nothing to migrate, neither ncs.php nor ncs.xml is here.\n");
+		exit(2);
+	}
+
+	file_put_contents("$cwd/dresscode.neon", $config);
+	echo "dresscode.neon written; delete ncs.php and ncs.xml once it works.\n";
+	foreach ($migration->unknown as $name) {
+		echo "Warning: no rule for $name, left out.\n";
+	}
+
+	foreach ($migration->notes as $note) {
+		echo "Note: $note\n";
+	}
+
+	exit(0);
+}
+
 $command = null;
 $forceFix = false;
 $paths = [];
