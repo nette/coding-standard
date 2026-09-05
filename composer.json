@@ -1,0 +1,27 @@
+{
+	"name": "nette/coding-standard",
+	"description": "Nette Coding Standard: the presets, the file filter and the version 3 entry point on top of DressCode",
+	"license": "MIT",
+	"require": {
+		"dresscode/dresscode": "dev-master"
+	},
+	"require-dev": {
+		"nette/tester": "^2.6",
+		"tracy/tracy": "^2.12",
+		"phpstan/phpstan": "^2.2"
+	},
+	"autoload": {
+		"psr-4": {
+			"Nette\\CodingStandard\\": "src"
+		}
+	},
+	"scripts": {
+		"tester": "tester tests -s",
+		"phpstan": "phpstan analyse"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "4.0-dev"
+		}
+	}
+}

@@ -1,0 +1,20 @@
+# dresscode/dresscode is not on Packagist yet, so `composer install` only works with a local
+# path repository; runs are started manually until the package is published, then this
+# switches to `on: [push, pull_request]`.
+name: Static Analysis
+
+on: workflow_dispatch
+
+jobs:
+    phpstan:
+        name: PHPStan
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 8.5
+                  coverage: none
+
+            - run: composer install --no-progress --prefer-dist
+            - run: composer phpstan -- --no-progress

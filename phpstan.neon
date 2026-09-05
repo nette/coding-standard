@@ -1,0 +1,11 @@
+parameters:
+	level: 8
+
+	paths:
+		- src
+		- tests
+
+	excludePaths:
+		analyseAndScan:
+			- tests/fixtures*
+			- tests/temp/*
