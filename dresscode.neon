@@ -1,0 +1,17 @@
+extensions:
+	- Nette\CodingStandard\Extension
+
+presets:
+	- dresscode/nette
+
+style:
+	eol: auto
+
+paths:
+	- src
+	- tests
+	- ecs
+
+fileExtensions:
+	- php
+	- phpt
