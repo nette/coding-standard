@@ -5,8 +5,30 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 
-Introduction
-------------
+> [!IMPORTANT]
+> **This project is abandoned in favor of [DressCode](https://dresscode.run)**, the next-generation tool that checks and fixes the [Nette coding standard](https://doc.nette.org/contributing/coding-standard), which it has built in as the `nette` standard. Version 3 is the last one: it keeps working, but it gets no new rules and no new features. How to switch is described in [Moving from Version 3](https://doc.nette.org/tools/coding-standard#moving-from-version-3).
+
+
+Why DressCode
+-------------
+
+- **One tool instead of two.** Nette Coding Standard drives PHP CS Fixer and PHP_CodeSniffer side by side, each with its own rules and its own configuration (`ncs.php`, `ncs.xml`). DressCode is a single engine with a single `dresscode.neon`.
+- **It changes only what it fixes.** DressCode reads every file into a lossless syntax tree, so a fix touches the piece of code that broke the standard and nothing else.
+- **It is faster.** One file takes about a third to a half of the time PHP CS Fixer needs, and fixing a project takes 36 to 54 percent of the time of `phpcbf` ([measured](https://github.com/dg/dresscode#performance-php-cs-fixer-php_codesniffer) in October 2026).
+- **It upgrades the code too.** Besides the style, it rewrites the code to what newer PHP offers, and with `dresscode/upgrade-nette` to the new API of the Nette libraries.
+- **Its findings say why.** Every finding names the setting it breaks, and a fix that may change what the code does waits for your consent.
+
+```shell
+composer global require dresscode/dresscode
+```
+
+Then put a `dresscode.neon` with `use: [nette]` into the project root and run `dresscode check` or `dresscode fix`. The [manual](https://doc.nette.org/tools/coding-standard) walks you through it.
+
+
+Version 3
+---------
+
+The rest of this page documents version 3 for the projects that still use it.
 
 Nette Coding Standard checks and automatically fixes your PHP code so that it follows the [Nette coding standard](https://doc.nette.org/contributing/coding-standard) – from indentation and braces to spacing and the ordering of imports.
 
@@ -14,11 +36,8 @@ Under the hood it combines two industry-standard tools, [PHP CS Fixer](https://g
 
 It runs as a standalone application, not as a project dependency, which keeps its many dependencies away from your own.
 
-Documentation can be found on the [website](https://doc.nette.org/tools/coding-standard). If you like it, **[please make a donation now](https://github.com/sponsors/dg)**. Thank you!
 
-
-Installation
-------------
+### Installation
 
 Install it globally via Composer:
 
@@ -38,8 +57,7 @@ composer create-project nette/coding-standard
 It requires PHP 8.0 or higher.
 
 
-Usage
------
+### Usage
 
 The tool provides two commands. The `check` command runs in read-only mode and only reports violations, while `fix` repairs them automatically:
 

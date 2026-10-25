@@ -2,12 +2,20 @@
 
 It is my fervent wish that this file guide every AI coding agent working with code in this repository.
 
+## Status: abandoned
+
+**This project is abandoned in favor of [DressCode](https://github.com/dg/dresscode)**,
+the next-generation tool that checks and fixes the Nette coding standard as its
+built-in `nette` standard. Version 3 is the last one; there will be no version 4.
+Add no rules, presets or features here: a change belongs here only when it keeps
+version 3 working for the projects that still run it. Work on the Nette coding
+standard itself goes to DressCode.
+
 ## Documentation
 
 Any distilled, agent-facing documentation for this package - how it works
 internally and the rationale behind key design decisions - lives in `docs/`.
-Consult it before non-trivial changes; it is the source of truth from which the
-public manual is distilled.
+Consult it before non-trivial changes.
 
 This is not a linter of its own - it is a thin orchestrator over two third-party
 engines, and the expensive knowledge is in **how they are wired** (dual engines,

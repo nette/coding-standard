@@ -14,6 +14,8 @@ if (
 	exit(1);
 }
 
+fwrite(STDERR, "Nette Coding Standard is abandoned, switch to DressCode: https://dresscode.run/from-ncs\n\n");
+
 
 // Argument Parsing
 $cmd = new Parser(<<<'XX'
